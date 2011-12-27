@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# search for library path
+if [ -z "$GITCE_HOME" ]; then
+	if [ -z "$(echo $0 | grep '/')" ]; then
+		# assume we're called through the PATH
+		GITCE_HOME==/usr/local/
+	else
+		GITCE_HOME=$(dirname $0)
+	fi
+fi
+
+if [ -f $GITCE_HOME/lib/init.sh ]; then
+	LIB=$GITCE_HOME/lib
+elif [ -f $GITCE_HOME/lib/gitce/init.sh ]; then
+	LIB=$GITCE_HOME/lib/gitce
+else
+	panic "GITCE_HOME not found!"
+fi
+
+
+# basic argument sanitizing
+if [ $# -lt 2 ]; then
+	cat $LIB/help.txt
+	exit 1
+fi
+
+# run the requested command
+COMMAND=$1
+COMMAND_SCRIPT=$LIB/gitce-$COMMAND.sh
+if [ -f $COMMAND_SCRIPT ]; then
+	. $LIB/init.sh
+	. $COMMAND_SCRIPT $*
+else
+	panic "Command $COMMAND not found!"
+fi

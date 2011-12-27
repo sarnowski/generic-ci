@@ -1,0 +1,53 @@
+gitce - git continuous execution
+=============================================================================
+
+A simple shell-based continuous integration tool.
+
+
+
+Basic Usage
+=============================================================================
+
+Your git repository must have an executable "test.sh" script in the root
+directory. Typically a script you would give to "git bisect run". The return
+code of the script measures if a build failed or worked.
+
+To use the gitce commands, you need to provide a configuration file with at
+least the "REPOSITORY" entry which points to the source repository to check.
+
+  Example:
+      REPOSITORY=https://github.com/sarnowski/gitce
+
+
+The tools will look at the following locations for the configuration file:
+
+  As root:
+      /etc/gitce/<CONFIGFILE>
+  As user:
+      $HOME/.gitce/<CONFIGFILE>
+
+or you can specify the file directly.
+
+
+Running and checking with gitce
+=============================================================================
+
+$ gitce watch MyRepo
+
+Will continuously check the repository for changes and automatically verify
+them.
+
+
+$ gitce run MyRepo master
+
+Builds and checks the master branch.
+
+
+$ gitce update
+
+Updates the repository with the latest upstream changes.
+
+
+$ gitce status
+
+Shows all changes that need to be done.
