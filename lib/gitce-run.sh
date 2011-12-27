@@ -34,6 +34,14 @@ echo $SHA1 > $BUILD_SHA1
 echo "Preparing build directory..."
 $GIT archive --format=tar $SHA1 | tar x -C $BUILD_DIR
 
+# publish some variables about the build
+export GITCE_BUILD_ID=$BUILD_ID
+export GITCE_BUILD_NUMBER=$BUILD_NUMBER
+export GITCE_BUILD_BRANCH=$BRANCH
+export GITCE_BUILD_SHA1=$SHA1
+export GITCE_CONFIG=$CONFIG
+export GITCE_REPOSITORY=$REPO
+
 # run the script
 TEST_SCRIPT=$BUILD_DIR/test.sh
 
@@ -51,18 +59,11 @@ fi
 echo $RESULT > $BUILD_RESULT
 echo $SHA1 > $HEADS/$BRANCH
 echo "Return code: $RESULT"
+export GITCE_BUILD_RESULT=$RESULT
 
 # trigger hooks
 TRIGGERS=$CONFIG_DIR/$CONFIG.d
 if [ -d $TRIGGERS ]; then
-	export GITCE_BUILD_ID=$BUILD_ID
-	export GITCE_BUILD_NUMBER=$BUILD_NUMBER
-	export GITCE_BUILD_BRANCH=$BRANCH
-	export GITCE_BUILD_SHA1=$SHA1
-	export GITCE_BUILD_RESULT=$RESULT
-	export GITCE_CONFIG=$CONFIG
-	export GITCE_REPOSITORY=$REPO
-
 	for trigger in $(ls $TRIGGERS); do
 		$TRIGGERS/$trigger
 	done
