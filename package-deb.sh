@@ -2,7 +2,10 @@
 cd $(dirname $0)
 
 # resolve version
-VERSION=$(git describe --tags)
+GIT_DIR=.git
+[ ! -z "$GITCE_REPOSITORY" ] && GIT_DIR=$GITCE_REPOSITORY
+
+VERSION=$(git --git-dir=$GIT_DIR describe --tags)
 
 # a temporary directory for the package
 TMP=/tmp/gitce-deb
