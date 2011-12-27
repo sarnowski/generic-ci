@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # do not start automatically
-if [ -f /etc/init.d/gitce ]; then
+if [ -f /etc/init.d/gitce-watchers ]; then
     # remove update script
-    update-rc.d -f gitce remove
+    update-rc.d -f gitce-watchers remove
 fi
 
 # stop gitce
-/etc/init.d/gitce stop
+/etc/init.d/gitce-watchers stop

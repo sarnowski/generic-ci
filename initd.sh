@@ -7,7 +7,8 @@ case $1 in
 			for config in $(ls /etc/gitce); do
 				[ ! -f /etc/gitce/$config ] && continue
 				echo -n " $config"
-				nohup gitce watch $config > /var/log/gitce.log 2>&1 &
+				mkdir -p /var/log/gitce/$(dirname $config)
+				nohup gitce watch $config > /var/log/gitce/$config.log 2>&1 &
 			done
 			echo
 		fi

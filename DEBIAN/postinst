@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # start gitce
-/etc/init.d/gitce start || exit $?
+/etc/init.d/gitce-watchers start || exit $?
 
 # add as system startup script
-update-rc.d gitce defaults || exit $?
+update-rc.d gitce-watchers defaults || exit $?

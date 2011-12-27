@@ -20,7 +20,7 @@ mkdir -p $TMP/usr/local/share/gitce
 cp README LICENSE $TMP/usr/local/share/gitce
 
 mkdir -p $TMP/etc/init.d
-cp initd.sh $TMP/etc/init.d/gitce
+cp initd.sh $TMP/etc/init.d/gitce-watchers
 
 cp -r DEBIAN $TMP
 sed "s/#VERSION#/$VERSION/g" -i $TMP/DEBIAN/control
