@@ -49,7 +49,7 @@ while [ true ]; do
 
 		echo "Triggering $BUILD_ID..."
 		mkdir -p $(dirname $BUILD_LOG)
-		nohup $0 run $2 $branch | tee $BUILD_LOG
+		nohup $0 run $2 $branch 2>&1 | tee $BUILD_LOG
 	else
 		# done, wait a short time period
 		while [ $(date +%M) -eq $LAST_CHECK ]; do
