@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# do not start automatically
+if [ -f /etc/init.d/gitce ]; then
+    # remove update script
+    update-rc.d -f gitce remove
+fi
+
+# stop gitce
+/etc/init.d/gitce stop

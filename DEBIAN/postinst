@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# start gitce
+/etc/init.d/gitce start || exit $?
+
+# add as system startup script
+update-rc.d gitce defaults || exit $?
