@@ -2,7 +2,7 @@
 
 # search for library path
 if [ -z "$GITCE_HOME" ]; then
-	if [ -z "$(echo $0 | grep '/')" ]; then
+	if [ -z "$(echo $0 | grep '/')" ] || [ -z  ]; then
 		# assume we're called through the PATH
 		GITCE_HOME=/usr/local
 	else
@@ -14,8 +14,14 @@ if [ -f $GITCE_HOME/lib/init.sh ]; then
 	LIB=$GITCE_HOME/lib
 elif [ -f $GITCE_HOME/lib/gitce/init.sh ]; then
 	LIB=$GITCE_HOME/lib/gitce
+elif [ -f $GITCE_HOME/../lib/init.sh ]; then
+	GITCE_HOME=$(dirname $GITCE_HOME)
+	LIB=$GITCE_HOME/lib
+elif [ -f $GITCE_HOME/../lib/gitce/init.sh ]; then
+	GITCE_HOME=$(dirname $GITCE_HOME)
+	LIB=$GITCE_HOME/lib/gitce
 else
-	echo "GITCE_HOME not found!" >&2
+	echo "GITCE_HOME[$GITCE_HOME] not found!" >&2
 	exit 1
 fi
 
