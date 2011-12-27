@@ -2,7 +2,6 @@
 cd $(dirname $0)
 
 # resolve version
-export
 GIT_DIR=.git
 [ ! -z "$GITCE_REPOSITORY" ] && GIT_DIR=$GITCE_REPOSITORY
 
