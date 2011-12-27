@@ -5,7 +5,7 @@ cd $(dirname $0)
 GIT_DIR=.git
 [ ! -z "$GITCE_REPOSITORY" ] && GIT_DIR=$GITCE_REPOSITORY
 
-VERSION=$(git --git-dir=$GIT_DIR describe --tags)
+VERSION=$(git --git-dir=$GIT_DIR describe --tags $GITCE_BUILD_SHA1)
 
 # a temporary directory for the package
 TMP=/tmp/gitce-deb
