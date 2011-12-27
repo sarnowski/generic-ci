@@ -4,7 +4,7 @@
 if [ -z "$GITCE_HOME" ]; then
 	if [ -z "$(echo $0 | grep '/')" ]; then
 		# assume we're called through the PATH
-		GITCE_HOME==/usr/local/
+		GITCE_HOME=/usr/local
 	else
 		GITCE_HOME=$(dirname $0)
 	fi
@@ -15,7 +15,8 @@ if [ -f $GITCE_HOME/lib/init.sh ]; then
 elif [ -f $GITCE_HOME/lib/gitce/init.sh ]; then
 	LIB=$GITCE_HOME/lib/gitce
 else
-	panic "GITCE_HOME not found!"
+	echo "GITCE_HOME not found!" >&2
+	exit 1
 fi
 
 
