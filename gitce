@@ -2,7 +2,7 @@
 
 # search for library path
 if [ -z "$GITCE_HOME" ]; then
-	if [ -z "$(echo $0 | grep '/')" ] || [ -z  ]; then
+	if [ -z "$(echo $0 | grep '/')" ] || [ "$0" = "/usr/local/bin/gitce" ]; then
 		# assume we're called through the PATH
 		GITCE_HOME=/usr/local
 	else

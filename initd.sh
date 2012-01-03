@@ -11,11 +11,13 @@ case $1 in
 				nohup gitce watch $config > /var/log/gitce/$config.log 2>&1 &
 			done
 			echo
+			exit 0
 		fi
 		;;
 	stop)
 		echo "Stopping all gitce watchers..."
 		killall gitce
+		exit 0
 		;;
 	restart)
 		$0 stop
