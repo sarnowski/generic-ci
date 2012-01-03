@@ -6,7 +6,7 @@ panic() {
 # set up basic variables
 CONFIG=$2
 
-if [ $(id -u) -eq 0 ]; then
+if [ $(id -u) -eq 0 ] || [ -z "$HOME" ]; then
 	# running as root
 	CONFIG_DIR=/etc/gitce
 	WORKS_DIR=/var/lib/gitce
@@ -15,7 +15,7 @@ else
 	CONFIG_DIR=$HOME/.gitce
 	WORKS_DIR=$HOME/.gitce/works
 fi
-mkdir -p $CONFIG_DIR
+mkdir -p $CONFIG_DIR || exit $?
 
 # load the configuration
 if [ -f $CONFIG ]; then
@@ -45,8 +45,8 @@ HEADS=$WORK_DIR/heads
 # check for repository
 if [ ! -d $REPO ]; then
 	# clone it
-	mkdir -p $(dirname $REPO)
-	$GIT_BIN clone --mirror $REPOSITORY $REPO
+	mkdir -p $(dirname $REPO) || exit $?
+	$GIT_BIN clone --mirror $REPOSITORY $REPO || exit $?
 fi
 GIT="$GIT_BIN --git-dir=$REPO"
 
