@@ -33,4 +33,4 @@ sed "s/#VERSION#/$VERSION/g" -i $TMP/DEBIAN/control
 fakeroot dpkg-deb -b $TMP gitce-$VERSION-all.deb
 
 # cleanup
-#rm -rf $TMP
+rm -rf $TMP
