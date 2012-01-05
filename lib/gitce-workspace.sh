@@ -1,0 +1,1 @@
+echo $WORK_DIR
