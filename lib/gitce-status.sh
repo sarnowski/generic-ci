@@ -1,4 +1,4 @@
-for branch in $($GIT for-each-ref --format='%(refname)' | cut -d'/' -f3-); do
+for branch in $($GIT for-each-ref --format='%(refname)' refs/heads | cut -d'/' -f3-); do
 	if [ -f $HEADS/$branch ]; then
 		OLD_HEAD=$(cat $HEADS/$branch)
 		NEW_HEAD=$($GIT show --pretty=oneline $branch | head -1 | cut -d' ' -f1)
@@ -13,7 +13,7 @@ done
 
 for branch in $(ls $HEADS); do
 	found=0
-	for rbranch in $($GIT for-each-ref --format='%(refname)' | cut -d'/' -f3-); do
+	for rbranch in $($GIT for-each-ref --format='%(refname)' refs/heads | cut -d'/' -f3-); do
 		if [ "$branch" = "$rbranch" ]; then
 			found=1
 			break
