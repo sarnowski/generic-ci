@@ -27,14 +27,19 @@ cp initd.sh $TMP/etc/init.d/gitce-watchers
 # build tarball
 echo "Building tarball..."
 TAR=gitce-$VERSION.tar.gz
-tar czf $TAR -C $TMP etc usr
+tar czf $TAR -C $TMP etc usr || exit $?
 
 # build debian package
-echo "Building debian package..."
-cp -r DEBIAN $TMP
-sed "s/#VERSION#/$VERSION/g" -i $TMP/DEBIAN/control
-DEB=gitce-$VERSION-all.deb
-fakeroot dpkg-deb -b $TMP $DEB > /dev/null
+which dpkg-deb >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+	echo "Building debian package..."
+	cp -r DEBIAN $TMP
+	sed "s/#VERSION#/$VERSION/g" -i $TMP/DEBIAN/control
+	DEB=gitce-$VERSION-all.deb
+	fakeroot dpkg-deb -b $TMP $DEB > /dev/null || exit $?
+else
+	echo "Skipping debian package..."
+fi
 
 # convert to various other packages
 which alien >/dev/null 2>&1
