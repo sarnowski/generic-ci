@@ -33,3 +33,8 @@ The tools will look at the following locations for the configuration file:
 or you can specify the file directly. You can find an example configuration
 with further explanation in the "examples" folder.
 
+
+License
+=============================================================================
+
+See the LICENSE file.
