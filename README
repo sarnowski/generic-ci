@@ -45,6 +45,44 @@ For more informations look at share/examples/hooks/README.
 
 
 
+Web Interface
+=============================================================================
+
+gitce provides a simple web interface to track the current state of the build
+server. To use it, you need a CGI capable web server. The following Apache2
+configuration:
+
+<VirtualHost *:80>
+	ServerName tobi.cosmo
+
+	DocumentRoot /usr/local/share/gitce
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /usr/local/share/gitce/>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride None
+		Order allow,deny
+		allow from all
+	</Directory>
+
+	ScriptAlias /cgi-bin/ /usr/local/share/gitce/cgi-bin/
+	<Directory "/usr/local/share/gitce/cgi-bin">
+		AllowOverride None
+		Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+		Order allow,deny
+		Allow from all
+	</Directory>
+</VirtualHost>
+
+WARNING: The web interface is highly exploitable and is not secure in any way
+at the moment. The web interface will not provide any user management by
+itself. Be sure to block any malicous sources. Only run it in your trusted
+internal network or secure it by granting only access to trusted users.
+
+
+
 License
 =============================================================================
 
