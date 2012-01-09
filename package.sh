@@ -8,9 +8,7 @@ GIT_DIR=.git
 VERSION=$(git --git-dir=$GIT_DIR describe --tags $GITCE_BUILD_SHA1)
 
 # a temporary directory for the package
-TMP=/tmp/gitce-deb
-rm -rf $TMP
-mkdir -p $TMP
+TMP=$(mktemp --directory --suffix=gitce)
 
 # the package structure
 mkdir -p $TMP/usr/local/bin
@@ -26,11 +24,26 @@ cp README LICENSE $TMP/usr/local/share/gitce
 mkdir -p $TMP/etc/init.d
 cp initd.sh $TMP/etc/init.d/gitce-watchers
 
+# build tarball
+echo "Building tarball..."
+TAR=gitce-$VERSION.tar.gz
+tar czf $TAR -C $TMP etc usr
+
+# build debian package
+echo "Building debian package..."
 cp -r DEBIAN $TMP
 sed "s/#VERSION#/$VERSION/g" -i $TMP/DEBIAN/control
+DEB=gitce-$VERSION-all.deb
+fakeroot dpkg-deb -b $TMP $DEB > /dev/null
 
-# build the package
-fakeroot dpkg-deb -b $TMP gitce-$VERSION-all.deb
+# convert to various other packages
+which alien >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+	echo "Building redhat package..."
+	fakeroot alien --to-rpm $TAR >/dev/null
+else
+	echo "Skipping redhat package..."
+fi
 
 # cleanup
 rm -rf $TMP
