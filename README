@@ -31,7 +31,18 @@ The tools will look at the following locations for the configuration file:
       $HOME/.gitce/<CONFIGFILE>
 
 or you can specify the file directly. You can find an example configuration
-with further explanation in the "examples" folder.
+with further explanation in the "examples" folder:
+  share/examples/example-project
+
+
+
+Plugins
+=============================================================================
+
+To support build server specific environments it is possible to define hooks
+which can setup and teardown the build environment or send notifications.
+For more informations look at share/examples/hooks/README.
+
 
 
 License
