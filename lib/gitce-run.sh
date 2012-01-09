@@ -45,6 +45,19 @@ export GITCE_BUILD_NUMBER=$BUILD_NUMBER
 export GITCE_BUILD_SHA1=$SHA1
 export GITCE_BUILD_DIR=$BUILD_DIR
 
+# trigger pre hooks
+TRIGGER_PRE_DIR=$CONFIG_DIR/$CONFIG-pre.d
+export GITCE_PHASE="pre"
+if [ -d $TRIGGER_PRE_DIR ]; then
+	for trigger in $(ls $TRIGGER_PRE_DIR); do
+		if [ -d $TRIGGER_PRE_DIR/$trigger ]; then
+			$TRIGGER_PRE_DIR/$trigger/trigger.sh
+		else
+			$TRIGGER_PRE_DIR/$trigger
+		fi
+	done
+fi
+
 # run the script
 [ -z "$TEST_EXECUTABLE" ] && TEST_EXECUTABLE=/test.sh
 TEST_BIN=$BUILD_DIR$TEST_EXECUTABLE
@@ -72,11 +85,16 @@ echo $SHA1 > $HEADS/$BRANCH
 echo "Return code: $RESULT"
 export GITCE_BUILD_RESULT=$RESULT
 
-# trigger hooks
-TRIGGERS=$CONFIG_DIR/$CONFIG.d
-if [ -d $TRIGGERS ]; then
-	for trigger in $(ls $TRIGGERS); do
-		$TRIGGERS/$trigger
+# trigger post hooks
+TRIGGER_POST_DIR=$CONFIG_DIR/$CONFIG-post.d
+export GITCE_PHASE="post"
+if [ -d $TRIGGER_POST_DIR ]; then
+	for trigger in $(ls $TRIGGER_POST_DIR); do
+		if [ -d $TRIGGER_POST_DIR/$trigger ]; then
+			$TRIGGER_POST_DIR/$trigger/trigger.sh
+		else
+			$TRIGGER_POST_DIR/$trigger
+		fi
 	done
 fi
 
