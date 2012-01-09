@@ -16,7 +16,7 @@ case $1 in
 				[ ! -f /etc/gitce/$config ] && continue
 				echo -n " $config"
 				mkdir -p /var/log/gitce/$(dirname $config)
-				nohup gitce watch $config > /var/log/gitce/$config.log 2>&1 &
+				nohup gitce watch $config >> /var/log/gitce/$config.log 2>&1 &
 			done
 			echo
 			exit 0
