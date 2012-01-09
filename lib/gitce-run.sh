@@ -50,9 +50,16 @@ export GITCE_BUILD_DIR=$BUILD_DIR
 TEST_BIN=$BUILD_DIR$TEST_EXECUTABLE
 
 if [ -f $TEST_BIN ]; then
-	echo "Running build script $TEST_BIN..."
-	$TEST_BIN
-	RESULT=$?
+	if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
+		echo "Running build script $TEST_BIN as $BUILD_USER..."
+		chown -R $BUILD_USER $BUILD_DIR
+		su -p -c "$TEST_BIN" $BUILD_USER
+		RESULT=$?
+	else
+		echo "Running build script $TEST_BIN..."
+		$TEST_BIN
+		RESULT=$?
+	fi
 else
 	echo "$TEST_BIN not found!" >&2
 	RESULT=100

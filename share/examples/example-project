@@ -7,6 +7,9 @@ REPOSITORY=
 # which executable to execute for testing
 #TEST_EXECUTABLE=/test.sh
 
+# if called via root, use this user
+#BUILD_USER=nobody
+
 # where to store all build related stuff
 #WORK_DIR=
 
