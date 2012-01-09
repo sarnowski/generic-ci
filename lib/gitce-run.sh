@@ -35,12 +35,15 @@ echo "Preparing build directory..."
 $GIT archive --format=tar $SHA1 | tar x -C $BUILD_DIR
 
 # publish some variables about the build
+export GITCE_CONFIG=$CONFIG
+export GITCE_CONFIG_DIR=$WORK_DIR
+export GITCE_REPOSITORY=$REPO
+export GITCE_BRANCH_DIR=$BRANCH_DIR
 export GITCE_BUILD_ID=$BUILD_ID
 export GITCE_BUILD_NUMBER=$BUILD_NUMBER
 export GITCE_BUILD_BRANCH=$BRANCH
 export GITCE_BUILD_SHA1=$SHA1
-export GITCE_CONFIG=$CONFIG
-export GITCE_REPOSITORY=$REPO
+export GITCE_BUILD_DIR=$BUILD_DIR
 
 # run the script
 TEST_SCRIPT=$BUILD_DIR/test.sh
