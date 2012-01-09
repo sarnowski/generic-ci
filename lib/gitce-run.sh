@@ -46,14 +46,15 @@ export GITCE_BUILD_SHA1=$SHA1
 export GITCE_BUILD_DIR=$BUILD_DIR
 
 # run the script
-TEST_SCRIPT=$BUILD_DIR/test.sh
+[ -z "$TEST_EXECUTABLE" ] && TEST_EXECUTABLE=/test.sh
+TEST_BIN=$BUILD_DIR$TEST_EXECUTABLE
 
-if [ -f $TEST_SCRIPT ]; then
-	echo "Running build script..."
-	$TEST_SCRIPT
+if [ -f $TEST_BIN ]; then
+	echo "Running build script $TEST_BIN..."
+	$TEST_BIN
 	RESULT=$?
 else
-	echo "$TEST_SCRIPT not found!" >&2
+	echo "$TEST_BIN not found!" >&2
 	RESULT=100
 fi
 

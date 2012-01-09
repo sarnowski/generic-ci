@@ -1,0 +1,15 @@
+# this file's name is the unique project's name
+
+# where to get the source from
+# e.g. git@github.com:sarnowski/gitce.git
+REPOSITORY=
+
+# which executable to execute for testing
+#TEST_EXECUTABLE=/test.sh
+
+# where to store all build related stuff
+#WORK_DIR=
+
+# which git executable to use
+#GIT_BIN=git
+
