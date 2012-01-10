@@ -8,17 +8,25 @@
 # Default-Stop:		0 1 6
 ### END INIT INFO
 
+if [ $(id -u) -eq 0 ]; then
+	CONFIG_DIR=/etc/gitce
+	LOG_DIR=/var/log/gitce
+else
+	CONFIG_DIR=$HOME/.gitce
+	LOG_DIR=$CONFIG_DIR/logs
+fi
+
 case $1 in
 	start)
-		if [ -d /etc/gitce ]; then
+		if [ -d $CONFIG_DIR ]; then
 			echo -n "Starting gitce watchers..."
-			for config in $(ls /etc/gitce); do
-				[ ! -f /etc/gitce/$config ] && continue
+			for config in $(ls $CONFIG_DIR); do
+				[ ! -f $CONFIG_DIR/$config ] && continue
 				[ ! -z "$(echo $config | grep "nowatch")" ] && continue
-				if [ ! -f /etc/gitce/$config.nowatch ]; then
+				if [ ! -f $CONFIG_DIR/$config.nowatch ]; then
 					echo -n " $config"
-					mkdir -p /var/log/gitce/$(dirname $config)
-					nohup gitce watch $config >> /var/log/gitce/$config.log 2>&1 &
+					mkdir -p $LOG_DIR/$(dirname $config)
+					nohup gitce watch $config >> $LOG_DIR/$config.log 2>&1 &
 				fi
 			done
 			echo
