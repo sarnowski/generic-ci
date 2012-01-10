@@ -14,9 +14,12 @@ case $1 in
 			echo -n "Starting gitce watchers..."
 			for config in $(ls /etc/gitce); do
 				[ ! -f /etc/gitce/$config ] && continue
-				echo -n " $config"
-				mkdir -p /var/log/gitce/$(dirname $config)
-				nohup gitce watch $config >> /var/log/gitce/$config.log 2>&1 &
+				[ ! -z "$(echo $config | grep "nowatch")" ] && continue
+				if [ ! -f /etc/gitce/$config.nowatch ]; then
+					echo -n " $config"
+					mkdir -p /var/log/gitce/$(dirname $config)
+					nohup gitce watch $config >> /var/log/gitce/$config.log 2>&1 &
+				fi
 			done
 			echo
 			exit 0
