@@ -1,3 +1,7 @@
+if [ -f $CONFIG_DIR/$CONFIG.nowatch ]; then
+	exit 1
+fi
+
 while [ true ]; do
 	# update repository
 	$0 update $2
