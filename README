@@ -43,6 +43,10 @@ To support build server specific environments it is possible to define hooks
 which can setup and teardown the build environment or send notifications.
 For more informations look at share/examples/hooks/README.
 
+There are some prebuild hooks containing features like
+  * Mail notifications
+  * VNC server management
+
 
 
 Web Interface
