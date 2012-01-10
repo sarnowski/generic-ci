@@ -36,6 +36,24 @@ with further explanation in the "examples" folder:
 
 
 
+Trigger
+=============================================================================
+
+gitce supports three kinds of triggers. The default and most prominent
+trigger is the "source changed" trigger. Using the gitce watcher will trigger
+a build upon every code change. It will poll the git repository for changes.
+
+If you need a cron based trigger or only a manual trigger, you should disable
+the automatic watching of the configuration by creating a ".nowatch" file.
+  /etc/gitce/example-config
+  /etc/gitce/example-config.nowatch
+
+To manually trigger a configuration, run "gitce run example-config" on your
+shell. Using the same command you can configure a cronly trigger:
+  0 */2 * * * /usr/local/bin/gitce run example-config
+
+
+
 Plugins
 =============================================================================
 
