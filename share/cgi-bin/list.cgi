@@ -18,10 +18,10 @@ for config in $(ls /etc/gitce); do
 	fi
 
 	if [ $first -eq 0 ]; then
-		echo -n "    ,"
+		echo "    ,"
 	else
 		first=0
-		echo -n "     "
+		echo "     "
 	fi
 
 	echo "\"$config\""

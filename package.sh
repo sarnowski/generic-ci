@@ -8,7 +8,14 @@ GIT_DIR=.git
 VERSION=$(git --git-dir=$GIT_DIR describe --tags $GITCE_BUILD_SHA1)
 
 # a temporary directory for the package
-TMP=$(mktemp --directory --suffix=gitce)
+SYS=$(uname)
+if [ "$SYS" = "Darwin" ]; then
+	TMP=$(mktemp -d -t gitce)
+elif [ "$SYS" = "Linux" ]; then
+	TMP=$(mktemp -d)
+else
+	TMP=/tmp/gitce-$(date +%s)
+fi
 
 # the package structure
 mkdir -p $TMP/usr/local/bin

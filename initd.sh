@@ -19,12 +19,12 @@ fi
 case $1 in
 	start)
 		if [ -d $CONFIG_DIR ]; then
-			echo -n "Starting gitce watchers..."
+			echo "Starting gitce watchers..."
 			for config in $(ls $CONFIG_DIR); do
 				[ ! -f $CONFIG_DIR/$config ] && continue
 				[ ! -z "$(echo $config | grep "nowatch")" ] && continue
 				if [ ! -f $CONFIG_DIR/$config.nowatch ]; then
-					echo -n " $config"
+					echo "    * $config"
 					mkdir -p $LOG_DIR/$(dirname $config)
 					nohup gitce watch $config >> $LOG_DIR/$config.log 2>&1 &
 				fi
