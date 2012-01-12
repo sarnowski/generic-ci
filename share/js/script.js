@@ -28,7 +28,7 @@ function updateConfiguration(config, status) {
     var item, index, configId;
 
     configId = "#config-" + config;
-    $(configId, '.next,.active').empty();
+    $('.next,.active',configId).empty();
 
     for (index in status['next']) {
         item = status['next'][index];
