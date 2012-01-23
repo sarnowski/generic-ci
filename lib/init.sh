@@ -25,12 +25,12 @@ fi
 if [ -f $CONFIG_DIR/$CONFIG ]; then
 	. $CONFIG_DIR/$CONFIG
 else
-	panic "Configuration $CONFIG not found!"
+	panic "Configuration $CONFIG_DIR/$CONFIG not found!"
 fi
 
 # sanitize configuration
 if [ -z "$REPOSITORY" ]; then
-	panic "REPOSITORY not set!"
+	panic "REPOSITORY not set in $CONFIG_DIR/$CONFIG!"
 fi
 
 # set up defaults
