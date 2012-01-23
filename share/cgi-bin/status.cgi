@@ -46,6 +46,9 @@ export ws=$($GITCE workspace $CONFIG)
 # general output
 echo "{"
 
+# logged in user (or empty if not available)
+echo "    \"user\": \"$REMOTE_USER\","
+
 # output next builds
 echo "    \"next\": ["
 first=1
