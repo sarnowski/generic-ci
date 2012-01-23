@@ -4,6 +4,15 @@ gitce - git continuous execution
 A simple shell-based, POSIX compliant continuous integration tool.
 
 
+-- Content
+    * Basic Usage
+    * Trigger
+    * Plugins
+    * Web Interface
+    * Monitor
+    * License
+
+
 
 Basic Usage
 =============================================================================
