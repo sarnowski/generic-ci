@@ -124,6 +124,7 @@ $GITCE current $CONFIG | grep "running" | while read line; do
 	echo "        {"
 	echo "            \"branch\": \"$branch\","
 	echo "            \"commit\": \"$commit\","
+	echo "            \"message\": \"$(git --git-dir=$ws/repository log --format='%ar: (%h) %s' "$commit^..$commit")\","
 	echo "            \"authors\": [$(git_authors_list $CONFIG $from $commit)]"
 	echo "        }"
 done
