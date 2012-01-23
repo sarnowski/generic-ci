@@ -25,6 +25,7 @@ BUILD_RESULT=$BUILD_DIR.result
 mkdir -p $BUILD_DIR
 
 echo "Build $BUILD_ID"
+date
 
 # get the real git hash
 SHA1=$($GIT show --pretty=oneline $BRANCH | head -1 | cut -d' ' -f1)
@@ -98,6 +99,9 @@ if [ -d $TRIGGER_POST_DIR ]; then
 		fi
 	done
 fi
+
+# for logging
+date
 
 # end the run
 if [ $RESULT -eq 0 ]; then
