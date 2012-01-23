@@ -105,6 +105,19 @@ internal network or secure it by granting only access to trusted users.
 
 
 
+Monitor
+=============================================================================
+
+To have a nice monitor setup in your room, have a look at the "monitor"
+directory in the "examples" directory.
+
+Basically, you can access a monitor-optimized page for a configuration via
+web browser. A HTML5 capable browser is required (used with Google Chrome).
+
+  http://example.com/gitce/monitor.html?example-configuration
+
+
+
 License
 =============================================================================
 

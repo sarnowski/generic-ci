@@ -1,0 +1,4 @@
+export DISPLAY=:0
+/root/after_start &
+exec google-chrome -geometry=1280x1024+0+0 --user-data-dir=/root/.chrome --kiosk "http://example.com/monitor.html?example-config"
+

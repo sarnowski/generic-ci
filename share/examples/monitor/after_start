@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "Waiting until X11 settled..."
+sleep 20
+
+echo "Disabling Monitor Standby mode..."
+xset -dpms
+xset s noblank
+xset s off
+
+echo "Setting Google Chrome to fullscreen..."
+xwit -move 0 0 -resize 1280 1024 -current
+
