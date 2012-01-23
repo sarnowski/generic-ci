@@ -1,3 +1,5 @@
+var wasBroken = false;
+
 $(document).ready(function() {
 	// load given configuration
 	var urlParts = window.location.href.split('?');
@@ -77,9 +79,24 @@ function updateConfiguration(config, status) {
 
 		$('#broken').show();
 		$('body').attr('class', 'failure');
+
+		if (!wasBroken) {
+			// initially broken!
+			playAlarm();
+		}
+		wasBroken = true;
 	} else {
 		$('#broken').hide();
 		$('body').attr('class', 'success');
+
+		if (wasBroken) {
+			// ok again
+		}
+		wasBroken = false;
 	}
 }
 
+function playAlarm() {
+	var alarmSound = new Audio('sound/alarm.ogg');
+	alarmSound.play();
+}
