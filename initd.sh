@@ -26,7 +26,7 @@ case $1 in
 				if [ ! -f $CONFIG_DIR/$config.nowatch ]; then
 					echo "    * $config"
 					mkdir -p $LOG_DIR/$(dirname $config)
-					nohup gitce watch $config >> $LOG_DIR/$config.log 2>&1 &
+					nohup /usr/local/bin/gitce watch $config >> $LOG_DIR/$config.log 2>&1 &
 				fi
 			done
 			echo
