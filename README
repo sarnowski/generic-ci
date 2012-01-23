@@ -81,31 +81,19 @@ Web Interface
 
 gitce provides a simple web interface to track the current state of the build
 server. To use it, you need a CGI capable web server. The following Apache2
-configuration:
+configuration gives an example of how to configure your server (works with
+default Debian "squeeze" Apache2 package).
 
 <VirtualHost *:80>
-	ServerName tobi.cosmo
+	ServerName gitce.example.com
 
 	DocumentRoot /usr/local/share/gitce
-	<Directory />
-		Options FollowSymLinks
-		AllowOverride None
-	</Directory>
-	<Directory /usr/local/share/gitce/>
-		Options Indexes FollowSymLinks MultiViews
-		AllowOverride None
-		Order allow,deny
-		allow from all
-	</Directory>
-
 	ScriptAlias /cgi-bin/ /usr/local/share/gitce/cgi-bin/
-	<Directory "/usr/local/share/gitce/cgi-bin">
-		AllowOverride None
-		Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-		Order allow,deny
-		Allow from all
-	</Directory>
 </VirtualHost>
+
+Access it with your HTML5 capable browser:
+  http://gitce.example.com/
+
 
 WARNING: The web interface is highly exploitable and is not secure in any way
 at the moment. The web interface will not provide any user management by
@@ -127,7 +115,7 @@ directory in the "examples" directory.
 Basically, you can access a monitor-optimized page for a configuration via
 web browser. A HTML5 capable browser is required (used with Google Chrome).
 
-  http://example.com/gitce/monitor.html?example-configuration
+  http://gitce.example.com/monitor.html?example-configuration
 
 
 
