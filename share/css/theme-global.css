@@ -55,7 +55,7 @@ table {
     border-spacing: 0;
 }
 
-/* layout */
+/* global */
 h1 {
     color: #6F7E87;
     background: #C4CED4;
@@ -65,42 +65,33 @@ h1 {
     margin: 0 0 10px;
 }
 
-#root {
-    margin: 0 10px;
+/* consoleLog */
+#consoleLog {
+    background: #000;
+    color: #fff;
+    margin: 20px;
+    padding: 20px;
+    min-height: 600px;
 }
 
-.config {
-    border: 1px solid #6F7E87;
-    float: left;
-    margin: 20px 10px 20px 10px;
-    padding: 0 0 10px;
-    width: 200px;
+/* clearfix */
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
 }
 
-.config h2 {
-    color: #6F7E87;
-    background: #C4CED4;
-    border-bottom: 1px solid #6F7E87;
-    font-size: 1.6em;
-    font-weight: bold;
-    text-transform: lowercase;
-    padding: 10px;
+.clearfix {
+    display: inline-block;
 }
 
-.config h3 {
-    padding: 10px;
+html[xmlns] .clearfix {
+    display: block;
 }
 
-.branches {
-    font-size: 1.2em;
-    margin: 0 0 0 10px;
-}
-
-.branch {
-    margin: 2px 0;
-    padding: 3px 10px;
-}
-
-.branch a {
-    float: right;
+* html .clearfix {
+    height: 1%;
 }
