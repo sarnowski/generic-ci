@@ -112,6 +112,10 @@ at the moment. The web interface will not provide any user management by
 itself. Be sure to block any malicous sources. Only run it in your trusted
 internal network or secure it by granting only access to trusted users.
 
+HINT: Use your e-mail addresses as htpasswd users. The web interface will
+compare htpasswd users with the git authors e-mails and can give a
+personalized view.
+
 
 
 Monitor
