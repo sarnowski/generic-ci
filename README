@@ -57,9 +57,9 @@ the automatic watching of the configuration by creating a ".nowatch" file.
   /etc/gitce/example-config
   /etc/gitce/example-config.nowatch
 
-To manually trigger a configuration, run "gitce run example-config" on your
-shell. Using the same command you can configure a cronly trigger:
-  0 */2 * * * /usr/local/bin/gitce run example-config
+To manually trigger a configuration, run "gitce run-newest example-config" on
+your shell. Using the same command you can configure a cronly trigger:
+  0 */2 * * * /usr/local/bin/gitce run-newest example-config
 
 
 
