@@ -92,9 +92,10 @@ echo "    ],"
 echo "    \"broken\": ["
 first=1
 $GITCE current $CONFIG | grep "broken" | while read line; do
-	branch=$(echo $line | awk '{print $1}')
-	commit=$(echo $line | awk '{print $3}')
-	from=$(echo $line | awk '{print $4}')
+	branch=$(echo $line | awk '{print $2}')
+	number=$(echo $line | awk '{print $3}')
+	commit=$(echo $line | awk '{print $4}')
+	from=$(echo $line | awk '{print $5}')
 
 	if [ $first -eq 0 ]; then
 		echo "        ,"
@@ -104,6 +105,7 @@ $GITCE current $CONFIG | grep "broken" | while read line; do
 
 	echo "        {"
 	echo "            \"branch\": \"$branch\","
+	echo "            \"number\": \"$number\","
 	echo "            \"commit\": \"$commit\","
 	echo "            \"authors\": [$(git_authors_list $CONFIG $from $commit)]"
 	echo "        }"
@@ -114,9 +116,10 @@ echo "    ],"
 echo "    \"running\": ["
 first=1
 $GITCE current $CONFIG | grep "running" | while read line; do
-	branch=$(echo $line | awk '{print $1}')
-	commit=$(echo $line | awk '{print $3}')
-	from=$(echo $line | awk '{print $4}')
+	branch=$(echo $line | awk '{print $2}')
+	number=$(echo $line | awk '{print $3}')
+	commit=$(echo $line | awk '{print $4}')
+	from=$(echo $line | awk '{print $5}')
 
 	if [ $first -eq 0 ]; then
 		echo "        ,"
@@ -126,6 +129,7 @@ $GITCE current $CONFIG | grep "running" | while read line; do
 
 	echo "        {"
 	echo "            \"branch\": \"$branch\","
+	echo "            \"number\": \"$number\","
 	echo "            \"commit\": \"$commit\","
 	echo "            \"message\": \"$(git --git-dir=$ws/repository log --format='%ar: (%h) %s' "$commit^..$commit")\","
 	echo "            \"authors\": [$(git_authors_list $CONFIG $from $commit)]"
