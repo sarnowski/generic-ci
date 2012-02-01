@@ -1,0 +1,33 @@
+#console {
+    background: #000;
+    color: #fff;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.4em;
+    font-weight: normal;
+    height: 800px;
+    line-height: 1.4em;
+    margin: 20px;
+    padding: 20px;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    white-space: pre;
+}
+
+#console .error {
+    color: #f33;
+    font-weight: bold;
+}
+
+#console .warning {
+    color: #ff3;
+}
+
+#console .info {
+    font-weight: bold;
+}
+
+#console .success {
+    color: #3f3;
+    font-weight: bold;
+}

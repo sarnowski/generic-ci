@@ -10,6 +10,19 @@ GITCE.overview = function (parameters) {
         '</li>');
     var tplBranch = $('<li class="branch"><span/><a>log</a>');
 
+    function branchHasStatus(states, status, branch) {
+        for(var index in states[status]) {
+            var branches = states[status];
+            for(var key in branches) {
+                if (branches[key].branch == branch) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     var that = {
         servers:null,
         serverList:[
@@ -37,8 +50,13 @@ GITCE.overview = function (parameters) {
                         item = status['next'][index];
 
                         branch = tplBranch.clone().appendTo(branchesNext);
-                        branch.find('span').text(item['branch']);
-                        branch.find('a').remove();
+                        if (branchHasStatus(status, "running", item["branch"])) {
+                            branch.find('span').text(item['branch'] + ' *');
+                            branch.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '/' + item['branch'] + '/' + item['number']);
+                        } else {
+                            branch.find('span').text(item['branch']);
+                            branch.find('a').remove();
+                        }
                     }
 
                     for (index in status['broken']) {
