@@ -1,7 +1,7 @@
 var GITCE = {
 
-    debugState: true,
-    debug: function d(a) {
+    debugState:true,
+    debug:function d(a) {
         if (!this.debugState) return;
 
         if (console.info === undefined) {
@@ -11,7 +11,8 @@ var GITCE = {
         }
     },
 
-    getQueryParams: function() {
+    //TODO implent a more reliable parsing algo
+    getQueryParams:function () {
         var params = {};
         var query = window.location.href.split('?');
         if (query.length == 2) {

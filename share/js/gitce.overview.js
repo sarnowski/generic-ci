@@ -6,7 +6,7 @@ GITCE.overview = function (parameters) {
     var tplServer = $('<li class="server"><h2/><ul class="configs clearfix"></ul>');
     var tplConfig = $('<li class="config"><h3 class="name"/>' +
         '<h4>broken</h4><ul class="branches branches-broken"/>' +
-        '<h4>next</h4><ul class="branches branches-next"/>' +
+        '<h4>pending</h4><ul class="branches branches-next"/>' +
         '</li>');
     var tplBranch = $('<li class="branch"><span/><a>log</a>');
 
@@ -20,6 +20,15 @@ GITCE.overview = function (parameters) {
             }
         }
 
+        return false;
+    }
+
+    function branchHasAuthor(states, branch) {
+        for(var index in branch.authors) {
+            if (states.user == branch.authors[index].email) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -41,29 +50,55 @@ GITCE.overview = function (parameters) {
             $.ajax({
                 url:server.url + "cgi-bin/status.cgi?" + name,
                 success:function (status) {
-                    var index, item, branch;
+                    var index, branch, branchContainer;
 
-                    var branchesBroken = $('.branches-broken,', configContainer).empty();
-                    var branchesNext = $('.branches-next', configContainer).empty();
-
+                    // Pending Branches
+                    var branchesPending = $('.branches-next', configContainer).empty();
                     for (index in status['next']) {
-                        item = status['next'][index];
+                        branch = status['next'][index];
 
-                        branch = tplBranch.clone().appendTo(branchesNext);
-                        if (branchHasStatus(status, "running", item["branch"])) {
-                            branch.find('span').text(item['branch'] + ' *');
-                            branch.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '/' + item['branch'] + '/' + item['number']);
+                        branchContainer = tplBranch.clone().appendTo(branchesPending);
+                        if (branchHasStatus(status, "running", branch.branch)) {
+                            branchContainer.find('span').text(branch.branch + ' *');
+                            branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '/' + branch.branch + '/' + branch.number);
                         } else {
-                            branch.find('span').text(item['branch']);
-                            branch.find('a').remove();
+                            branchContainer.find('span').text(branch['branchContainer']);
+                            branchContainer.find('a').remove();
                         }
                     }
 
+                    if (branchesPending.children().size()) {
+                        branchesPending.prev().show();
+                    } else {
+                        branchesPending.prev().hide();
+                    }
+
+                    // Broken Branches
+                    var branchesBroken = $('.branches-broken,', configContainer).empty();
+                    var broken = false;
+                    var responsible = false;
                     for (index in status['broken']) {
-                        item = status['broken'][index];
-                        branch = tplBranch.clone().appendTo(branchesBroken);
-                        branch.find('span').text(item['branch']);
-                        branch.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '/' + item['branch'] + '/' + item['number']);
+                        branch = status['broken'][index];
+
+                        broken = true;
+                        responsible = responsible || branchHasAuthor(status, branch);
+
+                        branchContainer = tplBranch.clone().appendTo(branchesBroken);
+                        branchContainer.find('span').text(branch.branch);
+                        branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '/' + branch.branch + '/' + branch.number);
+                    }
+
+                    if (branchesBroken.children().size()) {
+                        branchesBroken.prev().show();
+                    } else {
+                        branchesBroken.prev().hide();
+                    }
+
+                    if (broken) {
+                        configContainer.addClass('broken');
+                        if (responsible) {
+                            configContainer.addClass('you-broke-it');
+                        }
                     }
                 }
             });

@@ -3,8 +3,6 @@ GITCE.detail = function (parameters) {
         refreshTime:2000
     }, parameters);
 
-
-
     var that = {
         init: function() {
 
