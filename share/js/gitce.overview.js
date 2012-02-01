@@ -11,9 +11,9 @@ GITCE.overview = function (parameters) {
     var tplBranch = $('<li class="branch"><span/><a>log</a>');
 
     function branchHasStatus(states, status, branch) {
-        for(var index in states[status]) {
+        for (var index in states[status]) {
             var branches = states[status];
-            for(var key in branches) {
+            for (var key in branches) {
                 if (branches[key].branch == branch) {
                     return true;
                 }
@@ -24,7 +24,7 @@ GITCE.overview = function (parameters) {
     }
 
     function branchHasAuthor(states, branch) {
-        for(var index in branch.authors) {
+        for (var index in branch.authors) {
             if (states.user == branch.authors[index].email) {
                 return true;
             }
@@ -37,6 +37,7 @@ GITCE.overview = function (parameters) {
         serverList:[
             {title:'localhost', url:'/', deletable:false}
         ],
+        configIntervals:{},
 
         update:function () {
             that.servers.empty();
@@ -107,7 +108,11 @@ GITCE.overview = function (parameters) {
         initServer:function (server) {
             var serverContainer = tplServer.clone().appendTo(that.servers);
 
-            serverContainer.find('h2').html(server.title);
+            if (server.deletable) {
+                serverContainer.find('h2').html(server.title + '<a href="#" class="delete-server">x</a>');
+            } else {
+                serverContainer.find('h2').html(server.title);
+            }
 
             $.ajax({
                 url:server.url + 'cgi-bin/list.cgi',
@@ -119,40 +124,98 @@ GITCE.overview = function (parameters) {
             });
         },
 
+        addServer:function (server) {
+            that.serverList.push(server);
+            GITCE.cookieObject('serverList', that.serverList);
+            that.initServer(server);
+        },
+
+        deleteServer:function (serverContainer) {
+            var index, headline, serverName;
+
+            // find out the server-name
+            headline = serverContainer.find('h2');
+            headline.find('a').remove();
+
+            serverName = headline.html();
+
+            for(index in that.serverList) {
+                if (that.serverList[index].title == serverName && that.serverList[index].deletable) {
+                    // remove from serverlist
+                    that.serverList.splice(index, 1);
+
+                    // clear all update-intervals
+                    for(var key in that.configIntervals[serverName]) {
+                        window.clearInterval(that.configIntervals[serverName][key]);
+                    }
+                    that.configIntervals[serverName] = new Array();
+
+                    // remove from gui
+                    serverContainer.remove();
+
+                    break;
+                }
+            }
+
+            GITCE.cookieObject('serverList', that.serverList);
+        },
+
         initConfig:function (name, serverContainer, server) {
             var configContainer = tplConfig.clone().appendTo(serverContainer.find('.configs'));
 
             configContainer.find('h3').html(name);
 
+            // initial and interval-driven update-process
             that.updateConfig.call(that, name, configContainer, server);
-
-            window.setInterval(function () {
+            var configInterval = window.setInterval(function () {
                 that.updateConfig.call(that, name, configContainer, server);
             }, options.refreshTime);
+
+            // save config-Interval for clearing
+            if (that.configIntervals[server] === undefined) {
+                that.configIntervals[server] = new Array();
+            }
+            that.configIntervals[server].push(configInterval);
+
         },
 
         init:function () {
+            // restore configuration
+            var serverList = GITCE.cookieObject('serverList');
+            if (serverList !== null && serverList.length) {
+                that.serverList = serverList;
+            }
+
+            // initalize servers
             that.servers = $('.servers');
 
             for (var index in that.serverList) {
                 that.initServer(that.serverList[index]);
             }
 
+            // bind add-server-event
             $('#add-server').live('submit', function (e) {
+                e.preventDefault();
+
                 var server = {
                     title:$(this).find('#server-title').val(),
                     url:$(this).find('#server-location').val(),
                     deletable:true
                 };
 
-                // TODO nicer
+                // TODO nicer server-validation
                 if (server.title != "" && server.url != "") {
-                    that.serverList.push(server);
-                    that.initServer(server);
+                    that.addServer(server);
                 }
 
-                e.preventDefault();
                 return false;
+            });
+
+            // bind delete-server-event
+            $('.delete-server').live('click', function (e) {
+                e.preventDefault();
+
+                that.deleteServer($(this).parents('.server'));
             });
         }
     };

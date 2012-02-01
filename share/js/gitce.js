@@ -26,6 +26,15 @@ var GITCE = {
         return params;
     },
 
+    cookieObject: function(name, value) {
+        if (arguments.length > 1) {
+            return this.cookie(name, $.toJSON(value));
+        }
+
+        var cookieValue = this.cookie(name);
+        return cookieValue === null ? null : $.parseJSON(cookieValue);
+    },
+
     /**
      * Adapted from jQuery Cookie plugin
      * Copyright (c) 2010 Klaus Hartl (stilbuero.de)

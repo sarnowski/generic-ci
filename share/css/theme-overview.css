@@ -7,6 +7,17 @@
     border-bottom: 1px solid #6F7E87;
 }
 
+.server h2 .delete-server {
+    color: #333;
+    display: none;
+    float: right;
+    text-decoration: none;
+}
+
+.server h2:hover .delete-server {
+    display: block;
+}
+
 .server {
     margin: 20px;
 }
