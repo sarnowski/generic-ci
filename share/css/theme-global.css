@@ -55,7 +55,7 @@ table {
     border-spacing: 0;
 }
 
-/* layout */
+/* global */
 h1 {
     color: #6F7E87;
     background: #C4CED4;
@@ -65,8 +65,33 @@ h1 {
     margin: 0 0 10px;
 }
 
-ul,
-div {
-    font-size: 1.2em;
+/* consoleLog */
+#consoleLog {
+    background: #000;
+    color: #fff;
     margin: 20px;
+    padding: 20px;
+    min-height: 600px;
+}
+
+/* clearfix */
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+.clearfix {
+    display: inline-block;
+}
+
+html[xmlns] .clearfix {
+    display: block;
+}
+
+* html .clearfix {
+    height: 1%;
 }

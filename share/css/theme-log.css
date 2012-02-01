@@ -1,0 +1,14 @@
+#consoleLog {
+    background: #000;
+    color: #fff;
+    font-family: monospace;
+    font-size: 1.6em;
+    height: 800px;
+    line-height: 1.4em;
+    margin: 20px;
+    padding: 20px;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    white-space: pre;
+}
