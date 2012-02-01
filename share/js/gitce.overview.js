@@ -1,10 +1,4 @@
-function d(a) {
-    if (console.info !== undefined) {
-        console.info(a);
-    }
-}
-
-var overview = function (parameters) {
+GITCE.overview = function (parameters) {
     var options = $.extend({
         refreshTime:2000
     }, parameters);
@@ -14,12 +8,12 @@ var overview = function (parameters) {
         '<h4>broken</h4><ul class="branches branches-broken"/>' +
         '<h4>next</h4><ul class="branches branches-next"/>' +
         '</li>');
-    var tplBranch = $('<li class="branch"><span/><a>log</a>')
+    var tplBranch = $('<li class="branch"><span/><a>log</a>');
 
     var that = {
         servers:null,
         serverList:[
-            {name:'localhost', url:'/'},
+            {title:'localhost', url:'/', deletable:false}
         ],
 
         update:function () {
@@ -44,14 +38,14 @@ var overview = function (parameters) {
 
                         branch = tplBranch.clone().appendTo(branchesNext);
                         branch.find('span').text(item['branch']);
-                        branch.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + item['branch'] + '/' + name + '/0');
+                        branch.find('a').remove();
                     }
 
                     for (index in status['broken']) {
                         item = status['broken'][index];
                         branch = tplBranch.clone().appendTo(branchesBroken);
                         branch.find('span').text(item['branch']);
-                        branch.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '/' + item['branch'] + '/0');
+                        branch.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '/' + item['branch'] + '/' + item['number']);
                     }
                 }
             });
@@ -60,7 +54,7 @@ var overview = function (parameters) {
         initServer:function (server) {
             var serverContainer = tplServer.clone().appendTo(that.servers);
 
-            serverContainer.find('h2').html(server.name);
+            serverContainer.find('h2').html(server.title);
 
             $.ajax({
                 url:server.url + 'cgi-bin/list.cgi',
@@ -90,6 +84,23 @@ var overview = function (parameters) {
             for (var index in that.serverList) {
                 that.initServer(that.serverList[index]);
             }
+
+            $('#add-server').live('submit', function (e) {
+                var server = {
+                    title:$(this).find('#server-title').val(),
+                    url:$(this).find('#server-location').val(),
+                    deletable:true
+                };
+
+                // TODO nicer
+                if (server.title != "" && server.url != "") {
+                    that.serverList.push(server);
+                    that.initServer(server);
+                }
+
+                e.preventDefault();
+                return false;
+            });
         }
     };
 

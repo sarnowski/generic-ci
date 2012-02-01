@@ -1,10 +1,4 @@
-function d(a) {
-    if (console.info !== undefined) {
-        console.info(a);
-    }
-}
-
-var consoleLog = function (parameters) {
+GITCE.console = function (parameters) {
     var options = $.extend({
         refreshTime:2000
     }, parameters);

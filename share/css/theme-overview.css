@@ -1,7 +1,13 @@
-.server {
-    margin: 20px;
+/* servers */
+.server h2 {
+    border-bottom: 1px solid #6F7E87;
 }
 
+.server {
+    margin: 20px 20px 40px;
+}
+
+/* configs */
 .server .configs {
     margin: 0 10px;
 }
@@ -29,6 +35,7 @@
     padding: 10px;
 }
 
+/* branches */
 .branches {
     font-size: 1.2em;
     margin: 0 0 0 10px;
@@ -41,4 +48,47 @@
 
 .branch a {
     float: right;
+}
+
+/* add-server */
+#add-server {
+    background: #C4CED4;
+    border-top: 1px solid #6F7E87;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+#add-server div {
+    padding: 10px 20px;
+}
+
+#add-server h2 {
+    color: #6F7E87;
+    display: inline;
+    margin: 0 20px 0 0;
+}
+
+label {
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+form span {
+    display: inline;
+    padding: 0 10px 0 0;
+}
+
+input[type="text"] {
+    border: 1px solid #ccc;
+    font-size: 1.3em;
+    padding: 3px;
+}
+
+input[type="submit"] {
+    background: #ccc;
+    border: 1px solid #6F7E87;
+    cursor: pointer;
+    padding: 3px 10px;
 }
