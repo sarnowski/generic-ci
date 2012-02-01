@@ -4,6 +4,15 @@ gitce - git continuous execution
 A simple shell-based, POSIX compliant continuous integration tool.
 
 
+-- Content
+    * Basic Usage
+    * Trigger
+    * Plugins
+    * Web Interface
+    * Monitor
+    * License
+
+
 
 Basic Usage
 =============================================================================
@@ -48,9 +57,9 @@ the automatic watching of the configuration by creating a ".nowatch" file.
   /etc/gitce/example-config
   /etc/gitce/example-config.nowatch
 
-To manually trigger a configuration, run "gitce run example-config" on your
-shell. Using the same command you can configure a cronly trigger:
-  0 */2 * * * /usr/local/bin/gitce run example-config
+To manually trigger a configuration, run "gitce run-newest example-config" on
+your shell. Using the same command you can configure a cronly trigger:
+  0 */2 * * * /usr/local/bin/gitce run-newest example-config
 
 
 
@@ -72,36 +81,41 @@ Web Interface
 
 gitce provides a simple web interface to track the current state of the build
 server. To use it, you need a CGI capable web server. The following Apache2
-configuration:
+configuration gives an example of how to configure your server (works with
+default Debian "squeeze" Apache2 package).
 
 <VirtualHost *:80>
-	ServerName tobi.cosmo
+	ServerName gitce.example.com
 
 	DocumentRoot /usr/local/share/gitce
-	<Directory />
-		Options FollowSymLinks
-		AllowOverride None
-	</Directory>
-	<Directory /usr/local/share/gitce/>
-		Options Indexes FollowSymLinks MultiViews
-		AllowOverride None
-		Order allow,deny
-		allow from all
-	</Directory>
-
 	ScriptAlias /cgi-bin/ /usr/local/share/gitce/cgi-bin/
-	<Directory "/usr/local/share/gitce/cgi-bin">
-		AllowOverride None
-		Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-		Order allow,deny
-		Allow from all
-	</Directory>
 </VirtualHost>
+
+Access it with your HTML5 capable browser:
+  http://gitce.example.com/
+
 
 WARNING: The web interface is highly exploitable and is not secure in any way
 at the moment. The web interface will not provide any user management by
 itself. Be sure to block any malicous sources. Only run it in your trusted
 internal network or secure it by granting only access to trusted users.
+
+HINT: Use your e-mail addresses as htpasswd users. The web interface will
+compare htpasswd users with the git authors e-mails and can give a
+personalized view.
+
+
+
+Monitor
+=============================================================================
+
+To have a nice monitor setup in your room, have a look at the "monitor"
+directory in the "examples" directory.
+
+Basically, you can access a monitor-optimized page for a configuration via
+web browser. A HTML5 capable browser is required (used with Google Chrome).
+
+  http://gitce.example.com/monitor.html?example-configuration
 
 
 

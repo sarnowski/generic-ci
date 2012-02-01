@@ -9,7 +9,7 @@ for head in $(ls $HEADS); do
 		if [ -f $BUILDS/$head/build/$prev.sha1 ]; then
 			prev_sha1=$(cat $BUILDS/$head/build/$prev.sha1)
 		fi
-		echo "$head running $(cat $BUILDS/$head/build/$current.sha1) $prev_sha1"
+		echo "running $head $current $(cat $BUILDS/$head/build/$current.sha1) $prev_sha1"
 
 		# for broken check
 		current=$(($current - 1))
@@ -22,7 +22,7 @@ for head in $(ls $HEADS); do
 			if [ -f $BUILDS/$head/build/$prev.sha1 ]; then
 				prev_sha1=$(cat $BUILDS/$head/build/$prev.sha1)
 			fi
-			echo "$head broken $(cat $BUILDS/$head/build/$current.sha1) $prev_sha1"
+			echo "broken $head $current $(cat $BUILDS/$head/build/$current.sha1) $prev_sha1"
 		fi
 	fi
 done
