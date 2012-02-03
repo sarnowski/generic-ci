@@ -163,7 +163,7 @@ GITCE.overview = function (parameters) {
         initConfig:function (name, serverContainer, server) {
             var configContainer = tplConfig.clone().appendTo(serverContainer.find('.configs'));
 
-            configContainer.find('h3').html(name);
+            configContainer.find('h3').html($('<a href="/detail.html?server=' + server.url + '&config='+name+'">'+name+'</a>'));
 
             // initial and interval-driven update-process
             that.updateConfig.call(that, name, configContainer, server);

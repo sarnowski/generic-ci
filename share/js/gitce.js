@@ -26,6 +26,10 @@ var GITCE = {
         return params;
     },
 
+    getMachineName: function(name) {
+        return name.toLowerCase().replace(/[^A-Za-z0-9]/, '-');
+    },
+
     cookieObject: function(name, value) {
         if (arguments.length > 1) {
             return this.cookie(name, $.toJSON(value));

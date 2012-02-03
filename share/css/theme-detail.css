@@ -1,0 +1,131 @@
+h2 {
+    border-bottom: 1px solid #6F7E87;
+    font-size: 2em;
+    margin: 20px;
+}
+
+#details {
+    margin: 0 20px 20px;
+    width: 800px;
+}
+
+/* states */
+ul.states {
+    float: left;
+    width: 200px;
+}
+
+h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0 0 10px;
+}
+
+ul.states ul {
+    margin: 0 20px 20px;
+}
+
+ul.states li {
+    padding: 5px;
+    font-size: 1.1em;
+    margin: 0 0 3px;
+}
+
+ul.states .branches li {
+    cursor: pointer;
+}
+
+ul.states li.current {
+    font-weight: bold;
+}
+
+ul.states li.status-broken {
+    background: #faa;
+}
+
+ul.states li.status-ok {
+    background: #ddf;
+}
+
+/* details */
+ul.details {
+    float: right;
+    width: 600px;
+}
+
+ul.details li {
+    display: none;
+}
+
+ul.details li.current {
+    display: block;
+}
+
+.details .branch {
+    margin: 0 0 20px;
+}
+
+h4 {
+    font-size: 1.5em;
+    margin: 0 0 20px;
+}
+
+table {
+    font-size: 1.2em;
+    width: 900px;
+}
+
+table th {
+    background: #eee;
+    text-align: left;
+}
+
+table th,
+table td {
+    padding: 5px;
+}
+
+table td {
+    border-bottom: 1px solid #eee;
+}
+
+table tr.status-broken {
+    background: #faa;
+}
+
+table tr.status-ok {
+    background: #ddf;
+}
+
+table .build {
+    width: 40px;
+}
+
+table .time {
+    width: 200px;
+}
+
+table .status {
+    width: 100px;
+}
+
+table .actions {
+    text-align: right;
+    width: 80px;
+}
+
+table tr.show-all td {
+    padding: 0;
+}
+
+table a.show-all {
+    background: #eee;
+    cursor: pointer;
+    display: block;
+    padding: 5px;
+    text-align: center;
+}
+
+table a.show-all:hover {
+    background: #ddd;
+}
