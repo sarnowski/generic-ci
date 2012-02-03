@@ -1,6 +1,6 @@
 GITCE.detail = function (parameters) {
     var options = $.extend({
-        refreshTime:2000
+        refreshTime:10000
     }, parameters);
 
     var params = $.extend({
@@ -98,13 +98,11 @@ GITCE.detail = function (parameters) {
 
             // show first or current branch
             var active = $('.branches li:first');
-            if (that.currentBranch != null && $('.' + that.currentBranch).length) {
-                active = $('.branches li.' + that.currentBranch);
+            if (that.currentBranch != null && $('.branches li[rel="' + that.currentBranch+'"]').length) {
+                active = $('.branches li[rel="' + that.currentBranch+'"]');
             }
-            if (active) {
-                active.addClass('current');
-                $('.details .' + active.attr('rel')).addClass('current');
-            }
+            active.addClass('current');
+            $('.details .' + active.attr('rel')).addClass('current');
         },
 
         createBranchColumn: function(branchName, buildNo) {
