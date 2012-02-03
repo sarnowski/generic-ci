@@ -1,6 +1,6 @@
 GITCE.detail = function (parameters) {
     var options = $.extend({
-        refreshTime:5000
+        refreshTime:2000
     }, parameters);
 
     var params = $.extend({
@@ -78,48 +78,7 @@ GITCE.detail = function (parameters) {
                 var branchTable = branchContainer.find('table');
                 var latestBuild = that.history[branchName].length - 1;
                 for (var buildNo = latestBuild; buildNo >= 0; buildNo--) {
-                    var branchHistory = that.history[branchName][buildNo];
-                    var branchColumn = tplTableColumn.clone();
-
-                    // calculate date
-                    var date = branchHistory['time'];
-                    if (branchHistory['time'] != '') {
-                        var calcDate = new Date();
-                        calcDate.setTime(branchHistory['time'] * 1000);
-                        date = calcDate.toGMTString();
-                    }
-
-                    // format authors
-                    var authors = '';
-                    for (var index in branchHistory['authors']) {
-                        authors += branchHistory['authors'][index]['name'] + ', ';
-                    }
-                    if (authors != '') {
-                        authors = authors.substr(0, authors.length - 2);
-                    }
-
-                    // set Status
-                    var status = '';
-                    if (branchHistory['result'] == '0') {
-                        status = 'Broken';
-                        branchColumn.addClass('status-broken');
-                    } else if (branchHistory['result'] != '') {
-                        status = 'OK';
-                        branchColumn.addClass('status-ok');
-                    } else if (isPendingBranch(branchName)) {
-                        status = 'Pending';
-                        branchColumn.addClass('status-pending');
-                    }
-
-                    // fill columns
-                    branchColumn.find('.build').html('#' + branchHistory['number']);
-                    branchColumn.find('.time').html(date);
-                    branchColumn.find('.authors').html(authors);
-                    branchColumn.find('.status').html(status);
-                    branchColumn.find('.actions').html($('<a href="/log.html?server='
-                        + params.server + '&config=' + params.config + '/' + branchName + '/' + buildNo + '">show logs</a>'));
-
-                    branchColumn.appendTo(branchTable);
+                    that.createBranchColumn(branchName, buildNo).appendTo(branchTable);
                 }
 
                 // add history table-header and more-column
@@ -148,15 +107,75 @@ GITCE.detail = function (parameters) {
             }
         },
 
-        init:function () {
-            $('h2').html(params.config);
+        createBranchColumn: function(branchName, buildNo) {
+            var branchHistory = that.history[branchName][buildNo];
+            var branchColumn = tplTableColumn.clone();
 
-            // fetch Status, then History, then display it
+            // calculate date
+            var date = branchHistory['time'];
+            if (branchHistory['time'] != '') {
+                var calcDate = new Date();
+                calcDate.setTime(branchHistory['time'] * 1000);
+                date = calcDate.toGMTString();
+            }
+
+            // format authors
+            var authors = '';
+            for (var index in branchHistory['authors']) {
+                authors += branchHistory['authors'][index]['name'] + ', ';
+            }
+            if (authors != '') {
+                authors = authors.substr(0, authors.length - 2);
+            }
+
+            // set Status
+            var status = '';
+            if (branchHistory['result'] == '0') {
+                status = 'Broken';
+                branchColumn.addClass('status-broken');
+            } else if (branchHistory['result'] != '') {
+                status = 'OK';
+                branchColumn.addClass('status-ok');
+            } else if (isPendingBranch(branchName)) {
+                status = 'Pending';
+                branchColumn.addClass('status-pending');
+            }
+
+            // fill columns
+            branchColumn.find('.build').html('#' + branchHistory['number']);
+            branchColumn.find('.time').html(date);
+            branchColumn.find('.authors').html(authors);
+            branchColumn.find('.status').html(status);
+            branchColumn.find('.actions').html($('<a href="/log.html?server='
+                + params.server + '&config=' + params.config + '/' + branchName + '/' + buildNo + '">show logs</a>'));
+
+            return branchColumn;
+        },
+
+        clearView: function() {
+            $('.states .branches li, .details li').remove();
+        },
+
+        updateView: function() {
+            that.status = null;
+            that.history = null;
+
             that.fetchStatus(function () {
                 that.fetchHistory.call(that, function () {
+                    that.clearView();
                     that.buildHistory();
                 });
             });
+        },
+
+        init:function () {
+            $('h2').html(params.config);
+
+            // initialize view and update-interval
+            that.updateView();
+            window.setInterval(function(){
+                that.updateView();
+            }, options.refreshTime);
 
             // bind history show-all event
             $('.states .branches li').live('click', function (e) {

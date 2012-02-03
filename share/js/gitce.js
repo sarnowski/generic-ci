@@ -1,6 +1,6 @@
 var GITCE = {
 
-    debugState:true,
+    debugState:false,
     debug:function d(a) {
         if (!this.debugState) return;
 
