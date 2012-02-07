@@ -62,24 +62,23 @@
     padding: 10px;
 }
 
-.config h4 {
-    font-size: 1.2em;
-    padding: 10px;
-}
-
 /* branches */
 .branches {
     font-size: 1.2em;
-    margin: 0 0 0 10px;
+    margin: 10px 10px 0;
 }
 
 .branch {
-    margin: 2px 0;
-    padding: 3px 10px;
+    margin: 0 0 3px;
+    padding: 5px 10px;
 }
 
 .branch a {
     float: right;
+}
+
+.branches-broken .branch {
+    background: #faa;
 }
 
 /* add-server */

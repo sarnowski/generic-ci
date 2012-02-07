@@ -5,8 +5,8 @@ GITCE.overview = function (parameters) {
 
     var tplServer = $('<li class="server"><h2/><ul class="configs clearfix"></ul>');
     var tplConfig = $('<li class="config"><h3 class="name"/>' +
-        '<h4>broken</h4><ul class="branches branches-broken"/>' +
-        '<h4>pending</h4><ul class="branches branches-next"/>' +
+        '<ul class="branches branches-broken"/>' +
+        '<ul class="branches branches-next"/>' +
         '</li>');
     var tplBranch = $('<li class="branch"><span/><a>log</a>');
 
@@ -69,9 +69,9 @@ GITCE.overview = function (parameters) {
                     }
 
                     if (branchesPending.children().size()) {
-                        branchesPending.prev().show();
+                        branchesPending.show();
                     } else {
-                        branchesPending.prev().hide();
+                        branchesPending.hide();
                     }
 
                     // Broken Branches
@@ -90,9 +90,9 @@ GITCE.overview = function (parameters) {
                     }
 
                     if (branchesBroken.children().size()) {
-                        branchesBroken.prev().show();
+                        branchesBroken.show();
                     } else {
-                        branchesBroken.prev().hide();
+                        branchesBroken.hide();
                     }
 
                     if (broken) {
