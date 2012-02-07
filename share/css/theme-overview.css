@@ -36,7 +36,7 @@
 }
 
 .server .broken h3 {
-    background: #f99;
+    background: #faa;
 }
 
 .server .broken h3 a {
@@ -44,7 +44,7 @@
 }
 
 .server .you-broke-it {
-    background: #fdd;
+    background: #b00;
 }
 
 .config h3 {
