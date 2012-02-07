@@ -86,7 +86,7 @@ GITCE.overview = function (parameters) {
 
                         branchContainer = tplBranch.clone().appendTo(branchesBroken);
                         branchContainer.find('span').text(branch.branch);
-                        branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '/' + branch.branch + '/' + branch.number);
+                        branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '&branch=' + branch.branch + '&build=' + branch.number);
                     }
 
                     if (branchesBroken.children().size()) {

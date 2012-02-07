@@ -145,7 +145,7 @@ GITCE.detail = function (parameters) {
             branchColumn.find('.authors').html(authors);
             branchColumn.find('.status').html(status);
             branchColumn.find('.actions').html($('<a href="/log.html?server='
-                + params.server + '&config=' + params.config + '/' + branchName + '/' + buildNo + '">show logs</a>'));
+                + params.server + '&config=' + params.config + '&branch=' + branchName + '&build=' + buildNo + '">show logs</a>'));
 
             return branchColumn;
         },

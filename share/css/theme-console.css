@@ -1,3 +1,8 @@
+.wrap {
+    padding: 20px;
+}
+
+/* console */
 #console {
     background: #000;
     color: #fff;
@@ -6,7 +11,7 @@
     font-weight: normal;
     height: 800px;
     line-height: 1.4em;
-    margin: 20px;
+    margin: 0 20px 0 0;
     padding: 20px;
     overflow: scroll;
     overflow-x: hidden;
@@ -29,5 +34,24 @@
 
 #console .success {
     color: #3f3;
+    font-weight: bold;
+}
+
+/* history */
+#history {
+    float: right;
+    width: 180px;
+}
+
+#history h2 {
+    margin: 0 0 10px;
+}
+
+#history ul li {
+    padding: 5px 0;
+    font-size: 1.2em;
+}
+
+#history ul li.current {
     font-weight: bold;
 }
