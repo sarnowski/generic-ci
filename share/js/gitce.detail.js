@@ -129,11 +129,12 @@ GITCE.detail = function (parameters) {
             // set Status
             var status = '';
             if (branchHistory['result'] == '0') {
-                status = 'Broken';
-                branchColumn.addClass('status-broken');
-            } else if (branchHistory['result'] != '') {
                 status = 'OK';
                 branchColumn.addClass('status-ok');
+            } else if (branchHistory['result'] != '') {
+                status = 'Broken';
+                branchColumn.addClass('status-broken');
+
             } else if (isPendingBranch(branchName)) {
                 status = 'Pending';
                 branchColumn.addClass('status-pending');
