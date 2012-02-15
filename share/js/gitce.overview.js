@@ -64,9 +64,9 @@ GITCE.overview = function (parameters) {
             }
         },
 
-        updateConfig:function (name, configContainer, server) {
+        updateConfig:function (config, configContainer, server) {
             $.ajax({
-                url:server.url + "cgi-bin/status.cgi?" + name,
+                url:server.url + "cgi-bin/status.cgi?" + config.config,
                 success:function (status) {
                     var index, branch, branchContainer;
 
@@ -80,7 +80,7 @@ GITCE.overview = function (parameters) {
                         branchContainer = tplBranch.clone().appendTo(branchesPending);
                         if (branchHasStatus(status, "running", branch.branch)) {
                             branchContainer.find('a').text(branch.branch);
-                            branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '/' + branch.branch + '/' + branch.number);
+                            branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + config.config + '/' + branch.branch + '/' + branch.number);
                         } else {
                             branchContainer.find('a').text(branch['branchContainer']);
                             branchContainer.find('a').remove();
@@ -106,7 +106,7 @@ GITCE.overview = function (parameters) {
 
                         branchContainer = tplBranch.clone().appendTo(branchesBroken);
                         branchContainer.find('a').text(branch.branch);
-                        branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '&branch=' + branch.branch + '&build=' + branch.number);
+                        branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + config.config + '&branch=' + branch.branch + '&build=' + branch.number);
                     }
 
                     if (branchesBroken.children().size()) {
@@ -185,15 +185,15 @@ GITCE.overview = function (parameters) {
             GITCE.cookieObject('serverList', that.serverList);
         },
 
-        initConfig:function (name, serverContainer, server) {
+        initConfig:function (config, serverContainer, server) {
             var configContainer = tplConfig.clone().appendTo(serverContainer.find('.configs'));
 
-            configContainer.find('h3').html($('<a href="/detail.html?server=' + server.url + '&config='+name+'">'+name+'</a>'));
+            configContainer.find('h3').html($('<a href="/detail.html?server=' + server.url + '&config='+config.config+'">'+config.config+'</a>'));
 
             // initial and interval-driven update-process
-            that.updateConfig.call(that, name, configContainer, server);
+            that.updateConfig.call(that, config, configContainer, server);
             var configInterval = window.setInterval(function () {
-                that.updateConfig.call(that, name, configContainer, server);
+                that.updateConfig.call(that, config, configContainer, server);
             }, options.refreshTime);
 
             // save config-Interval for clearing
