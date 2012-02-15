@@ -1,6 +1,6 @@
 GITCE.detail = function (parameters) {
     var options = $.extend({
-        refreshTime:10000
+        refreshTime:5000
     }, parameters);
 
     var params = $.extend({

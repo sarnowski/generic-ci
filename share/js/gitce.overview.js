@@ -1,6 +1,6 @@
 GITCE.overview = function (parameters) {
     var options = $.extend({
-        refreshTime:2000
+        refreshTime:5000
     }, parameters);
 
     var tplServer = $('<li class="server"><h2/><ul class="configs clearfix"></ul>');
