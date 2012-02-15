@@ -115,5 +115,5 @@
 }
 
 #history ul li.status-pending a {
-    background: #ddf;
+    background: #ddf url(../images/spinner.gif) 120px 10px no-repeat;
 }

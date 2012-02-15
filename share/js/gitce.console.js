@@ -124,16 +124,20 @@ GITCE.console = function (parameters) {
             // initalize console-log
             var consoleLog = $('#console');
 
-            that.updateConsole(consoleLog);
-            window.setInterval(function () {
-                that.updateConsole.call(that, consoleLog);
-            }, options.refreshTime);
-
-            // initalize history
             var historyContainer = $('#history');
             $('h2').text(params.config + ' / ' + params.branch + ' / #' + params.build);
             $('.head a').attr('href', '/detail.html?server=' + params.server + '&config=' + params.config);
-            that.updateHistory(historyContainer.find('ul'));
+            var historyList = historyContainer.find('ul');
+
+            that.updateConsole(consoleLog);
+            that.updateHistory(historyList);
+            window.setInterval(function () {
+                that.updateConsole.call(that, consoleLog);
+                that.updateHistory.call(that, historyList);
+            }, options.refreshTime);
+
+            // initalize history
+
         }
     };
 
