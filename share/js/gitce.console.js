@@ -31,6 +31,8 @@ GITCE.console = function (parameters) {
         ]
     };
 
+    var tplBuild = $('<li><a href="#"><h3/><span class="date"/></a></li>');
+
     var that = {
         highlightText:function (text) {
             var lines = text.split("\n");
@@ -63,24 +65,57 @@ GITCE.console = function (parameters) {
         },
 
         updateHistory:function (historyList) {
+            var nowDay = new Date();
+
             $.ajax({
                 url:params.server + 'cgi-bin/builds.cgi?' + params.config,
                 success:function (history) {
+
                     if (typeof(history[params.branch]) != "undefined") {
                         historyList.empty();
-                        for (var build in history[params.branch]) {
 
-                            var link = $('<a>Build #' + build + '</a>');
-                            link.attr('href', '/log.html?server=' + params.server + '&config='
-                                + params.config + '&branch=' + params.branch + '&build=' + build);
+                        for (var buildNumber in history[params.branch]) {
+                            var build = history[params.branch][buildNumber];
 
-                            if (build == params.build) {
-                                historyList.append($('<li class="current"/>').append(link));
-                            } else {
-                                historyList.append($('<li/>').append(link));
+                            var buildContainer = tplBuild.clone();
+
+                            // title + link
+                            buildContainer.find('h3').html('Build #' + buildNumber);
+                            buildContainer.find('a').attr('href', '/log.html?server=' + params.server + '&config='
+                                + params.config + '&branch=' + params.branch + '&build=' + buildNumber);
+
+                            if (buildNumber == params.build) {
+                                buildContainer.addClass('current');
                             }
+
+                            // status
+                            if (build.result == '0') {
+                                buildContainer.addClass('status-ok');
+                            } else if (build.result != '') {
+                                buildContainer.addClass('status-broken');
+                            } else {
+                                buildContainer.addClass('status-pending');
+                            }
+
+                            // date
+                            var date = build['time'];
+                            if (date != '') {
+                                var calcDate = new Date();
+                                calcDate.setTime(date * 1000);
+
+                                if (calcDate.toDateString() == nowDay.toDateString()) {
+                                    buildContainer.find('span').html('today, ' + calcDate.getHours() + ':' + calcDate.getMinutes());
+                                } else {
+                                    buildContainer.find('span').html(calcDate.toDateString());
+                                }
+
+                                buildContainer.find('a').attr('title', calcDate.toGMTString());
+                            }
+
+                            historyList.prepend(buildContainer);
                         }
                     }
+
                 }
             })
         },
@@ -96,7 +131,8 @@ GITCE.console = function (parameters) {
 
             // initalize history
             var historyContainer = $('#history');
-            historyContainer.find('h2').text(params.config + '/' + params.branch);
+            $('h2').text(params.config + ' / ' + params.branch + ' / #' + params.build);
+            $('.head a').attr('href', '/detail.html?server=' + params.server + '&config=' + params.config);
             that.updateHistory(historyContainer.find('ul'));
         }
     };
