@@ -8,7 +8,7 @@ GITCE.overview = function (parameters) {
         '<ul class="branches branches-broken"/>' +
         '<ul class="branches branches-next"/>' +
         '</li>');
-    var tplBranch = $('<li class="branch"><span/><a>log</a>');
+    var tplBranch = $('<li class="branch"><a/>');
 
     function branchHasStatus(states, status, branch) {
         for (var index in states[status]) {
@@ -76,10 +76,10 @@ GITCE.overview = function (parameters) {
 
                         branchContainer = tplBranch.clone().appendTo(branchesPending);
                         if (branchHasStatus(status, "running", branch.branch)) {
-                            branchContainer.find('span').text(branch.branch + ' *');
+                            branchContainer.find('a').text(branch.branch + ' *');
                             branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '/' + branch.branch + '/' + branch.number);
                         } else {
-                            branchContainer.find('span').text(branch['branchContainer']);
+                            branchContainer.find('a').text(branch['branchContainer']);
                             branchContainer.find('a').remove();
                         }
                     }
@@ -101,7 +101,7 @@ GITCE.overview = function (parameters) {
                         responsible = responsible || branchHasAuthor(status, branch);
 
                         branchContainer = tplBranch.clone().appendTo(branchesBroken);
-                        branchContainer.find('span').text(branch.branch);
+                        branchContainer.find('a').text(branch.branch);
                         branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '&branch=' + branch.branch + '&build=' + branch.number);
                     }
 
@@ -187,15 +187,15 @@ GITCE.overview = function (parameters) {
 
             // initial and interval-driven update-process
             that.updateConfig.call(that, name, configContainer, server);
-            var configInterval = window.setInterval(function () {
-                that.updateConfig.call(that, name, configContainer, server);
-            }, options.refreshTime);
+            //var configInterval = window.setInterval(function () {
+            //    that.updateConfig.call(that, name, configContainer, server);
+            //}, options.refreshTime);
 
             // save config-Interval for clearing
             if (that.configIntervals[server] === undefined) {
                 that.configIntervals[server] = new Array();
             }
-            that.configIntervals[server].push(configInterval);
+            //that.configIntervals[server].push(configInterval);
 
         },
 

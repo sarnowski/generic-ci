@@ -31,7 +31,7 @@
     border: 1px solid #6F7E87;
     float: left;
     margin: 20px 10px 20px 10px;
-    min-height: 84px;
+    min-height: 74px;
     padding: 0 0 10px;
     width: 200px;
 }
@@ -71,15 +71,22 @@
 
 .branch {
     margin: 0 0 3px;
-    padding: 5px 10px;
 }
 
 .branch a {
-    float: right;
+    color: #000;
+    text-decoration: none;
+    display: block;
+    padding: 5px 10px;
 }
 
-.branches-broken .branch {
+.branches-broken .branch a {
     background: #faa;
+}
+
+.branches-next .branch a {
+    background: #C4CED4 url(../images/spinner.gif) 3px 3px no-repeat;
+    padding: 5px 10px 5px 25px;
 }
 
 /* add-server */
