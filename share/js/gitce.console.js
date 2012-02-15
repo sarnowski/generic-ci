@@ -132,6 +132,7 @@ GITCE.console = function (parameters) {
             // initalize history
             var historyContainer = $('#history');
             $('h2').text(params.config + ' / ' + params.branch + ' / #' + params.build);
+            $('.head a').attr('href', '/detail.html?server=' + params.server + '&config=' + params.config);
             that.updateHistory(historyContainer.find('ul'));
         }
     };
