@@ -31,6 +31,8 @@ cp README LICENSE $TMP/usr/local/share/gitce
 mkdir -p $TMP/etc/init.d
 cp initd.sh $TMP/etc/init.d/gitce-watchers
 
+echo $VERSION > $TMP/usr/local/share/gitce/VERSION
+
 # build tarball
 echo "Building tarball..."
 TAR=gitce-$VERSION.tar.gz
