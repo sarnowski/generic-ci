@@ -89,6 +89,10 @@ default Debian "squeeze" Apache2 package).
 
 	DocumentRoot /usr/local/share/gitce
 	ScriptAlias /cgi-bin/ /usr/local/share/gitce/cgi-bin/
+
+	# Enable to allow unified dashboard usage. Be aware of
+	# security implications!
+	#Header add Access-Control-Allow-Origin "*"
 </VirtualHost>
 
 Access it with your HTML5 capable browser:
