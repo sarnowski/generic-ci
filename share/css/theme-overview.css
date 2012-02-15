@@ -63,6 +63,14 @@
     padding: 10px;
 }
 
+.config span {
+    display: block;
+    font-size: 12px;
+    font-style: italic;
+    text-align: center;
+    padding: 15px 0 0;
+}
+
 /* branches */
 .branches {
     font-size: 1.2em;

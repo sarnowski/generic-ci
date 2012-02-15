@@ -7,6 +7,7 @@ GITCE.overview = function (parameters) {
     var tplConfig = $('<li class="config"><h3 class="name"/>' +
         '<ul class="branches branches-broken"/>' +
         '<ul class="branches branches-next"/>' +
+        '<span style="display: none;">nothing pending / broken</span>' +
         '</li>');
     var tplBranch = $('<li class="branch"><a/>');
 
@@ -69,6 +70,8 @@ GITCE.overview = function (parameters) {
                 success:function (status) {
                     var index, branch, branchContainer;
 
+                    var nothingToDo = configContainer.find('span').show();
+
                     // Pending Branches
                     var branchesPending = $('.branches-next', configContainer).empty();
                     for (index in status['next']) {
@@ -86,6 +89,7 @@ GITCE.overview = function (parameters) {
 
                     if (branchesPending.children().size()) {
                         branchesPending.show();
+                        nothingToDo.hide();
                     } else {
                         branchesPending.hide();
                     }
@@ -107,6 +111,7 @@ GITCE.overview = function (parameters) {
 
                     if (branchesBroken.children().size()) {
                         branchesBroken.show();
+                        nothingToDo.hide();
                     } else {
                         branchesBroken.hide();
                     }
