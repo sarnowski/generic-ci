@@ -26,6 +26,17 @@ else
 fi
 
 
+# version
+if [ "$1" = "version" ]; then
+	VERSION_FILE=$GITCE_HOME/share/gitce/VERSION
+	if [ -f $VERSION_FILE ]; then
+		cat $VERSION_FILE
+	else
+		echo "development"
+	fi
+	exit 0
+fi
+
 # basic argument sanitizing
 if [ $# -lt 2 ]; then
 	cat $LIB/help.txt
