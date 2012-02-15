@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. $(pwd)/init.sh
+
 # HTTP HEADER STAT
 
 echo "Content-Type: application/json"
@@ -24,7 +26,18 @@ for config in $(ls /etc/gitce | grep -v ".nowatch"); do
 		echo "     "
 	fi
 
-	echo "\"$config\""
+	ws=$($GITCE workspace $config)
+	owner=$(stat -c "%U" $ws/releases)
+	if [ $(id -un) = "$owner" ]; then
+		releasable="true"
+	else
+		releasable="false"
+	fi
+
+	echo "{"
+	echo "    \"config\": \"$config\","
+	echo "    \"releasable\": $releasable"
+	echo "}"
 done
 echo "]"
 
