@@ -192,15 +192,15 @@ GITCE.overview = function (parameters) {
 
             // initial and interval-driven update-process
             that.updateConfig.call(that, name, configContainer, server);
-            //var configInterval = window.setInterval(function () {
-            //    that.updateConfig.call(that, name, configContainer, server);
-            //}, options.refreshTime);
+            var configInterval = window.setInterval(function () {
+                that.updateConfig.call(that, name, configContainer, server);
+            }, options.refreshTime);
 
             // save config-Interval for clearing
             if (that.configIntervals[server] === undefined) {
                 that.configIntervals[server] = new Array();
             }
-            //that.configIntervals[server].push(configInterval);
+            that.configIntervals[server].push(configInterval);
 
         },
 
