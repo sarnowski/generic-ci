@@ -4,6 +4,8 @@ for branch in $($GIT for-each-ref --format='%(refname)' refs/heads | cut -d'/' -
 		NEW_HEAD=$($GIT show --pretty=oneline $branch | head -1 | cut -d' ' -f1)
 		if [ "$OLD_HEAD" != "$NEW_HEAD" ]; then
 			echo "changed $branch $NEW_HEAD $OLD_HEAD"
+		elif [ -f $RELEASES/$branch ]; then
+			echo "release $branch $(cat $RELEASES/$branch)"
 		fi
 	else
 		NEW_HEAD=$($GIT show --pretty=oneline $branch | head -1 | cut -d' ' -f1)

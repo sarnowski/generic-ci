@@ -49,13 +49,13 @@ else
 fi
 
 # convert to various other packages
-which alien >/dev/null 2>&1
-if [ $? -eq 0 ]; then
-	echo "Building redhat package..."
-	fakeroot alien --to-rpm $TAR >/dev/null
-else
-	echo "Skipping redhat package..."
-fi
+#which alien >/dev/null 2>&1
+#if [ $? -eq 0 ]; then
+#	echo "Building redhat package..."
+#	fakeroot alien --to-rpm $TAR >/dev/null
+#else
+#	echo "Skipping redhat package..."
+#fi
 
 # cleanup
 rm -rf $TMP

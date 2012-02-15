@@ -58,6 +58,9 @@ for branch in $(ls $ws/builds); do
 		echo "        {"
 		echo "            \"number\": \"$number\","
 		echo "            \"commit\": \"$commit\","
+		if [ -f $prefix.exec ]; then
+			echo "            \"exec\": \"$(cat $prefix.exec | sed 's/"/\\"/g')\","
+		fi
 		echo "            \"result\": \"$result\","
 		echo "            \"time\": \"$time\","
 		echo "            \"authors\": [$(git_authors_list $ws $last_commit $commit)]"

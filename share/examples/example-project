@@ -7,6 +7,9 @@ REPOSITORY=
 # which executable to execute for testing
 #TEST_EXECUTABLE=/test.sh
 
+# which executable to execute for releasing
+#RELEASE_EXECUTABLE=/release.sh
+
 # if called via root, use this user
 #BUILD_USER=nobody
 

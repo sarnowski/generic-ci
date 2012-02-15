@@ -41,6 +41,7 @@ fi
 REPO=$WORK_DIR/repository
 BUILDS=$WORK_DIR/builds
 HEADS=$WORK_DIR/heads
+RELEASES=$WORK_DIR/releases
 
 # check for repository
 if [ ! -d $REPO ]; then

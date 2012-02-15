@@ -1,12 +1,16 @@
 BRANCH=$3
+REF=$4
+EXEC=$5
 
 if [ -z "$BRANCH" ]; then
-	panic "Usage:  $0 run $2 <branch> not given"
+	panic "Usage:  $0 run $2 <branch> [ref [exec]]"
 fi
 
 # set up basics
 BRANCH_DIR=$BUILDS/$BRANCH
 mkdir -p $BRANCH_DIR
+
+[ -z "$REF" ] && REF="$BRANCH"
 
 # get the build number
 BUILD_NUMBER_FILE=$BRANCH_DIR/number
@@ -21,6 +25,7 @@ echo $(($BUILD_NUMBER + 1)) > $BUILD_NUMBER_FILE
 BUILD_ID=$BRANCH-$BUILD_NUMBER
 BUILD_DIR=$BRANCH_DIR/build/$BUILD_NUMBER
 BUILD_SHA1=$BUILD_DIR.sha1
+BUILD_EXEC=$BUILD_DIR.exec
 BUILD_RESULT=$BUILD_DIR.result
 mkdir -p $BUILD_DIR
 
@@ -28,8 +33,16 @@ echo "Build $BUILD_ID"
 date
 
 # get the real git hash
-SHA1=$($GIT show --pretty=oneline $BRANCH | head -1 | cut -d' ' -f1)
+SHA1=$($GIT show --pretty=oneline "$REF" | head -1 | cut -d' ' -f1)
+if [ -z "$SHA1" ]; then
+	echo "Failed to resolve ref \"$REF\"!" >&2
+	exit 1
+fi
 echo $SHA1 > $BUILD_SHA1
+echo "Build based on $REF ($SHA1)"
+
+TITLE=$($GIT show --format="%s" "$REF" | head -n 1)
+echo "Title: $TITLE"
 
 # check out files
 echo "Preparing build directory..."
@@ -62,6 +75,10 @@ fi
 
 # run the script
 [ -z "$TEST_EXECUTABLE" ] && TEST_EXECUTABLE=/test.sh
+if [ ! -z "$EXEC" ]; then
+	TEST_EXECUTABLE=$EXEC
+	echo $EXEC > $BUILD_EXEC
+fi
 TEST_BIN=$BUILD_DIR$TEST_EXECUTABLE
 
 if [ -f $TEST_BIN ]; then
