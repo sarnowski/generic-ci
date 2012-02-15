@@ -26,17 +26,20 @@ ul.states ul {
 }
 
 ul.states li {
-    padding: 5px;
     font-size: 1.1em;
     margin: 0 0 3px;
+    padding: 5px;
 }
 
 ul.states .branches li {
+    font-size: 1.1em;
     cursor: pointer;
 }
 
 ul.states li.current {
+    border: 1px solid #000;
     font-weight: bold;
+    padding: 4px;
 }
 
 ul.states li.status-broken {
