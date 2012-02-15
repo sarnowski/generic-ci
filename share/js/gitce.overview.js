@@ -32,6 +32,22 @@ GITCE.overview = function (parameters) {
         return false;
     }
 
+    function isValidServer(server) {
+        if (server.title == "" || server.url == "") {
+            return false;
+        }
+
+        for(var index in that.serverList) {
+            if (that.serverList.hasOwnProperty(index)) {
+                if (server.url == that.serverList[index].url || server.title == that.serverList[index].title) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     var that = {
         servers:null,
         serverList:[
@@ -125,9 +141,13 @@ GITCE.overview = function (parameters) {
         },
 
         addServer:function (server) {
+            if (!isValidServer(server)) return false;
+
             that.serverList.push(server);
             GITCE.cookieObject('serverList', that.serverList);
             that.initServer(server);
+
+            return true;
         },
 
         deleteServer:function (serverContainer) {
@@ -203,10 +223,7 @@ GITCE.overview = function (parameters) {
                     deletable:true
                 };
 
-                // TODO nicer server-validation
-                if (server.title != "" && server.url != "") {
-                    that.addServer(server);
-                }
+                that.addServer(server);
 
                 return false;
             });
