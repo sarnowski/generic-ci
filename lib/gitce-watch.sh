@@ -10,6 +10,7 @@ while [ true ]; do
 	# clean up old branches
 	for branch in $($0 status $2 | grep "deleted" | cut -d' ' -f2); do
 		rm $HEADS/$branch
+		rm -f $RELEASES/$branch
 		echo "Branch $branch deleted."
 	done
 
@@ -51,9 +52,16 @@ while [ true ]; do
 		export GITCE_BUILD_LOG=$BUILD_LOG
 		export GITCE_BUILD_OLD_SHA1=$($0 status $2 | grep "$build " | cut -d' ' -f4)
 
-		echo "Triggering $BUILD_ID..."
 		mkdir -p $(dirname $BUILD_LOG)
-		nohup $0 run $2 $branch 2>&1 | tee $BUILD_LOG
+		if [ -f $RELEASES/$branch ]; then
+			echo "Releasing $BUILD_ID..."
+			REF=$(cat $RELEASES/$branch)
+			nohup $0 release $2 $branch $REF 2>&1 | tee $BUILD_LOG
+			rm $RELEASES/$branch
+		else
+			echo "Testing $BUILD_ID..."
+			nohup $0 run $2 $branch 2>&1 | tee $BUILD_LOG
+		fi
 	else
 		# done, wait a short time period
 		while [ $(date +%M) -eq $LAST_CHECK ]; do
