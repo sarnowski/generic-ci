@@ -41,7 +41,7 @@ fi
 echo $SHA1 > $BUILD_SHA1
 echo "Build based on $REF ($SHA1)"
 
-TITLE=$(git show --format="%s" "$REF" | head -n 1)
+TITLE=$($GIT show --format="%s" "$REF" | head -n 1)
 echo "Title: $TITLE"
 
 # check out files
