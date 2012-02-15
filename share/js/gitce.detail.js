@@ -134,9 +134,8 @@ GITCE.detail = function (parameters) {
             } else if (branchHistory['result'] != '') {
                 status = 'Broken';
                 branchColumn.addClass('status-broken');
-
             } else if (isPendingBranch(branchName)) {
-                status = 'Pending';
+                status = '<img src="/images/spinner.gif"/>';
                 branchColumn.addClass('status-pending');
             }
 

@@ -31,7 +31,7 @@
     border: 1px solid #6F7E87;
     float: left;
     margin: 20px 10px 20px 10px;
-    min-height: 74px;
+    min-height: 69px;
     padding: 0 0 10px;
     width: 200px;
 }
@@ -79,6 +79,10 @@
 
 .branch {
     margin: 0 0 3px;
+}
+
+.branch:last-child {
+    margin: 0;
 }
 
 .branch a {

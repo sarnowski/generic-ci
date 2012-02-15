@@ -79,7 +79,7 @@ GITCE.overview = function (parameters) {
 
                         branchContainer = tplBranch.clone().appendTo(branchesPending);
                         if (branchHasStatus(status, "running", branch.branch)) {
-                            branchContainer.find('a').text(branch.branch + ' *');
+                            branchContainer.find('a').text(branch.branch);
                             branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '/' + branch.branch + '/' + branch.number);
                         } else {
                             branchContainer.find('a').text(branch['branchContainer']);

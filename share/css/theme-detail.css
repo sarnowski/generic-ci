@@ -44,7 +44,15 @@ ul.states li.status-broken {
 }
 
 ul.states li.status-ok {
-    background: #ddf;
+    background: #afa;
+}
+
+ul.states li.status-pending {
+    background: #C4CED4;
+}
+
+ul.states li.state-inactive .branches li {
+    background: #eee;
 }
 
 /* details */
@@ -94,6 +102,10 @@ table tr.status-broken {
 }
 
 table tr.status-ok {
+    background: #afa;
+}
+
+table tr.status-pending {
     background: #ddf;
 }
 
