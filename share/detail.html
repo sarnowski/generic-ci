@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>gitce</title>
+    <link rel="stylesheet" type="text/css" href="css/theme-global.css">
+    <link rel="stylesheet" type="text/css" href="css/theme-detail.css">
+    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/gitce.js"></script>
+    <script type="text/javascript" src="js/gitce.detail.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            GITCE.detail().init();
+        });
+    </script>
+</head>
+<body>
+
+<h1><a href="/">gitce</a></h1>
+
+<h2></h2>
+
+<div id="details" class="clearfix">
+
+    <ul class="states">
+        <li class="state-active">
+            <h3>Active</h3>
+            <ul class="branches">
+            </ul>
+        </li>
+        <li class="state-inactive">
+            <h3>Inactive</h3>
+            <ul class="branches">
+            </ul>
+        </li>
+    </ul>
+
+    <ul class="details">
+    </ul>
+</div>
+
+</body>
+</html>
