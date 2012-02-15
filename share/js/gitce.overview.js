@@ -1,14 +1,15 @@
 GITCE.overview = function (parameters) {
     var options = $.extend({
-        refreshTime:2000
+        refreshTime:5000
     }, parameters);
 
     var tplServer = $('<li class="server"><h2/><ul class="configs clearfix"></ul>');
     var tplConfig = $('<li class="config"><h3 class="name"/>' +
         '<ul class="branches branches-broken"/>' +
         '<ul class="branches branches-next"/>' +
+        '<span style="display: none;">nothing pending / broken</span>' +
         '</li>');
-    var tplBranch = $('<li class="branch"><span/><a>log</a>');
+    var tplBranch = $('<li class="branch"><a/>');
 
     function branchHasStatus(states, status, branch) {
         for (var index in states[status]) {
@@ -32,6 +33,22 @@ GITCE.overview = function (parameters) {
         return false;
     }
 
+    function isValidServer(server) {
+        if (server.title == "" || server.url == "") {
+            return false;
+        }
+
+        for(var index in that.serverList) {
+            if (that.serverList.hasOwnProperty(index)) {
+                if (server.url == that.serverList[index].url || server.title == that.serverList[index].title) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     var that = {
         servers:null,
         serverList:[
@@ -47,11 +64,13 @@ GITCE.overview = function (parameters) {
             }
         },
 
-        updateConfig:function (name, configContainer, server) {
+        updateConfig:function (config, configContainer, server) {
             $.ajax({
-                url:server.url + "cgi-bin/status.cgi?" + name,
+                url:server.url + "cgi-bin/status.cgi?" + config.config,
                 success:function (status) {
                     var index, branch, branchContainer;
+
+                    var nothingToDo = configContainer.find('span').show();
 
                     // Pending Branches
                     var branchesPending = $('.branches-next', configContainer).empty();
@@ -60,16 +79,17 @@ GITCE.overview = function (parameters) {
 
                         branchContainer = tplBranch.clone().appendTo(branchesPending);
                         if (branchHasStatus(status, "running", branch.branch)) {
-                            branchContainer.find('span').text(branch.branch + ' *');
-                            branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '/' + branch.branch + '/' + branch.number);
+                            branchContainer.find('a').text(branch.branch);
+                            branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + config.config + '/' + branch.branch + '/' + branch.number);
                         } else {
-                            branchContainer.find('span').text(branch['branchContainer']);
+                            branchContainer.find('a').text(branch['branchContainer']);
                             branchContainer.find('a').remove();
                         }
                     }
 
                     if (branchesPending.children().size()) {
                         branchesPending.show();
+                        nothingToDo.hide();
                     } else {
                         branchesPending.hide();
                     }
@@ -85,12 +105,13 @@ GITCE.overview = function (parameters) {
                         responsible = responsible || branchHasAuthor(status, branch);
 
                         branchContainer = tplBranch.clone().appendTo(branchesBroken);
-                        branchContainer.find('span').text(branch.branch);
-                        branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + name + '&branch=' + branch.branch + '&build=' + branch.number);
+                        branchContainer.find('a').text(branch.branch);
+                        branchContainer.find('a').attr('href', '/log.html?server=' + server.url + '&config=' + config.config + '&branch=' + branch.branch + '&build=' + branch.number);
                     }
 
                     if (branchesBroken.children().size()) {
                         branchesBroken.show();
+                        nothingToDo.hide();
                     } else {
                         branchesBroken.hide();
                     }
@@ -125,9 +146,13 @@ GITCE.overview = function (parameters) {
         },
 
         addServer:function (server) {
+            if (!isValidServer(server)) return false;
+
             that.serverList.push(server);
             GITCE.cookieObject('serverList', that.serverList);
             that.initServer(server);
+
+            return true;
         },
 
         deleteServer:function (serverContainer) {
@@ -160,15 +185,15 @@ GITCE.overview = function (parameters) {
             GITCE.cookieObject('serverList', that.serverList);
         },
 
-        initConfig:function (name, serverContainer, server) {
+        initConfig:function (config, serverContainer, server) {
             var configContainer = tplConfig.clone().appendTo(serverContainer.find('.configs'));
 
-            configContainer.find('h3').html($('<a href="/detail.html?server=' + server.url + '&config='+name+'">'+name+'</a>'));
+            configContainer.find('h3').html($('<a href="/detail.html?server=' + server.url + '&config='+config.config+'">'+config.config+'</a>'));
 
             // initial and interval-driven update-process
-            that.updateConfig.call(that, name, configContainer, server);
+            that.updateConfig.call(that, config, configContainer, server);
             var configInterval = window.setInterval(function () {
-                that.updateConfig.call(that, name, configContainer, server);
+                that.updateConfig.call(that, config, configContainer, server);
             }, options.refreshTime);
 
             // save config-Interval for clearing
@@ -203,10 +228,7 @@ GITCE.overview = function (parameters) {
                     deletable:true
                 };
 
-                // TODO nicer server-validation
-                if (server.title != "" && server.url != "") {
-                    that.addServer(server);
-                }
+                that.addServer(server);
 
                 return false;
             });

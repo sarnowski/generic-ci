@@ -1,6 +1,6 @@
 GITCE.detail = function (parameters) {
     var options = $.extend({
-        refreshTime:10000
+        refreshTime:5000
     }, parameters);
 
     var params = $.extend({
@@ -134,9 +134,8 @@ GITCE.detail = function (parameters) {
             } else if (branchHistory['result'] != '') {
                 status = 'Broken';
                 branchColumn.addClass('status-broken');
-
             } else if (isPendingBranch(branchName)) {
-                status = 'Pending';
+                status = '<img src="/images/spinner.gif"/>';
                 branchColumn.addClass('status-pending');
             }
 
