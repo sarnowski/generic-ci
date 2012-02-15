@@ -48,7 +48,9 @@ var GITCE = {
             return null;
 
         } else {
-            document.cookie = encodeURIComponent(key) + '=' + encodeURIComponent(value);
+            var date = new Date();
+            date.setTime(date.getTime() + 1000 * 365 * 24 * 60 * 60 * 1000);
+            document.cookie = encodeURIComponent(key) + '=' + encodeURIComponent(value) + '; expires=' + date.toGMTString();
         }
     }
 };
