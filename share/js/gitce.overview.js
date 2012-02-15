@@ -40,12 +40,12 @@ GITCE.overview = function (parameters) {
         for(var index in that.serverList) {
             if (that.serverList.hasOwnProperty(index)) {
                 if (server.url == that.serverList[index].url || server.title == that.serverList[index].title) {
-                    return true;
+                    return false;
                 }
             }
         }
 
-        return false;
+        return true;
     }
 
     var that = {
