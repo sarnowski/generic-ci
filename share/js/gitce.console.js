@@ -86,7 +86,12 @@ GITCE.console = function (parameters) {
                                 buildContainer = tplBuild.clone();
 
                             // title + link
-                            buildContainer.find('h3').html('Build #' + buildNumber);
+                            if (build.hasOwnProperty('exec')) {
+                                buildContainer.find('h3').html('Build #' + buildNumber + '*');
+                            } else {
+                                buildContainer.find('h3').html('Build #' + buildNumber);
+                            }
+
                             buildContainer.find('a').attr('href', '/log.html?server=' + params.server + '&config='
                                 + params.config + '&branch=' + params.branch + '&build=' + buildNumber);
 
