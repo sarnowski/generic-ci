@@ -31,9 +31,12 @@ GITCE.console = function (parameters) {
         ]
     };
 
+    var tplSpinner = $('<img src="/images/spinner.gif"/>');
     var tplBuild = $('<li><a href="#"><h3/><span class="date"/></a></li>');
 
     var that = {
+        autoscroll: false,
+
         highlightText:function (text) {
             var lines = text.split("\n");
             for (var index in lines) {
@@ -60,6 +63,9 @@ GITCE.console = function (parameters) {
                 url:params.server + 'cgi-bin/log.cgi?' + params.config + '/' + params.branch + '/' + params.build,
                 success:function (response) {
                     consoleLog.html(that.highlightText(response));
+                    if (that.autoscroll) {
+                        consoleLog.append(tplSpinner.clone()).scrollTop(100 * 1000000);
+                    }
                 }
             });
         },
@@ -75,9 +81,9 @@ GITCE.console = function (parameters) {
                         historyList.empty();
 
                         for (var buildNumber in history[params.branch]) {
-                            var build = history[params.branch][buildNumber];
-
-                            var buildContainer = tplBuild.clone();
+                            var isCurrent = false,
+                                build = history[params.branch][buildNumber],
+                                buildContainer = tplBuild.clone();
 
                             // title + link
                             buildContainer.find('h3').html('Build #' + buildNumber);
@@ -86,6 +92,7 @@ GITCE.console = function (parameters) {
 
                             if (buildNumber == params.build) {
                                 buildContainer.addClass('current');
+                                isCurrent = true;
                             }
 
                             // status
@@ -95,6 +102,10 @@ GITCE.console = function (parameters) {
                                 buildContainer.addClass('status-broken');
                             } else {
                                 buildContainer.addClass('status-pending');
+
+                                if (isCurrent) {
+                                    that.autoscroll = true;
+                                }
                             }
 
                             // date
