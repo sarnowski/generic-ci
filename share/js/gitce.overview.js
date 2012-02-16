@@ -204,6 +204,17 @@ GITCE.overview = function (parameters) {
 
         },
 
+        fetchVersion: function(serverUrl, callback){
+            $.ajax({
+                url: serverUrl + 'cgi-bin/version.cgi',
+                success: function(version) {
+                    if (typeof(callback) == 'function') {
+                        callback.call(that, version);
+                    }
+                }
+            });
+        },
+
         init:function () {
             // restore configuration
             var serverList = GITCE.cookieObject('serverList');
@@ -238,6 +249,12 @@ GITCE.overview = function (parameters) {
                 e.preventDefault();
 
                 that.deleteServer($(this).parents('.server'));
+            });
+
+            // display version
+            that.fetchVersion('/', function(version) {
+                console.log(version);
+                $('.version').text(version);
             });
         }
     };

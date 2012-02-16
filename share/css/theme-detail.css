@@ -42,7 +42,7 @@ ul.states ul {
 ul.states li {
     font-size: 1.1em;
     margin: 0 0 3px;
-    padding: 5px;
+    padding: 7px;
 }
 
 ul.states .branches li {
@@ -53,7 +53,7 @@ ul.states .branches li {
 ul.states li.current {
     border: 1px solid #000;
     font-weight: bold;
-    padding: 4px;
+    padding: 6px;
 }
 
 ul.states li.status-broken {
@@ -65,7 +65,7 @@ ul.states li.status-ok {
 }
 
 ul.states li.status-pending {
-    background: #C4CED4;
+    background: #ff5;
 }
 
 ul.states li.state-inactive .branches li {
@@ -123,7 +123,7 @@ table tr.status-ok {
 }
 
 table tr.status-pending {
-    background: #ddf;
+    background: #ff5;
 }
 
 table .build {

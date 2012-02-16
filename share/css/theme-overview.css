@@ -31,7 +31,7 @@
     border: 1px solid #6F7E87;
     float: left;
     margin: 20px 10px 20px 10px;
-    min-height: 69px;
+    min-height: 73px;
     padding: 0 0 10px;
     width: 200px;
 }
@@ -89,7 +89,7 @@
     color: #000;
     text-decoration: none;
     display: block;
-    padding: 5px 10px;
+    padding: 7px 10px;
 }
 
 .branches-broken .branch a {
@@ -97,8 +97,8 @@
 }
 
 .branches-next .branch a {
-    background: #C4CED4 url(../images/spinner.gif) 3px 3px no-repeat;
-    padding: 5px 10px 5px 25px;
+    background: #ff5 url(../images/spinner.gif) 158px 5px no-repeat;
+    padding: 7px 25px 7px 10px;
 }
 
 /* add-server */
@@ -141,7 +141,16 @@ input[type="text"] {
 
 input[type="submit"] {
     background: #ccc;
-    border: 1px solid #666;
+    color: #6F7E87;
+    border: 1px solid #6F7E87;
     cursor: pointer;
     padding: 3px 10px;
+}
+
+/* version */
+.version {
+    color: #6F7E87;
+    font-size: 12px;
+    float: right;
+    margin: 20px;
 }
