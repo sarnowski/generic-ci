@@ -65,7 +65,7 @@ ul.states li.status-ok {
 }
 
 ul.states li.status-pending {
-    background: #ff5;
+    background: #ff5 url(../images/spinner.gif) 120px 5px no-repeat;
 }
 
 ul.states li.state-inactive .branches li {

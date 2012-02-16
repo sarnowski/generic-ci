@@ -5,8 +5,8 @@ GITCE.overview = function (parameters) {
 
     var tplServer = $('<li class="server"><h2/><ul class="configs clearfix"></ul>');
     var tplConfig = $('<li class="config"><h3 class="name"/>' +
-        '<ul class="branches branches-broken"/>' +
         '<ul class="branches branches-next"/>' +
+        '<ul class="branches branches-broken"/>' +
         '<span style="display: none;">nothing pending / broken</span>' +
         '</li>');
     var tplBranch = $('<li class="branch"><a/>');
