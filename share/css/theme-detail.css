@@ -130,6 +130,10 @@ table tr.status-pending {
     background: #ff5;
 }
 
+table .exec {
+    width: 20px;
+}
+
 table .build {
     width: 40px;
 }

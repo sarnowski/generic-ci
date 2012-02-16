@@ -10,8 +10,8 @@ GITCE.detail = function (parameters) {
 
     var tplReleaseButton = $('<a class="release" href="#">Release</a>');
     var tplBranch = $('<li class="branch"><h4/><table></table>');
-    var tplTableHeader = $('<tr><th>Build</th><th>Time</th><th>Authors</th><th>Status</th><th></th></tr>');
-    var tplTableColumn = $('<tr><td class="build"/><td class="time"/><td class="authors"/><td class="status"/><td class="actions"/></tr>');
+    var tplTableHeader = $('<tr><th></th><th>Build</th><th>Time</th><th>Authors</th><th>Status</th><th></th></tr>');
+    var tplTableColumn = $('<tr><td class="exec"/><td class="build"/><td class="time"/><td class="authors"/><td class="status"/><td class="actions"/></tr>');
     var tplTableShow = $('<tr class="show-all"><td colspan="5"><a href="#" class="show-all">show all</a></td></tr>');
 
     function isActiveBranch(name) {
@@ -110,6 +110,12 @@ GITCE.detail = function (parameters) {
             var branchHistory = that.history[branchName][buildNo];
             var branchColumn = tplTableColumn.clone();
 
+            // set exec
+            var exec = "";
+            if (branchHistory.hasOwnProperty('exec')) {
+                exec = 'X';
+            }
+
             // calculate date
             var date = branchHistory['time'];
             if (branchHistory['time'] != '') {
@@ -141,6 +147,7 @@ GITCE.detail = function (parameters) {
             }
 
             // fill columns
+            branchColumn.find('.exec').html(exec);
             branchColumn.find('.build').html('#' + branchHistory['number']);
             branchColumn.find('.time').html(date);
             branchColumn.find('.authors').html(authors);
