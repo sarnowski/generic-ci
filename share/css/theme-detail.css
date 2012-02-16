@@ -5,8 +5,8 @@ h2 {
 }
 
 .release {
-    background: #9f9;
-    border: 1px solid #ccc;
+    background: #C4CED4;
+    border: 1px solid #6F7E87;
     color: #000;
     display: block;
     float: right;
@@ -15,7 +15,7 @@ h2 {
 }
 
 .release:hover {
-    border: 1px solid #000;
+    border: 1px solid #ccc;
 }
 
 #details {
