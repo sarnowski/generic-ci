@@ -114,6 +114,10 @@ table td {
     border-bottom: 1px solid #eee;
 }
 
+body .branch table tr:hover {
+    background: #fff;
+}
+
 table tr.status-broken {
     background: #faa;
 }
