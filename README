@@ -1,7 +1,9 @@
 gitce - git continuous execution
 =============================================================================
 
-A simple shell-based, POSIX compliant continuous integration tool.
+A simple shell-based continuous integration tool.
+
+   https://www.new-thoughts.org/gitce/
 
 
 -- Content
