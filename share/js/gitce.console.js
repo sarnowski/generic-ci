@@ -135,9 +135,6 @@ GITCE.console = function (parameters) {
                 that.updateConsole.call(that, consoleLog);
                 that.updateHistory.call(that, historyList);
             }, options.refreshTime);
-
-            // initalize history
-
         }
     };
 

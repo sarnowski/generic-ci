@@ -8,6 +8,7 @@ GITCE.detail = function (parameters) {
         config:'master'
     }, GITCE.getQueryParams());
 
+    var tplReleaseButton = $('<a class="release" href="#">Release</a>');
     var tplBranch = $('<li class="branch"><h4/><table></table>');
     var tplTableHeader = $('<tr><th>Build</th><th>Time</th><th>Authors</th><th>Status</th><th></th></tr>');
     var tplTableColumn = $('<tr><td class="build"/><td class="time"/><td class="authors"/><td class="status"/><td class="actions"/></tr>');
@@ -166,6 +167,25 @@ GITCE.detail = function (parameters) {
             });
         },
 
+        initReleaseButton: function() {
+            $.ajax({
+                url: params.server + 'cgi-bin/list.cgi?' + params.config,
+                success: function(configs) {
+
+                    for(var index in configs) {
+                        if (configs.hasOwnProperty(index) && configs[index].config == params.config) {
+
+                            if (configs[index].releasable) {
+                                $('h2').append(tplReleaseButton.clone());
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            })
+        },
+
         init:function () {
             $('h2').html(params.config);
 
@@ -187,6 +207,25 @@ GITCE.detail = function (parameters) {
                     .addClass('current');
 
                 $(this).addClass('current');
+
+                return false;
+            });
+
+            // initalize release-button
+            that.initReleaseButton();
+            $('.release').live('click', function(e){
+                e.preventDefault();
+
+                $.ajax({
+                    url: params.server + 'cgi-bin/release.cgi?' + params.config + '/master/HEAD',
+                    success: function(data) {
+                        var message = data.result;
+                        if (data.error) {
+                            message += " with message: " + data.error;
+                        }
+                        alert(message);
+                    }
+                });
 
                 return false;
             });
