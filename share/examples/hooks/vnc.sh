@@ -1,4 +1,16 @@
 #!/bin/sh
+
+# it is nessecary to configure the DISPLAY variable
+# add something like this to your configuration
+#  export DISPLAY=:10
+
+# you have to configure the vnc server before running
+# the plugin.
+#  1. set a password for your vnc server
+#  2. cleanup your xstartup file
+#  3. you may need to allow your host, easiest way is
+#     to add "xhost +" to your xstartup file
+
 if [ -z "$DISPLAY" ]; then
 	exit 0
 fi
