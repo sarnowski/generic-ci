@@ -63,22 +63,16 @@ if [ $R -ne 0 ]; then
 
 
 	# send to authors
-	sent=
-	git --git-dir=$GITCE_REPOSITORY log --format="%ae|%an|%s" $GITCE_BUILD_OLD_SHA1..$GITCE_BUILD_SHA1 | while read line; do
+	git --git-dir=$GITCE_REPOSITORY log --format="%ae|%an|%s" $GITCE_BUILD_OLD_SHA1..$GITCE_BUILD_SHA1 | sort | uniq | while read line; do
 		email=$(echo $line | cut -d'|' -f1)
 		name=$(echo $line | cut -d'|' -f2)
 		message=$(echo $line | cut -d'|' -f3-)
-
-		if [ ! -z "$(echo $sent | grep "$email")" ]; then
-			continue
-		fi
 
 		echo "Sending E-Mail to $name <$email>..."
 		cat $BODY \
 			| sed "s/%NAME%/$name/g" \
 			| sed "s/%BUILD_ID%/$GITCE_BUILD_ID/g" \
 			| mail -s "$TITLE" $email
-		sent="$sent $email "
 
 		# remember authors for later success message
 		if [ ! -f $FAILAUTHORS ] || [ -z "$(grep $email $FAILAUTHORS)" ]; then
