@@ -1,4 +1,4 @@
-for head in $(ls $HEADS); do
+for head in $(ls $BUILDS); do
 	next=$(cat $BUILDS/$head/number)
 	current=$(($next - 1))
 
