@@ -112,7 +112,7 @@ $GITCE current $CONFIG | grep "running" | while read line; do
 	echo "            \"branch\": \"$branch\","
 	echo "            \"number\": \"$number\","
 	echo "            \"commit\": \"$commit\","
-	echo "            \"message\": \"$(git --git-dir=$ws/repository log --format='%ar: (%h) %s' "$commit^..$commit")\","
+	echo "            \"message\": \"$(git --git-dir=$ws/repository log --format='%ar: (%h) %s' "$commit^..$commit" | head -n 1 | sed 's/\"/\\\"/g')\","
 	echo "            \"authors\": [$(git_authors_list $ws $from $commit)]"
 	echo "        }"
 done
