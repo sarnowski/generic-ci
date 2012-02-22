@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. $(pwd)/init.sh
+. $(dirname $0)/init.sh
 
 # HTTP HEADER STAT
 

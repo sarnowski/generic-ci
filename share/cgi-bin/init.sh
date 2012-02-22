@@ -1,8 +1,8 @@
 # find gitce command
-if [ -e $(pwd)/../../gitce ]; then
-	GITCE=$(pwd)/../../gitce
-elif [ -e $(pwd)/../../gitce ]; then
-	GITCE=$(pwd)/../../bin/gitce
+if [ -f $(dirname $0)/../../gitce ]; then
+	GITCE=$(dirname $0)/../../gitce
+elif [ -f /usr/local/bin/gitce ]; then
+	GITCE=/usr/local/bin/gitce
 else
 	echo "Cannot find gitce command!" >&2
 	exit 1

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. $(pwd)/init.sh
+. $(dirname $0)/init.sh
 
 # check for the configuration parameter
 if [ -z "$QUERY_STRING" ]; then
