@@ -14,7 +14,7 @@ echo
 first=1
 
 echo "["
-for config in $(ls /etc/gitce | grep -v ".nowatch"); do
+for config in $(ls /etc/gitce); do
 	if [ -d /etc/gitce/$config ]; then
 		continue
 	fi

@@ -1,7 +1,3 @@
-if [ -f $CONFIG_DIR/$CONFIG.nowatch ]; then
-	exit 1
-fi
-
 while [ true ]; do
 	# update repository
 	$0 update $2
@@ -58,7 +54,7 @@ while [ true ]; do
 			REF=$(cat $RELEASES/$branch)
 			nohup $0 release $2 $branch $REF 2>&1 | tee $BUILD_LOG
 			rm $RELEASES/$branch
-		else
+		elif [ "$AUTO_RUN" != "no" ]; then
 			echo "Testing $BUILD_ID..."
 			nohup $0 run $2 $branch 2>&1 | tee $BUILD_LOG
 		fi

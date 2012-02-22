@@ -13,6 +13,9 @@ REPOSITORY=
 # if called via root, use this user
 #BUILD_USER=nobody
 
+# if the watcher should build on every change (yes/no)
+#AUTO_RUN=yes
+
 # where to store all build related stuff
 #WORK_DIR=
 
