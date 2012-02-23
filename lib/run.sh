@@ -69,6 +69,7 @@ echo $$ > $BUILD_PID
 SHA1=$($GIT show --pretty=oneline "$REF" | head -1 | cut -d' ' -f1)
 if [ -z "$SHA1" ]; then
 	echo "Failed to resolve ref \"$REF\"!" >&2
+	echo "100" > $BUILD_RESULT
 	exit 1
 fi
 echo $SHA1 > $BUILD_SHA1
