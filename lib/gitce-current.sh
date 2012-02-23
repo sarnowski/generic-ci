@@ -3,7 +3,7 @@ for head in $(ls $BUILDS); do
 	current=$(($next - 1))
 
 	# currently running?
-	if [ ! -f $BUILDS/$head/build/$current.result ]; then
+	if [ -f $BUILDS/$head/build/$current.sha1 ] && [ ! -f $BUILDS/$head/build/$current.result ]; then
 		prev=$(($current - 1))
 		prev_sha1=""
 		if [ -f $BUILDS/$head/build/$prev.sha1 ]; then
