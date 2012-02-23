@@ -14,8 +14,8 @@ echo
 first=1
 
 echo "["
-for config in $(ls /etc/gitce); do
-	if [ -d /etc/gitce/$config ]; then
+for config in $(ls $CONF); do
+	if [ -d $CONF/$config ]; then
 		continue
 	fi
 
@@ -26,8 +26,7 @@ for config in $(ls /etc/gitce); do
 		echo "     "
 	fi
 
-	ws=$($GITCE workspace $config)
-	owner=$(stat -c "%U" $ws/releases)
+	owner=$(stat -c "%U" $WORKS/$config/releases)
 	if [ $(id -un) = "$owner" ]; then
 		releasable="true"
 	else

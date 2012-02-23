@@ -10,8 +10,7 @@ fi
 CONFIG=$QUERY_STRING
 
 # basic var
-export ws=$($GITCE workspace $CONFIG)
-
+export ws=$WORKS/$CONFIG
 
 # HTTP HEADER STAT
 
@@ -41,12 +40,10 @@ for branch in $(ls $ws/builds); do
 	while [ $number -lt $next_number ]; do
 		prefix="$ws/builds/$branch/build/$number"
 
-		[ ! -f $prefix.sha1 ] && continue
-
-		commit=$(cat $prefix.sha1)
+		commit=$(cat $prefix/sha1)
 		result=
-		[ -f $prefix.result ] && result=$(cat $prefix.result)
-		time=$(stat -c %Y $prefix.sha1)
+		[ -f $prefix/result ] && result=$(cat $prefix/result)
+		time=$(stat -c %Y $prefix/sha1)
 
 		if [ $first_build -eq 0 ]; then
 			echo "    ,"
@@ -55,12 +52,17 @@ for branch in $(ls $ws/builds); do
 			echo "     "
 		fi
 
+		release=
+		if [ -f $prefix/release ]; then
+			release="true"
+		else
+			release="false"
+		fi
+
 		echo "        {"
 		echo "            \"number\": \"$number\","
 		echo "            \"commit\": \"$commit\","
-		if [ -f $prefix.exec ]; then
-			echo "            \"exec\": \"$(cat $prefix.exec | sed 's/"/\\"/g')\","
-		fi
+		echo "            \"release\": $release,"
 		echo "            \"result\": \"$result\","
 		echo "            \"time\": \"$time\","
 		echo "            \"authors\": [$(git_authors_list $ws $last_commit $commit)]"

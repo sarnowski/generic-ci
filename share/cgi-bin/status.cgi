@@ -20,7 +20,7 @@ fi
 CONFIG=$QUERY_STRING
 
 # basic var
-export ws=$($GITCE workspace $CONFIG)
+export ws=$WORKS/$CONFIG
 
 # general output
 echo "{"
@@ -29,11 +29,28 @@ echo "{"
 echo "    \"user\": \"$REMOTE_USER\","
 
 # output next builds
-echo "    \"next\": ["
+echo "    \"branches\": ["
 first=1
-$GITCE status $CONFIG | grep -v "deleted" | while read line; do
+$GITCE status $CONFIG | while read line; do
+	status=$(echo $line | awk '{print $1}')
 	branch=$(echo $line | awk '{print $2}')
-	commit=$(echo $line | awk '{print $3}')
+	action=$(echo $line | awk '{print $3}')
+	number=$(echo $line | awk '{print $4}')
+	running=$(echo $line | awk '{print $5}')
+
+	if [ -z "$running" ]; then
+		running="false"
+	else
+		running="true"
+	fi
+
+
+	commit=$(cat $ws/builds/$branch/build/$number/sha1)
+	if [ -f $ws/builds/$branch/build/$(($number - 1))/sha1 ]; then
+		from=$(cat $ws/builds/$branch/build/$(($number - 1))/sha1)
+	fi
+
+	message=$(git --git-dir=$ws/repository log --format='%ar: (%h) %s' "$commit^..$commit" | head -n 1)
 
 	if [ $first -eq 0 ]; then
 		echo "        ,"
@@ -43,76 +60,12 @@ $GITCE status $CONFIG | grep -v "deleted" | while read line; do
 
 	echo "        {"
 	echo "            \"branch\": \"$branch\","
-	echo "            \"commit\": \"$commit\""
-	echo "        }"
-done
-echo "    ],"
-
-# output active branches
-echo "    \"active\": ["
-first=1
-ls $ws/heads | while read head; do
-	commit=$(cat $ws/heads/$head)
-	number=$(($(cat $ws/builds/$head/number) - 1))
-
-	if [ $first -eq 0 ]; then
-		echo "        ,"
-	else
-		first=0
-	fi
-
-	echo "        {"
-	echo "            \"branch\": \"$head\","
+	echo "            \"status\": \"$status\","
+	echo "            \"action\": \"$action\","
+	echo "            \"number\": $number,"
+	echo "            \"running\": $running,"
 	echo "            \"commit\": \"$commit\","
-	echo "            \"number\": \"$number\""
-	echo "        }"
-done
-echo "    ],"
-
-# output broken branches
-echo "    \"broken\": ["
-first=1
-$GITCE current $CONFIG | grep "broken" | while read line; do
-	branch=$(echo $line | awk '{print $2}')
-	number=$(echo $line | awk '{print $3}')
-	commit=$(echo $line | awk '{print $4}')
-	from=$(echo $line | awk '{print $5}')
-
-	if [ $first -eq 0 ]; then
-		echo "        ,"
-	else
-		first=0
-	fi
-
-	echo "        {"
-	echo "            \"branch\": \"$branch\","
-	echo "            \"number\": \"$number\","
-	echo "            \"commit\": \"$commit\","
-	echo "            \"authors\": [$(git_authors_list $ws $from $commit)]"
-	echo "        }"
-done
-echo "    ],"
-
-# output currently running branch
-echo "    \"running\": ["
-first=1
-$GITCE current $CONFIG | grep "running" | while read line; do
-	branch=$(echo $line | awk '{print $2}')
-	number=$(echo $line | awk '{print $3}')
-	commit=$(echo $line | awk '{print $4}')
-	from=$(echo $line | awk '{print $5}')
-
-	if [ $first -eq 0 ]; then
-		echo "        ,"
-	else
-		first=0
-	fi
-
-	echo "        {"
-	echo "            \"branch\": \"$branch\","
-	echo "            \"number\": \"$number\","
-	echo "            \"commit\": \"$commit\","
-	echo "            \"message\": \"$(git --git-dir=$ws/repository log --format='%ar: (%h) %s' "$commit^..$commit" | head -n 1 | sed 's/\"/\\\"/g')\","
+	echo "            \"message\": \"$(echo $message | sed 's/\"/\\\"/g')\","
 	echo "            \"authors\": [$(git_authors_list $ws $from $commit)]"
 	echo "        }"
 done

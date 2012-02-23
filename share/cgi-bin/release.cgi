@@ -24,8 +24,13 @@ config=$(echo $RELEASE | cut -d'/' -f1)
 branch=$(echo $RELEASE | cut -d'/' -f2)
 ref=$(echo $RELEASE | cut -d'/' -f3)
 
+if [ -z "$branch" ] || [ -z "$ref" ]; then
+	echo '{"result":null,"error":"missing parameters"}'
+	exit 1
+fi
+
 # check release dir
-ws=$($GITCE workspace $config)
+ws=$WORKS/$config
 owner=$(stat -c "%U" $ws/releases)
 if [ $(id -un) != "$owner" ]; then
 	echo '{"result":null,"error":"releases dir does not exist or does not match user"}'
@@ -33,5 +38,9 @@ if [ $(id -un) != "$owner" ]; then
 fi
 
 # schedule release
-result=$($GITCE schedule-release $config $branch $ref | sed 's/"/\\"/g')
-echo "{\"result\":\"$result\",\"error\":null}"
+error=$($GITCE release $config $branch $ref | sed 's/"/\\"/g')
+if [ $? -eq 0 ]; then
+	echo "{\"result\":\"Release scheduled.\",\"error\":null}"
+else
+	echo "{\"result\":null,\"error\":\"$(echo $error | sed 's/"/\\"g')\"}"
+fi

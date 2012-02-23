@@ -24,8 +24,11 @@ config=$(echo $BUILD | cut -d'/' -f1)
 branch=$(echo $BUILD | cut -d'/' -f2)
 number=$(echo $BUILD | cut -d'/' -f3)
 
-# get workspace
-ws=$($GITCE workspace $config)
+ws=$WORKS/$config
+log=$ws/builds/$branch/build/$number/log
 
-# give out log file
-cat $ws/builds/$branch/build/$number.log
+if [ -f $log ]; then
+	cat $log
+else
+	echo "Log file not found."
+fi

@@ -1,12 +1,12 @@
-# find gitce command
-if [ -f $(dirname $0)/../../gitce ]; then
-	GITCE=$(dirname $0)/../../gitce
-elif [ -f /usr/local/bin/gitce ]; then
-	GITCE=/usr/local/bin/gitce
-else
-	echo "Cannot find gitce command!" >&2
+GITCE=/usr/local/bin/gitce
+
+if [ ! -f $GITCE ]; then
+	echo "No gitce installed for server usage." >&2
 	exit 1
 fi
+
+CONF=/etc/gitce
+WORKS=/var/lib/gitce
 
 # helper functions
 # git_authos /dir/to/repo.git from_sha1 to_sha1
