@@ -1,5 +1,5 @@
-gitce.iml
-*.idea
+/gitce.iml
+/.idea
 *.deb
 *.tar.gz
 *.rpm
