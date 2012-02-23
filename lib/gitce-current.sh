@@ -15,7 +15,7 @@ for head in $(ls $BUILDS); do
 		current=$(($current - 1))
 	fi
 
-	if [ -f $BUILDS/$head/build/$current.result ]; then
+	if [ -f $BUILDS/$head/build/$current.result ] && [ -f $HEADS/$head ]; then
 		if [ $(cat $BUILDS/$head/build/$current.result) -ne 0 ]; then
 			prev=$(($current - 1))
 			prev_sha1=""
