@@ -81,6 +81,9 @@ if [ ! -z "$EXEC" ]; then
 fi
 TEST_BIN=$BUILD_DIR$TEST_EXECUTABLE
 
+# info output about environment
+export
+
 if [ -f $TEST_BIN ]; then
 	if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
 		echo "Running build script $TEST_BIN as $BUILD_USER..."
