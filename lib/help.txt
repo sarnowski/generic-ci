@@ -1,8 +1,0 @@
-Usage:  gitce <command> <configuration> [arguments]
-
-Commands:
-  run    - run the specified branch
-           gitce run <configuration> <branch>
-
-  watch  - watch the repository for changes and verify them
-           gitce watch <configuration>

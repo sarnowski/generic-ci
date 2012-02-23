@@ -1,16 +1,22 @@
+# Usage: [--release] [branch [ref]]
+
+# check for release flag
+if [ "$3" = "--release" ]; then
+	release=1
+	shift
+else
+	release=0
+fi
+
 BRANCH=$3
 REF=$4
-EXEC=$5
 
-if [ -z "$BRANCH" ]; then
-	panic "Usage:  $0 run $2 <branch> [ref [exec]]"
-fi
+[ -z "$BRANCH" ] && BRANCH="master"
+[ -z "$REF" ] && REF="$BRANCH"
 
 # set up basics
 BRANCH_DIR=$BUILDS/$BRANCH
 mkdir -p $BRANCH_DIR
-
-[ -z "$REF" ] && REF="$BRANCH"
 
 # get the build number
 BUILD_NUMBER_FILE=$BRANCH_DIR/number
@@ -24,13 +30,40 @@ echo $(($BUILD_NUMBER + 1)) > $BUILD_NUMBER_FILE
 # set up working directory
 BUILD_ID=$BRANCH-$BUILD_NUMBER
 BUILD_DIR=$BRANCH_DIR/build/$BUILD_NUMBER
-BUILD_SHA1=$BUILD_DIR.sha1
-BUILD_EXEC=$BUILD_DIR.exec
-BUILD_RESULT=$BUILD_DIR.result
-mkdir -p $BUILD_DIR
+BUILD_WORK_DIR=$BUILD_DIR/work
+BUILD_SHA1=$BUILD_DIR/sha1
+BUILD_COMMAND=$BUILD_DIR/command
+BUILD_PID=$BUILD_DIR/pid
+BUILD_RESULT=$BUILD_DIR/result
+BUILD_RELEASE=$release
 
-echo "Build $BUILD_ID"
+mkdir -p $BUILD_DIR $BUILD_WORK_DIR
+
+# basic informations
+if [ $release -eq 1 ]; then
+	echo "Release $BUILD_ID"
+else
+	echo "Test $BUILD_ID"
+fi
 date
+
+# mark releases
+if [ $release -eq 1 ]; then
+	touch $BUILD_DIR/release
+fi
+
+# store command
+if [ $release -eq 1 ]; then
+	COMMAND=$RELEASE_COMMAND
+	[ -z "$COMMAND" ] && COMMAND="./release.sh"
+else
+	COMMAND=$TEST_COMMAND
+	[ -z "$COMMAND" ] && COMMAND="./test.sh"
+fi
+echo $COMMAND > $BUILD_COMMAND
+
+# store pid
+echo $$ > $BUILD_PID
 
 # get the real git hash
 SHA1=$($GIT show --pretty=oneline "$REF" | head -1 | cut -d' ' -f1)
@@ -41,27 +74,30 @@ fi
 echo $SHA1 > $BUILD_SHA1
 echo "Build based on $REF ($SHA1)"
 
+# readable informations
 TITLE=$($GIT show --format="%s" "$REF" | head -n 1)
 echo "Title: $TITLE"
 
 # check out files
 echo "Preparing build directory..."
-$GIT archive --format=tar $SHA1 | tar x -C $BUILD_DIR
+$GIT archive --format=tar $SHA1 | tar x -C $BUILD_WORK_DIR
 
 # publish some variables about the build
+export GITCE_CONF=$CONF
 export GITCE_CONFIG=$CONFIG
-export GITCE_CONFIG_DIR=$WORK_DIR
-export GITCE_REPOSITORY=$REPO
+export GITCE_REPOSITORY=$REPOSITORY
 export GITCE_BRANCH=$BRANCH
 export GITCE_BRANCH_DIR=$BRANCH_DIR
 export GITCE_BUILD_ID=$BUILD_ID
 export GITCE_BUILD_NUMBER=$BUILD_NUMBER
 export GITCE_BUILD_SHA1=$SHA1
 export GITCE_BUILD_DIR=$BUILD_DIR
+export GITCE_BUILD_WORK_DIR=$BUILD_WORK_DIR
 export GITCE_BUILD_USER=$BUILD_USER
+export GITCE_BUILD_COMMAND=$BUILD_COMMAND
 
 # trigger pre hooks
-TRIGGER_PRE_DIR=$CONFIG_DIR/$CONFIG-pre.d
+TRIGGER_PRE_DIR=$CONF/$CONFIG-pre.d
 export GITCE_PHASE="pre"
 if [ -d $TRIGGER_PRE_DIR ]; then
 	for trigger in $(ls $TRIGGER_PRE_DIR); do
@@ -73,33 +109,21 @@ if [ -d $TRIGGER_PRE_DIR ]; then
 	done
 fi
 
-# run the script
-[ -z "$TEST_EXECUTABLE" ] && TEST_EXECUTABLE=/test.sh
-if [ ! -z "$EXEC" ]; then
-	TEST_EXECUTABLE=$EXEC
-	echo $EXEC > $BUILD_EXEC
-fi
-TEST_BIN=$BUILD_DIR$TEST_EXECUTABLE
-
-# info output about environment
+# run the command
+export GITCE_PHASE="build"
 export
+cd $BUILD_WORK_DIR
 
-if [ -f $TEST_BIN ]; then
-	if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
-		echo "Running build script $TEST_BIN as $BUILD_USER..."
-		chown -R $BUILD_USER $BUILD_DIR
-		su -p -c "$TEST_BIN" $BUILD_USER
-		RESULT=$?
-	else
-		echo "Running build script $TEST_BIN..."
-		$TEST_BIN
-		RESULT=$?
-	fi
+if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
+	echo "Running build command $COMMAND as $BUILD_USER..."
+	chown -R $BUILD_USER $BUILD_WORK_DIR
+	su -p -c "$COMMAND" $BUILD_USER
+	RESULT=$?
 else
-	echo "$TEST_BIN not found!" >&2
-	RESULT=100
+	echo "Running build command $COMMAND..."
+	$COMMAND
+	RESULT=$?
 fi
-
 
 # the result
 echo $RESULT > $BUILD_RESULT
@@ -108,7 +132,7 @@ echo "Return code: $RESULT"
 export GITCE_BUILD_RESULT=$RESULT
 
 # trigger post hooks
-TRIGGER_POST_DIR=$CONFIG_DIR/$CONFIG-post.d
+TRIGGER_POST_DIR=$CONF/$CONFIG-post.d
 export GITCE_PHASE="post"
 if [ -d $TRIGGER_POST_DIR ]; then
 	for trigger in $(ls $TRIGGER_POST_DIR); do

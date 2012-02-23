@@ -1,55 +1,114 @@
 #!/bin/sh
 
-# search for library path
-if [ -z "$GITCE_HOME" ]; then
-	if [ -z "$(echo $0 | grep '/')" ] || [ "$0" = "/usr/local/bin/gitce" ]; then
-		# assume we're called through the PATH
-		GITCE_HOME=/usr/local
-	else
-		GITCE_HOME=$(dirname $0)
-	fi
-fi
-
-if [ -f $GITCE_HOME/lib/init.sh ]; then
-	LIB=$GITCE_HOME/lib
-elif [ -f $GITCE_HOME/lib/gitce/init.sh ]; then
-	LIB=$GITCE_HOME/lib/gitce
-elif [ -f $GITCE_HOME/../lib/init.sh ]; then
-	GITCE_HOME=$(dirname $GITCE_HOME)
-	LIB=$GITCE_HOME/lib
-elif [ -f $GITCE_HOME/../lib/gitce/init.sh ]; then
-	GITCE_HOME=$(dirname $GITCE_HOME)
-	LIB=$GITCE_HOME/lib/gitce
-else
-	echo "GITCE_HOME[$GITCE_HOME] not found!" >&2
+panic() {
+	echo $* >&2
 	exit 1
+}
+
+# locate base paths
+if [ "$0" = "gitce" ] && [ -z "$GITCE_HOME"] || [ "$0" = "/usr/local/bin/gitce" ] && [ -z "$GITCE_HOME" ]; then
+	GITCE=/usr/local/bin/gitce
+
+	LIB=/usr/local/lib/gitce
+	SHARE=/usr/local/share/gitce
+	DOC=/usr/local/doc/gitce
+else
+	if [ ! -z "$GITCE_HOME" ]; then
+		prefix=$GITCE_HOME
+	else
+		prefix=$(dirname $0)
+	fi
+
+	GITCE=$prefix/gitce
+
+	LIB=$prefix/lib
+	SHARE=$prefix/share
+	DOC=$prefix/doc
 fi
 
+# locate config paths
+if [ "$(id -u)" = 0 ] || [ -z "$HOME" ]; then
+	CONF=/etc/gitce
+	WORKS=/var/lib/gitce
+	LOGS=/var/log/gitce
+else
+	CONF=$HOME/.gitce
+	WORKS=$CONF/works
+	LOGS=$CONF/logs
+fi
 
 # version
 if [ "$1" = "version" ]; then
-	VERSION_FILE=$GITCE_HOME/share/gitce/VERSION
-	if [ -f $VERSION_FILE ]; then
-		cat $VERSION_FILE
+	version_file=$DOC/VERSION
+	if [ -f $version_file ]; then
+		cat $version_file
 	else
 		echo "development"
 	fi
 	exit 0
 fi
 
+# list configs
+if [ "$1" = "configs" ]; then
+	for entry in $(ls $CONF); do
+		if [ -f $CONF/$entry ]; then
+			echo $entry
+		fi
+	done
+	exit 0
+fi
+
 # basic argument sanitizing
-if [ $# -lt 2 ]; then
-	cat $LIB/help.txt
+if [ $# -eq 0 ]; then
+	echo "gitce - git continuous execution"
+	echo
+	echo "Find more help under http://www.new-thoughts.org/gitce/"
+	echo
+	echo
+	cat $DOC/LICENSE
 	exit 1
 fi
 
-# run the requested command
-COMMAND=$1
-COMMAND_SCRIPT=$LIB/gitce-$COMMAND.sh
-if [ -f $COMMAND_SCRIPT ]; then
-	. $LIB/init.sh
-	. $COMMAND_SCRIPT $*
-else
-	echo "Command $COMMAND not found!" >&2
+if [ $# -lt 2 ]; then
+	echo "Usage:  $0 <command> <configuration>" >&2
 	exit 1
 fi
+
+# check the requested command
+COMMAND=$1
+command_script=$LIB/$COMMAND.sh
+if [ ! -f $command_script ]; then
+	echo "Command $COMMAND not found!"
+fi
+
+# load the configuration
+CONFIG=$2
+config_file=$CONF/$CONFIG
+if [ ! -f $config_file ]; then
+	panic "Configuration $CONFIG not found!"
+fi
+. $config_file
+
+# sanitize configuration
+if [ -z "$SOURCE" ]; then
+	panic "SOURCE not set in $CONF/$CONFIG!"
+fi
+
+# set up more base paths
+WORK=$WORKS/$CONFIG
+
+REPOSITORY=$WORK/repository
+BUILDS=$WORK/builds
+HEADS=$WORK/heads
+RELEASES=$WORK/releases
+
+mkdir -p $WORK $BUILDS $HEADS $RELEASES
+
+# check for repository and clone on demand
+if [ ! -d $REPOSITORY ]; then
+	git clone --mirror $SOURCE $REPOSITORY || exit $?
+fi
+GIT="git --git-dir=$REPOSITORY"
+
+# finally run the command
+. $command_script

@@ -2,23 +2,16 @@
 
 # where to get the source from
 # e.g. git@github.com:sarnowski/gitce.git
-REPOSITORY=
+SOURCE=
 
 # which executable to execute for testing
-#TEST_EXECUTABLE=/test.sh
+#TEST_COMMAND=/test.sh
 
 # which executable to execute for releasing
-#RELEASE_EXECUTABLE=/release.sh
+#RELEASE_COMMAND=/release.sh
 
 # if called via root, use this user
 #BUILD_USER=nobody
 
-# if the watcher should build on every change (yes/no)
-#AUTO_RUN=yes
-
-# where to store all build related stuff
-#WORK_DIR=
-
-# which git executable to use
-#GIT_BIN=git
-
+# if the watcher should test on every change (yes/no)
+#RUN_TESTS=yes

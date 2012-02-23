@@ -24,7 +24,7 @@ case $1 in
 				[ ! -f $CONFIG_DIR/$config ] && continue
 
 				echo "    * $config"
-				mkdir -p $LOG_DIR/$(dirname $config)
+				mkdir -p $LOG_DIR
 				nohup /usr/local/bin/gitce watch $config >> $LOG_DIR/$config.log 2>&1 &
 			done
 			exit 0
