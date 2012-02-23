@@ -15,17 +15,19 @@ for branch in $(ls $RELEASES); do
 	echo "release $branch $(cat $RELEASES/$branch)"
 done
 
-for branch in $($GIT for-each-ref --format='%(refname)' refs/heads | cut -d'/' -f3-); do
-	if [ ! -f $RELEASES/$branch ]; then
-		if [ -f $HEADS/$branch ]; then
-			OLD_HEAD=$(cat $HEADS/$branch)
-			NEW_HEAD=$($GIT show --pretty=oneline $branch | head -1 | cut -d' ' -f1)
-			if [ "$OLD_HEAD" != "$NEW_HEAD" ]; then
-				echo "build $branch $NEW_HEAD $OLD_HEAD"
+if [ "$RUN_TESTS" != "no" ]; then
+	for branch in $($GIT for-each-ref --format='%(refname)' refs/heads | cut -d'/' -f3-); do
+		if [ ! -f $RELEASES/$branch ]; then
+			if [ -f $HEADS/$branch ]; then
+				OLD_HEAD=$(cat $HEADS/$branch)
+				NEW_HEAD=$($GIT show --pretty=oneline $branch | head -1 | cut -d' ' -f1)
+				if [ "$OLD_HEAD" != "$NEW_HEAD" ]; then
+					echo "build $branch $NEW_HEAD $OLD_HEAD"
+				fi
+			else
+				NEW_HEAD=$($GIT show --pretty=oneline $branch | head -1 | cut -d' ' -f1)
+				echo "build $branch $NEW_HEAD"
 			fi
-		else
-			NEW_HEAD=$($GIT show --pretty=oneline $branch | head -1 | cut -d' ' -f1)
-			echo "build $branch $NEW_HEAD"
 		fi
-	fi
-done
+	done
+fi

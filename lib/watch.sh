@@ -49,7 +49,7 @@ while [ true ]; do
 	fi
 
 	# check if we do normal builds
-	if [ "$AUTO_RUN" = "no" ] && [ "$action" != "release" ]; then
+	if [ "$RUN_TESTS" = "no" ] && [ "$action" != "release" ]; then
 		continue
 	fi
 
