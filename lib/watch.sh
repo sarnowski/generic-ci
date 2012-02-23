@@ -80,7 +80,7 @@ while [ true ]; do
 
 		nohup $GITCE run $CONFIG --release $branch $release_ref 2>&1 | tee $BUILD_LOG
 
-		rm $RELEASES/$release
+		rm $RELEASES/$branch
 
 	elif [ "$action" = "build" ]; then
 		echo "Testing $BUILD_ID..."
