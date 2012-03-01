@@ -97,6 +97,11 @@ export GITCE_BUILD_WORK_DIR=$BUILD_WORK_DIR
 export GITCE_BUILD_USER=$BUILD_USER
 export GITCE_BUILD_COMMAND=$BUILD_COMMAND
 
+# set up some variables, su does not set up for us
+export HOME=$(grep "^$BUILD_USER:" /etc/passwd | cut -d':' -f6)
+export USER=$BUILD_USER
+export LOGNAME=$BUILD_USER
+
 # trigger pre hooks
 TRIGGER_PRE_DIR=$CONF/$CONFIG-pre.d
 export GITCE_PHASE="pre"
