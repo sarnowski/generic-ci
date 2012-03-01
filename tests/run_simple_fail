@@ -1,0 +1,18 @@
+#!/bin/sh
+CONFIG=$1
+SOURCE=$2
+
+GIT="git --git-dir=$SOURCE/.git"
+
+# create and commit a failing test script
+cd $SOURCE
+cat > test.sh << "EOF"
+#!/bin/sh
+exit 10
+EOF
+$GIT commit -m "fail the test" test.sh
+
+# run it, should be failing!
+$GITCE run $CONFIG && exit 1
+
+exit 0
