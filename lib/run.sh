@@ -102,6 +102,7 @@ if [ ! -z "$BUILD_USER" ]; then
 	export HOME=$(grep "^$BUILD_USER:" /etc/passwd | cut -d':' -f6)
 	export USER=$BUILD_USER
 	export LOGNAME=$BUILD_USER
+	echo "Resetting environment for $USER to home $HOME"
 fi
 
 # trigger pre hooks
