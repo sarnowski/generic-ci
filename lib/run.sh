@@ -96,9 +96,10 @@ export GITCE_BUILD_DIR=$BUILD_DIR
 export GITCE_BUILD_WORK_DIR=$BUILD_WORK_DIR
 export GITCE_BUILD_USER=$BUILD_USER
 export GITCE_BUILD_COMMAND=$BUILD_COMMAND
+export GITCE_PHASE="init"
 
 # set up some variables, su does not set up for us
-if [ ! -z "$BUILD_USER" ]; then
+if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
 	export HOME=$(grep "^$BUILD_USER:" /etc/passwd | cut -d':' -f6)
 	export USER=$BUILD_USER
 	export LOGNAME=$BUILD_USER
