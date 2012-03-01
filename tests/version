@@ -1,0 +1,2 @@
+#!/bin/sh
+[ "development" = "$($GITCE version)" ] || exit 1

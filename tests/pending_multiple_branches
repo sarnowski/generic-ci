@@ -1,0 +1,17 @@
+#!/bin/sh
+CONFIG=$1
+SOURCE=$2
+
+GIT="git --git-dir=$SOURCE/.git"
+
+# create a second branch
+$GIT branch testbranch
+
+# two lines, since we have two branches now which are untested
+[ $($GITCE pending $CONFIG | wc -l) -eq 2 ] || exit 1
+
+# both should be named explicitly
+[ ! -z "$($GITCE pending $CONFIG | grep "build master ")" ] || exit 2
+[ ! -z "$($GITCE pending $CONFIG | grep "build testbranch ")" ] || exit 3
+
+exit 0

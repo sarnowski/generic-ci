@@ -106,7 +106,7 @@ mkdir -p $WORK $BUILDS $HEADS $RELEASES
 
 # check for repository and clone on demand
 if [ ! -d $REPOSITORY ]; then
-	git clone --mirror $SOURCE $REPOSITORY || exit $?
+	git clone --mirror $SOURCE $REPOSITORY >/dev/null || exit $?
 fi
 GIT="git --git-dir=$REPOSITORY"
 

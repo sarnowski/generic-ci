@@ -3,3 +3,4 @@
 *.deb
 *.tar.gz
 *.rpm
+/test-*

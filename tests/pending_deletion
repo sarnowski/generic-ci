@@ -1,0 +1,24 @@
+#!/bin/sh
+CONFIG=$1
+SOURCE=$2
+
+GIT="git --git-dir=$SOURCE/.git"
+ls -l $SOURCE
+
+# create a branch
+$GIT branch testbranch
+
+# build the branches
+$GITCE run $CONFIG testbranch
+
+# now delete the branch
+$GIT branch -d testbranch
+
+# update gitce
+$GITCE update $CONFIG
+
+# now there should be only one line, mentioning the deletion
+[ $($GITCE pending $CONFIG | wc -l) -eq 2 ] || exit 1
+[ ! -z "$($GITCE pending $CONFIG | grep "delete testbranch")" ] || exit 2
+
+exit 0

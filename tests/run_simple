@@ -1,0 +1,5 @@
+#!/bin/sh
+CONFIG=$1
+
+$GITCE run $CONFIG
+exit $?

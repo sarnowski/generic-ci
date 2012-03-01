@@ -1,0 +1,10 @@
+#!/bin/sh
+CONFIG=$1
+
+# only one line, since we only have a simpe master
+[ $($GITCE pending $CONFIG | wc -l) -eq 1 ] || exit 1
+
+# this one line should be a mark to build the master
+[ ! -z "$($GITCE pending $CONFIG | grep "^build master ")" ] || exit 2
+
+exit 0
