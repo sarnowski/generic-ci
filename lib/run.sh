@@ -81,7 +81,7 @@ echo "Title: $TITLE"
 
 # check out files
 echo "Preparing build directory..."
-$GIT archive --format=tar $SHA1 | tar x -C $BUILD_WORK_DIR
+$GIT archive --format=tar $SHA1 | tar -xf- -C $BUILD_WORK_DIR
 
 # publish some variables about the build
 export GITCE_CONF=$CONF
