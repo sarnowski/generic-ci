@@ -27,9 +27,9 @@ cp -r lib $TMP/usr/local/lib/gitce
 mkdir -p $TMP/usr/local/share
 cp -r share $TMP/usr/local/share/gitce
 
-mkdir -p $TMP/usr/local/doc
-cp -r doc $TMP/usr/local/doc/gitce
-cp README $TMP/usr/local/doc/gitce
+mkdir -p $TMP/usr/local/share/doc
+cp -r doc $TMP/usr/local/share/doc/gitce
+cp README $TMP/usr/local/share/doc/gitce
 
 mkdir -p $TMP/etc/init.d
 cp initd.sh $TMP/etc/init.d/gitce-watchers

@@ -11,7 +11,7 @@ if [ "$0" = "gitce" ] && [ -z "$GITCE_HOME"] || [ "$0" = "/usr/local/bin/gitce" 
 
 	LIB=/usr/local/lib/gitce
 	SHARE=/usr/local/share/gitce
-	DOC=/usr/local/doc/gitce
+	DOC=/usr/local/share/doc/gitce
 else
 	if [ ! -z "$GITCE_HOME" ]; then
 		prefix=$GITCE_HOME
