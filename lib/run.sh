@@ -127,7 +127,11 @@ cd $BUILD_WORK_DIR
 if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
 	echo "Running build command $COMMAND as $BUILD_USER..."
 	chown -R $BUILD_USER $BUILD_WORK_DIR
-	su -p -c "$COMMAND" $BUILD_USER
+	if [ "$(uname)" = "OpenBSD" ]; then
+		su $BUILD_USER -c "$COMMAND"
+	else
+		su -p -c "$COMMAND" $BUILD_USER
+	fi
 	RESULT=$?
 else
 	echo "Running build command $COMMAND..."
