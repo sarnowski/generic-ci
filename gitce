@@ -27,7 +27,7 @@ else
 fi
 
 # locate config paths
-if [ "$(id -u)" = 0 ] || [ -z "$HOME" ]; then
+if [ "$(id -u)" = 0 ] || [ -z "$HOME" ] || [ "$GITCE_GLOBAL" = "yes" ]; then
 	CONF=/etc/gitce
 	WORKS=/var/lib/gitce
 	LOGS=/var/log/gitce

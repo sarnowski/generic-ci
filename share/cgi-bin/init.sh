@@ -1,3 +1,5 @@
+export GITCE_GLOBAL="yes"
+
 GITCE=/usr/local/bin/gitce
 
 if [ ! -f $GITCE ]; then
