@@ -10,10 +10,10 @@
 SOURCE=
 
 # which executable to execute for testing
-#TEST_COMMAND=/test.sh
+#TEST_COMMAND=./test.sh
 
 # which executable to execute for releasing
-#RELEASE_COMMAND=/release.sh
+#RELEASE_COMMAND=./release.sh
 
 # if called via root, use this user
 #BUILD_USER=nobody
@@ -27,7 +27,7 @@ SOURCE=
 #
 
 # vnc
-#PRE="$PRE /usr/local/share/examples/hooks/vnc.sh"
+#PRE="$PRE /usr/local/share/examples/gitce/hooks/vnc.sh"
 
 
 #
@@ -35,10 +35,10 @@ SOURCE=
 #
 
 # vnc
-#POST="$POST /usr/local/share/examples/hooks/vnc.sh"
+#POST="$POST /usr/local/share/examples/gitce/hooks/vnc.sh"
 
 # mailing - send mails on fail etc.
-#POST="$POST /usr/local/share/examples/hooks/mail.sh"
+#POST="$POST /usr/local/share/examples/gitce/hooks/mail.sh"
 
 # cleanup
-#POST="$POST /usr/local/share/examples/hooks/cleanup.sh"
+#POST="$POST /usr/local/share/examples/gitce/hooks/cleanup.sh"
