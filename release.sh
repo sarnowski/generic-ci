@@ -31,10 +31,7 @@ cp README $TMP/usr/local/share/doc/gitce
 mkdir -p $TMP/usr/local/share/examples
 cp -r examples $TMP/usr/local/share/examples/gitce
 
-mkdir -p $TMP/etc/init.d
-cp initd.sh $TMP/etc/init.d/gitce-watchers
-
-echo $VERSION > $TMP/usr/local/share/gitce/VERSION
+echo $VERSION > $TMP/usr/local/share/doc/gitce/VERSION
 
 # build tarball
 echo "Building tarball..."

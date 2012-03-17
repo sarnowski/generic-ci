@@ -3,4 +3,4 @@
 *.deb
 *.tar.gz
 *.rpm
-/test-*
+/test-*.log

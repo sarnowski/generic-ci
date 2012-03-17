@@ -35,15 +35,15 @@ EOF
 
 	# execute the test
 	cd $h
-	tests/$t $config /tmp/$config >test-$t 2>&1
+	tests/$t $config /tmp/$config >test-$t.log 2>&1
 	result=$?
 
 	if [ $result -eq 0 ]; then
 		echo "OK    $t"
-		rm test-$t
+		rm test-$t.log
 	else
-		echo "FAIL  $t  (output: test-$t)"
-		echo "Return Code: $result" >> test-$t
+		echo "Return Code: $result" >> test-$t.log
+		echo "FAIL  $t  (output: test-$t.log)"
 		failed=$(($failed + 1))
 	fi
 

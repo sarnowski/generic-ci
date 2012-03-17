@@ -1,0 +1,17 @@
+#!/bin/sh
+CONFIG=$1
+
+$GITCE watch $CONFIG
+
+if [ "$($GITCE status $CONFIG)" != "ok master active 0 " ]; then
+	exit 1
+fi
+
+
+$GITCE watch $CONFIG
+
+if [ "$($GITCE status $CONFIG)" != "ok master active 0 " ]; then
+	exit 1
+fi
+
+exit 0
