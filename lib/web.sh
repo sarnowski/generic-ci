@@ -9,7 +9,7 @@ filesize() {
 		echo 0
 		return
 	fi
-	if [ "$(uname)" = "OpenBSD" ]; then
+	if [ ! -z "$(uname | grep -i "BSD")" ]; then
 		stat -f "%z" $1
 	else
 		stat -s $1
