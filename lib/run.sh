@@ -107,17 +107,10 @@ if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
 fi
 
 # trigger pre hooks
-TRIGGER_PRE_DIR=$CONF/$CONFIG-pre.d
 export GITCE_PHASE="pre"
-if [ -d $TRIGGER_PRE_DIR ]; then
-	for trigger in $(ls $TRIGGER_PRE_DIR); do
-		if [ -d $TRIGGER_PRE_DIR/$trigger ]; then
-			$TRIGGER_PRE_DIR/$trigger/trigger.sh
-		else
-			$TRIGGER_PRE_DIR/$trigger
-		fi
-	done
-fi
+for hook in "$PRE"; do
+	$hook
+done
 
 # run the command
 export GITCE_PHASE="build"
@@ -146,17 +139,10 @@ echo "Return code: $RESULT"
 export GITCE_BUILD_RESULT=$RESULT
 
 # trigger post hooks
-TRIGGER_POST_DIR=$CONF/$CONFIG-post.d
 export GITCE_PHASE="post"
-if [ -d $TRIGGER_POST_DIR ]; then
-	for trigger in $(ls $TRIGGER_POST_DIR); do
-		if [ -d $TRIGGER_POST_DIR/$trigger ]; then
-			$TRIGGER_POST_DIR/$trigger/trigger.sh
-		else
-			$TRIGGER_POST_DIR/$trigger
-		fi
-	done
-fi
+for hook in "$POST"; do
+	$hook
+done
 
 # for logging
 date

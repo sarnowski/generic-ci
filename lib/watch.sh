@@ -73,7 +73,7 @@ if [ "$action" = "release" ]; then
 
 	release_ref=$(cat $RELEASES/$branch)
 
-	nohup $GITCE run $CONFIG --release $branch $release_ref 2>&1 > $BUILD_LOG
+	nohup $GITCE run $CONFIG --release $branch $release_ref > $BUILD_LOG 2>&1
 
 	rm $RELEASES/$branch
 	logger -p "daemon.info" "$CONFIG/$BUILD_ID released."
@@ -81,7 +81,7 @@ if [ "$action" = "release" ]; then
 elif [ "$action" = "build" ]; then
 	logger -p "daemon.info" "Starting to test $CONFIG/$BUILD_ID..."
 
-	nohup $GITCE run $CONFIG $branch 2>&1 > $BUILD_LOG
+	nohup $GITCE run $CONFIG $branch > $BUILD_LOG 2>&1
 
 	logger -p "daemon.info" "$CONFIG/$BUILD_ID tested."
 fi

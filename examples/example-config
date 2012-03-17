@@ -1,4 +1,9 @@
 # this file's name is the unique project's name
+#
+
+#
+# BASIC SETUP
+#
 
 # where to get the source from
 # e.g. git@github.com:sarnowski/gitce.git
@@ -15,3 +20,25 @@ SOURCE=
 
 # if the watcher should test on every change (yes/no)
 #RUN_TESTS=yes
+
+
+#
+# HOOKS PRE
+#
+
+# vnc
+#PRE="$PRE /usr/local/share/examples/hooks/vnc.sh"
+
+
+#
+# HOOKS POST
+#
+
+# vnc
+#POST="$POST /usr/local/share/examples/hooks/vnc.sh"
+
+# mailing - send mails on fail etc.
+#POST="$POST /usr/local/share/examples/hooks/mail.sh"
+
+# cleanup
+#POST="$POST /usr/local/share/examples/hooks/cleanup.sh"
