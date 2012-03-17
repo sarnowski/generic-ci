@@ -24,9 +24,6 @@ cp gitce $TMP/usr/local/bin
 mkdir -p $TMP/usr/local/lib
 cp -r lib $TMP/usr/local/lib/gitce
 
-mkdir -p $TMP/usr/local/share
-cp -r share $TMP/usr/local/share/gitce
-
 mkdir -p $TMP/usr/local/share/doc
 cp -r doc $TMP/usr/local/share/doc/gitce
 cp README $TMP/usr/local/share/doc/gitce
