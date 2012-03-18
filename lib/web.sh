@@ -192,6 +192,58 @@ cat >> $WEB/index.html << "EOF"
 </html>
 EOF
 
+
+#
+# MONITOR
+#
+status="ok"
+if [ ! -z "$($GENCI status $CONFIG | grep "broken" | grep -v "inactive")" ]; then
+	status="broken"
+fi
+cat > $WEB/monitor.html << "EOF"
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>generic-ci monitor</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="refresh" content="5">
+		<style type="text/css">
+			* {
+				margin: 0;
+				border: 0;
+				padding: 0;
+			}
+			.ok {
+				background-color: #0d0;
+			}
+			.broken {
+				background-color: red;
+			}
+			body {
+				width: 100%;
+			}
+			h1 {
+				color: black;
+				font-size: 72px;
+				font-weight: bold;
+				font-family: Arial, sans-serif;
+				margin-top: 100px;
+				text-align: center;
+			}
+		</style>
+	</head>
+EOF
+
+echo "<body class=\"$status\">" >> $WEB/monitor.html
+echo "<h1>$CONFIG</h1>" >> $WEB/monitor.html
+
+cat >> $WEB/monitor.html << "EOF"
+	</body>
+</html>
+EOF
+
+
+
 #
 # BRANCHES
 #
