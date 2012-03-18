@@ -9,6 +9,14 @@ GIT_DIR=.git
 [ ! -z "$GENCI_REPOSITORY" ] && GIT_DIR=$GENCI_REPOSITORY
 
 VERSION=$(git --git-dir=$GIT_DIR describe --tags $GENCI_BUILD_SHA1)
+if [ -z "$VERSION" ]; then
+	echo "Cannot retrieve version; aborting release!" >&2
+	exit 1
+fi
+
+# generate user tarball
+echo "Building user tarball..."
+git archive --format=tar --prefix="generic-ci-$VERSION/" $VERSION | gzip -9 > generic-ci-user-$VERSION.tar.gz
 
 # a temporary directory for the package
 TMP=/tmp/genci-$(date +%s)
@@ -29,10 +37,9 @@ echo $VERSION > $TMP/usr/local/share/doc/genci/VERSION
 
 cp -r examples $TMP/usr/local/share/examples/genci
 
-
-# build tarball
-echo "Building tarball..."
-TAR=generic-ci-$VERSION.tar.gz
+# build server tarball
+echo "Building generic tarball..."
+TAR=generic-ci-server-$VERSION.tar.gz
 tar czf $TAR -C $TMP usr || exit $?
 
 # build debian package if possible
