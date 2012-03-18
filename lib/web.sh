@@ -94,6 +94,9 @@ td, th {
 a {
 	text-decoration: none;
 }
+a:hover {
+	text-decoration: underline;
+}
 th a {
 	font-weight: bold;
 	color: black;
