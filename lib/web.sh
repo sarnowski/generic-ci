@@ -12,7 +12,7 @@ filesize() {
 	if [ ! -z "$(uname | grep -i "BSD")" ]; then
 		stat -f "%z" $1
 	else
-		stat -s $1
+		stat -c "%s" $1
 	fi
 }
 
