@@ -1,6 +1,9 @@
 #!/bin/sh
 cd $(dirname $0)
 
+# run tests before
+./test.sh || exit $?
+
 # resolve version
 GIT_DIR=.git
 [ ! -z "$GENCI_REPOSITORY" ] && GIT_DIR=$GENCI_REPOSITORY
