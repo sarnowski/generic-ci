@@ -6,20 +6,20 @@ panic() {
 }
 
 # locate base paths
-if [ "$0" = "gitce" ] && [ -z "$GITCE_HOME"] || [ "$0" = "/usr/local/bin/gitce" ] && [ -z "$GITCE_HOME" ]; then
-	GITCE=/usr/local/bin/gitce
+if [ "$0" = "genci" ] && [ -z "$GENCI_HOME"] || [ "$0" = "/usr/local/bin/genci" ] && [ -z "$GENCI_HOME" ]; then
+	GENCI=/usr/local/bin/genci
 
-	LIB=/usr/local/lib/gitce
-	SHARE=/usr/local/share/gitce
-	DOC=/usr/local/share/doc/gitce
+	LIB=/usr/local/lib/genci
+	SHARE=/usr/local/share/genci
+	DOC=/usr/local/share/doc/genci
 else
-	if [ ! -z "$GITCE_HOME" ]; then
-		prefix=$GITCE_HOME
+	if [ ! -z "$GENCI_HOME" ]; then
+		prefix=$GENCI_HOME
 	else
 		prefix=$(dirname $0)
 	fi
 
-	GITCE=$prefix/gitce
+	GENCI=$prefix/genci
 
 	LIB=$prefix/lib
 	SHARE=$prefix/share
@@ -27,12 +27,12 @@ else
 fi
 
 # locate config paths
-if [ "$(id -u)" = 0 ] || [ -z "$HOME" ] || [ "$GITCE_GLOBAL" = "yes" ]; then
-	CONF=/etc/gitce
-	WORKS=/var/lib/gitce
-	LOGS=/var/log/gitce
+if [ "$(id -u)" = 0 ] || [ -z "$HOME" ] || [ "$GENCI_GLOBAL" = "yes" ]; then
+	CONF=/etc/genci
+	WORKS=/var/lib/genci
+	LOGS=/var/log/genci
 else
-	CONF=$HOME/.gitce
+	CONF=$HOME/.genci
 	WORKS=$CONF/works
 	LOGS=$CONF/logs
 fi
@@ -60,9 +60,9 @@ fi
 
 # basic argument sanitizing
 if [ $# -eq 0 ]; then
-	echo "gitce - git continuous execution"
+	echo "generic-ci - a generic continuous integration tool"
 	echo
-	echo "Find more help under http://www.new-thoughts.org/gitce/"
+	echo "Find more help under http://www.new-thoughts.org/generic-ci/"
 	echo
 	echo
 	cat $DOC/LICENSE

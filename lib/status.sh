@@ -80,7 +80,7 @@ print_branch() {
 	used_branches="$used_branches $branch"
 }
 
-branches=$($GITCE pending $CONFIG | while read line; do
+branches=$($GENCI pending $CONFIG | while read line; do
 	action=$(echo $line | cut -d' ' -f1)
 	branch=$(echo $line | cut -d' ' -f2)
 

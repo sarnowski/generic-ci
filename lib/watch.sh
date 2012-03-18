@@ -1,10 +1,10 @@
 # update repository
-$GITCE update $CONFIG
+$GENCI update $CONFIG
 
 # parse status
 build=
 release=
-todo=$($GITCE pending $CONFIG | while read status; do
+todo=$($GENCI pending $CONFIG | while read status; do
 	action=$(echo $status | cut -d' ' -f1)
 	branch=$(echo $status | cut -d' ' -f2)
 
@@ -63,7 +63,7 @@ BUILD_DIR=$BRANCH_DIR/build/$BUILD_NUMBER
 BUILD_LOG=$BUILD_DIR/log
 
 # trigger variables
-export GITCE_BUILD_LOG=$BUILD_LOG
+export GENCI_BUILD_LOG=$BUILD_LOG
 
 # prepare build directory
 mkdir -p $BUILD_DIR
@@ -73,7 +73,7 @@ if [ "$action" = "release" ]; then
 
 	release_ref=$(cat $RELEASES/$branch)
 
-	nohup $GITCE run $CONFIG --release $branch $release_ref > $BUILD_LOG 2>&1
+	nohup $GENCI run $CONFIG --release $branch $release_ref > $BUILD_LOG 2>&1
 
 	rm $RELEASES/$branch
 	logger -p "daemon.info" "$CONFIG/$BUILD_ID released."
@@ -81,7 +81,7 @@ if [ "$action" = "release" ]; then
 elif [ "$action" = "build" ]; then
 	logger -p "daemon.info" "Starting to test $CONFIG/$BUILD_ID..."
 
-	nohup $GITCE run $CONFIG $branch > $BUILD_LOG 2>&1
+	nohup $GENCI run $CONFIG $branch > $BUILD_LOG 2>&1
 
 	logger -p "daemon.info" "$CONFIG/$BUILD_ID tested."
 fi

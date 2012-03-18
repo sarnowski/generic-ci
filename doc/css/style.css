@@ -15,6 +15,10 @@ p, span, a, li, h1, h2, h3, h4 {
     line-height: 18px;
 }
 
+i {
+	font-style: italic;
+}
+
 p, span, li {
     color: #000;
 }

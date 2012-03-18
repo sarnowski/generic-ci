@@ -1,12 +1,11 @@
-gitce - git continuous execution
+generic-ci - a generic continuous integration tool
 =============================================================================
 
 A simple shell-based continuous integration tool.
 
 
 More informations here:
-   https://www.new-thoughts.org/gitce/
-
+   https://www.new-thoughts.org/generic-ci/
 
 
 

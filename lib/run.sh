@@ -84,19 +84,19 @@ echo "Preparing build directory..."
 $GIT archive --format=tar $SHA1 | tar -xf- -C $BUILD_WORK_DIR
 
 # publish some variables about the build
-export GITCE_CONF=$CONF
-export GITCE_CONFIG=$CONFIG
-export GITCE_REPOSITORY=$REPOSITORY
-export GITCE_BRANCH=$BRANCH
-export GITCE_BRANCH_DIR=$BRANCH_DIR
-export GITCE_BUILD_ID=$BUILD_ID
-export GITCE_BUILD_NUMBER=$BUILD_NUMBER
-export GITCE_BUILD_SHA1=$SHA1
-export GITCE_BUILD_DIR=$BUILD_DIR
-export GITCE_BUILD_WORK_DIR=$BUILD_WORK_DIR
-export GITCE_BUILD_USER=$BUILD_USER
-export GITCE_BUILD_COMMAND=$BUILD_COMMAND
-export GITCE_PHASE="init"
+export GENCI_CONF=$CONF
+export GENCI_CONFIG=$CONFIG
+export GENCI_REPOSITORY=$REPOSITORY
+export GENCI_BRANCH=$BRANCH
+export GENCI_BRANCH_DIR=$BRANCH_DIR
+export GENCI_BUILD_ID=$BUILD_ID
+export GENCI_BUILD_NUMBER=$BUILD_NUMBER
+export GENCI_BUILD_SHA1=$SHA1
+export GENCI_BUILD_DIR=$BUILD_DIR
+export GENCI_BUILD_WORK_DIR=$BUILD_WORK_DIR
+export GENCI_BUILD_USER=$BUILD_USER
+export GENCI_BUILD_COMMAND=$BUILD_COMMAND
+export GENCI_PHASE="init"
 
 # set up some variables, su does not set up for us
 if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
@@ -107,13 +107,13 @@ if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
 fi
 
 # trigger pre hooks
-export GITCE_PHASE="pre"
+export GENCI_PHASE="pre"
 for hook in "$PRE"; do
 	$hook
 done
 
 # run the command
-export GITCE_PHASE="build"
+export GENCI_PHASE="run"
 export
 cd $BUILD_WORK_DIR
 
@@ -136,10 +136,10 @@ fi
 echo $RESULT > $BUILD_RESULT
 echo $SHA1 > $HEADS/$BRANCH
 echo "Return code: $RESULT"
-export GITCE_BUILD_RESULT=$RESULT
+export GENCI_BUILD_RESULT=$RESULT
 
 # trigger post hooks
-export GITCE_PHASE="post"
+export GENCI_PHASE="post"
 for hook in "$POST"; do
 	$hook
 done

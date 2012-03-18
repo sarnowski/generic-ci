@@ -22,11 +22,11 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-if [ "$GITCE_PHASE" = "pre" ]; then
+if [ "$GENCI_PHASE" = "pre" ]; then
 	# start him
-	if [ $(id -u) -eq 0 ] && [ ! -z "$GITCE_BUILD_USER" ]; then
-		echo "Starting VNC server on display $DISPLAY for $GITCE_BUILD_USER..."
-		su -c "vncserver $DISPLAY" $GITCE_BUILD_USER &
+	if [ $(id -u) -eq 0 ] && [ ! -z "$GENCI_BUILD_USER" ]; then
+		echo "Starting VNC server on display $DISPLAY for $GENCI_BUILD_USER..."
+		su -c "vncserver $DISPLAY" $GENCI_BUILD_USER &
 	else
 		echo "Starting VNC server on display $DISPLAY..."
 		vncserver $DISPLAY &
@@ -34,9 +34,9 @@ if [ "$GITCE_PHASE" = "pre" ]; then
 	sleep 5  # give him a chance to start
 else
 	# kill him
-	if [ $(id -u) -eq 0 ] && [ ! -z "$GITCE_BUILD_USER" ]; then
-		echo "Killing VNC server on display $DISPLAY of $GITCE_BUILD_USER..."
-		su -c "vncserver -kill $DISPLAY" $GITCE_BUILD_USER
+	if [ $(id -u) -eq 0 ] && [ ! -z "$GENCI_BUILD_USER" ]; then
+		echo "Killing VNC server on display $DISPLAY of $GENCI_BUILD_USER..."
+		su -c "vncserver -kill $DISPLAY" $GENCI_BUILD_USER
 	else
 		echo "Killing VNC server on display $DISPLAY..."
 		vncserver -kill $DISPLAY

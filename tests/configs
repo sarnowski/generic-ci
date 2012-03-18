@@ -1,2 +1,2 @@
 #!/bin/sh
-[ ! -z $($GITCE configs | grep $1) ] || exit 1
+[ ! -z $($GENCI configs | grep $1) ] || exit 1

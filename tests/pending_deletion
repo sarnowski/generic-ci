@@ -9,16 +9,16 @@ ls -l $SOURCE
 $GIT branch testbranch
 
 # build the branches
-$GITCE run $CONFIG testbranch
+$GENCI run $CONFIG testbranch
 
 # now delete the branch
 $GIT branch -d testbranch
 
-# update gitce
-$GITCE update $CONFIG
+# update repository
+$GENCI update $CONFIG
 
 # now there should be only one line, mentioning the deletion
-[ $($GITCE pending $CONFIG | wc -l) -eq 2 ] || exit 1
-[ ! -z "$($GITCE pending $CONFIG | grep "delete testbranch")" ] || exit 2
+[ $($GENCI pending $CONFIG | wc -l) -eq 2 ] || exit 1
+[ ! -z "$($GENCI pending $CONFIG | grep "delete testbranch")" ] || exit 2
 
 exit 0

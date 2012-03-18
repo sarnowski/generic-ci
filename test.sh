@@ -4,17 +4,18 @@ cd $(dirname $0)
 h=$(pwd)
 
 # in case..
-mkdir -p $HOME/.gitce/works
+mkdir -p $HOME/.genci/works
 
 # set up environment
-export GITCE_HOME=$h
-export GITCE=$h/gitce
+export GENCI_HOME=$h
+export GENCI=$h/genci
 
 failed=0
+success=0
 for t in $(ls tests); do
 	# prepare
 	config=$(date +%s)-$t
-	echo "SOURCE=/tmp/$config" > $HOME/.gitce/$config
+	echo "SOURCE=/tmp/$config" > $HOME/.genci/$config
 
 	# prepare a fake git repository
 	mkdir /tmp/$config
@@ -41,6 +42,7 @@ EOF
 	if [ $result -eq 0 ]; then
 		echo "OK    $t"
 		rm test-$t.log
+		success=$(($success + 1))
 	else
 		echo "Return Code: $result" >> test-$t.log
 		echo "FAIL  $t  (output: test-$t.log)"
@@ -48,14 +50,14 @@ EOF
 	fi
 
 	# cleanup
-	rm $HOME/.gitce/$config
-	rm -rf $HOME/.gitce/works/$config
+	rm $HOME/.genci/$config
+	rm -rf $HOME/.genci/works/$config
 	rm -rf /tmp/$config
 done
 
 if [ $failed -eq 0 ]; then
-	echo "All tests passed." >&2
+	echo "All $success tests passed." >&2
 else
-	echo "$failed tests failed!" >&2
+	echo "$failed tests failed out of $(($failed + $success)) tests!" >&2
 fi
 exit $failed

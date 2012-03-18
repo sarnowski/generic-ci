@@ -1,4 +1,4 @@
-How to get a nice monitor for my gitce configuration.
+How to get a nice monitor for a generic-ci configuration.
 =============================================================================
 
 In our small test setup, we use a dedicated Debian "sqeeze" box. Plain X11 is
@@ -28,11 +28,11 @@ Boot
 Copy & Paste
 =============================================================================
 
-scp /usr/local/share/gitce/examples/monitor/monitor \
+scp /usr/local/share/examples/genci/monitor/monitor \
 	root@example.com:/etc/init.d/monitor
-scp /usr/local/share/gitce/examples/monitor/xinitrc \
+scp /usr/local/share/examples/genci/monitor/xinitrc \
 	root@example.com:/root/.xinitrc
-scp /usr/local/share/gitce/examples/monitor/after_start \
+scp /usr/local/share/examples/genci/monitor/after_start \
 	root@example.com:/root/after_start
 
 # HOME may not be set during startup and script will assume / as home,

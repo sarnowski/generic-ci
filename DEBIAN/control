@@ -1,8 +1,8 @@
-Package: gitce
+Package: generic-ci
 Version: #VERSION#
 Section: main
 Priority: optional
 Architecture: all
 Depends: git
 Maintainer: Tobias Sarnowski
-Description: https://www.new-thoughts.org/gitce/
+Description: https://www.new-thoughts.org/generic-ci/

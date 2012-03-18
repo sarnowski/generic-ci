@@ -1,16 +1,16 @@
 #!/bin/sh
 CONFIG=$1
 
-$GITCE watch $CONFIG
+$GENCI watch $CONFIG
 
-if [ "$($GITCE status $CONFIG)" != "ok master active 0 " ]; then
+if [ "$($GENCI status $CONFIG)" != "ok master active 0 " ]; then
 	exit 1
 fi
 
 
-$GITCE watch $CONFIG
+$GENCI watch $CONFIG
 
-if [ "$($GITCE status $CONFIG)" != "ok master active 0 " ]; then
+if [ "$($GENCI status $CONFIG)" != "ok master active 0 " ]; then
 	exit 1
 fi
 

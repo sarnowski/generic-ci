@@ -1,2 +1,2 @@
 #!/bin/sh
-[ "development" = "$($GITCE version)" ] || exit 1
+[ "development" = "$($GENCI version)" ] || exit 1

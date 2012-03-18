@@ -33,7 +33,7 @@ cat > $WEB/index.html << "EOF"
 	<head>
 EOF
 
-echo "<title>$CONFIG - gitce</title>" >> $WEB/index.html
+echo "<title>$CONFIG - generic-ci</title>" >> $WEB/index.html
 
 cat >> $WEB/index.html << "EOF"
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -79,7 +79,7 @@ EOF
 echo "<h1>$CONFIG build status</h1>" >> $WEB/index.html
 
 echo "<table>" >> $WEB/index.html
-$GITCE status $CONFIG | while read line; do
+$GENCI status $CONFIG | while read line; do
 	health=$(echo $line | cut -d' ' -f1)
 	branch=$(echo $line | cut -d' ' -f2)
 	status=$(echo $line | cut -d' ' -f3)
@@ -108,7 +108,7 @@ EOF
 #
 # BRANCHES
 #
-$GITCE status $CONFIG | while read line; do
+$GENCI status $CONFIG | while read line; do
 	health=$(echo $line | cut -d' ' -f1)
 	branch=$(echo $line | cut -d' ' -f2)
 	last=$(echo $line | cut -d' ' -f4)
@@ -122,7 +122,7 @@ $GITCE status $CONFIG | while read line; do
 	<head>
 EOF
 
-	echo "<title>$CONFIG / $branch - gitce</title>" >> $WEB/$branch.html
+	echo "<title>$CONFIG / $branch - generic-ci</title>" >> $WEB/$branch.html
 
 	cat >> $WEB/$branch.html << "EOF"
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -183,7 +183,7 @@ EOF
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>gitce widget</title>
+		<title>generic-ci widget</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<style type="text/css">
 			* {

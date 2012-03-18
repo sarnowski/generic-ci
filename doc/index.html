@@ -1,347 +1,357 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>gitce | new-thoughts.org</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<head>
+		<title>generic-ci | new-thoughts.org</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <meta name="robots" content="index,follow" />
-        <meta name="description" content="gitce, a continuous execution tool based on git." />
+		<meta name="robots" content="index,follow" />
+		<meta name="description" content="generic-ci, a generic continuous integration tool" />
 
-        <meta property="og:title" content="gitce | new-thoughts.org" />
-        <meta property="og:description" content="gitce, a continuous execution tool based on git." />
+		<meta property="og:title" content="generic-ci | new-thoughts.org" />
+		<meta property="og:description" content="generic-ci, a generic continuous integration tool" />
 
-        <meta property="og:url" content="http://www.new-thoughts.org/gitce/" />
-        <meta property="og:site_name" content="new-thoughts.org" />
-        <meta property="og:locale" content="en_US" />
-        <meta property="og:type" content="website" />
-    </head>
-    <body>
-        <div id="content">
-            <aside>
-                <article id="download">
-                    <h3>Download</h3>
+		<meta property="og:url" content="http://www.new-thoughts.org/generic-ci/" />
+		<meta property="og:site_name" content="new-thoughts.org" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:type" content="website" />
+	</head>
+	<body>
+		<div id="content">
+			<aside>
+				<article id="download">
+					<h3>Download</h3>
 
-                    <span>Latest release: <strong>1.0.0</strong></span>
-                    <span>
-                        <a href="https://github.com/downloads/sarnowski/gitce/gitce-1.0.0.tar.gz">tarball</a>,
-                        <a href="https://github.com/downloads/sarnowski/gitce/gitce-1.0.0-all.deb">deb</a>
-                    </span>
+					<span>Latest release: <strong>1.0.0</strong></span>
+					<span>
+						<a href="https://github.com/downloads/sarnowski/gitce/generic-ci-1.0.0.tar.gz">tarball</a>,
+						<a href="https://github.com/downloads/sarnowski/gitce/generic-ci-1.0.0-all.deb">deb</a>
+					</span>
 
-                    <br/>
+					<br/>
 
-                    <span>Source code</span>
-                    <span>
-                        <a href="https://github.com/sarnowski/gitce">on github</a>
-                    </span>
+					<span>Source code</span>
+					<span>
+						<a href="https://github.com/sarnowski/gitce">on github</a>
+					</span>
 
-                    <br/>
+					<br/>
 
-                    <span>License</span>
-                    <span>
-                        <a href="https://github.com/sarnowski/gitce/blob/master/LICENSE">Open Source License</a>
-                    </span>
-                </article>
+					<span>License</span>
+					<span>
+						<a href="https://github.com/sarnowski/gitce/blob/master/doc/LICENSE">ISC License</a>
+					</span>
+				</article>
 
-                <article id="listing">
-                    <h3>Content</h3>
-                    <nav>
-                        <ul>
-                            <li><a href="#user">Usage as an user</a></li>
-                            <li><a href="#server">Usage as server</a></li>
-                            <li><a href="#extending">Extending gitce</a></li>
-                            <li><a href="#plugins">Write your own plugins</a></li>
-                        </ul>
-                    </nav>
-                </article>
-            </aside>
+				<article id="listing">
+					<h3>Content</h3>
+					<nav>
+						<ul>
+							<li><a href="#user">Usage as an user</a></li>
+							<li><a href="#server">Usage as server</a></li>
+							<li><a href="#extending">Extending gitce</a></li>
+							<li><a href="#plugins">Write your own plugins</a></li>
+						</ul>
+					</nav>
+				</article>
+			</aside>
 
-            <header>
-                <h1><a href="https://www.new-thoughts.org/gitce/">gitce</a></h1>
-                <h2>a continuous execution tool based on git</h2>
-            </header>
+			<header>
+				<h1><a href="https://www.new-thoughts.org/generic-ci/">generic-ci</a></h1>
+				<h2>a generic continuous integration tool</h2>
+			</header>
 
-            <article>
-                <h3>What does "continuous execution" mean?</h3>
-                <p>
-                    Continuous execution is a broader term for continuous integration, deployment or delivery.
-                    It just executes what ever you gave it. May it be tests, deployments or whatever you need.
-                </p>
-            </article>
+			<article>
+				<h3>Continuous Integration</h3>
+				<p>
+					<i>
+						"continuous integration (CI) implements continuous processes of applying quality
+						control - small pieces of effort, applied frequently."
+					</i>
+					-- <a href="http://en.wikipedia.org/wiki/Continuous_integration" target="_blank">Wikipedia</a>
+				</p>
+			</article>
 
-            <article>
-                <h3>Why gitce?</h3>
-                <p>
-                    Using the 2GB fat Java continuous integration servers is often overkill for the feature
-                    set you really use. Often you don't even need Java on your server to build your project
-                    or you don't have the memory or space for that extra Java process. That is where gitce
-                    starts offering a lightweight, extremly simple and customizable solution.
-                </p>
-            </article>
+			<article>
+				<h3>Why generic-ci?</h3>
+				<p>
+					Using the 2GB fat Java continuous integration servers is often overkill for the feature
+					set you really use. Often you don't even need Java on your server to build your project
+					or you don't have the memory or space for that extra process. That is where generic-ci
+					starts offering a lightweight, extremly simple and customizable solution.
+				</p>
+			</article>
 
-            <article>
-                <h3>Features</h3>
-                <ul>
-                    <li>Pure shell based application with nearly zero dependencies.</li>
-                    <li>Can be used as a centralized server or as a single user without root access.</li>
-                    <li>Easily extendable through a plugin system.</li>
-                    <li>Write your plugins in every language you want to.</li>
-                    <li>Optional web interface to easily access the informations you need.</li>
-                </ul>
-            </article>
+			<article>
+				<h3>Features</h3>
+				<ul>
+					<li>Lightweight: pure shell based application with nearly zero dependencies.</li>
+					<li>Flexible: can be used as a centralized server or as a single user without root access.</li>
+					<li>Customizable: easily extendable through a plugin system.</li>
+					<li>Language independent: write your QA and plugins in every programming language you want to.</li>
+				</ul>
+			</article>
 
-            <article>
-                <h3><a name="user"></a>Usage as a single user</h3>
-                <p>
-                    gitce can be used without any root privileges. This use case is targeted for
-                    environments where you can't gain administrator rights, you are the only one who works
-                    on your project or you want to develop gitce itself.
-                </p>
+			<article>
+				<h3>Installation</h3>
+				<p>
+					You can use generic-ci as a user or as a server. To use it as a server, install one of the provided
+					packages. As a user, just clone the repository itself to somewhere in your home directory.
+				</p>
+			</article>
 
-                <h4>Installation</h4>
-                <p>
-                    To get gitce just clone it somewhere into your home directory:
-                    <span class="code">
-                        git clone git://github.com/sarnowski/gitce.git ~/apps/gitce
-                    </span>
-                    You are now ready to use gitce.
-                </p>
+			<article>
+				<h3><a name="user"></a>Usage as a single user</h3>
+				<p>
+					gitce can be used without any root privileges. This use case is targeted for
+					environments where you can't gain administrator rights, you are the only one who works
+					on your project or you want to develop gitce itself.
+				</p>
 
-                <h4>Set up a project</h4>
-                <p>
-                    gitce stores all data, nessecary for execution in <strong>~/.gitce</strong>. To
-                    set up a new project, use the example configuration and copy it to the data directory
-                    of gitce. The configuration file's name is the unique identifier for the project's
-                    executions.
-                    <span class="code">
-                        mkdir ~/.gitce<br/>
-                        cp ~/apps/gitce/share/examples/example-project ~/.gitce/my-cool-project
-                    </span>
-                    Open the new configuration file. The example configuration should be self explained.
-                    The only required configuration parameter to set up is the <strong>SOURCE</strong>
-                    where you define the source of your git repository.
-                </p>
+				<h4>Installation</h4>
+				<p>
+					To get gitce just clone it somewhere into your home directory:
+					<span class="code">
+						git clone git://github.com/sarnowski/gitce.git ~/apps/gitce
+					</span>
+					You are now ready to use gitce.
+				</p>
 
-                <h4>Working with your project</h4>
-                <p>
-                    By default, gitce runs a <strong>test.sh</strong> which is expected to be in the
-                    project's root and executable. If you want gitce to run another program, then
-                    you can configure it with the <strong>TEST_COMMAND</strong> parameter.
-                </p>
+				<h4>Set up a project</h4>
+				<p>
+					gitce stores all data, nessecary for execution in <strong>~/.gitce</strong>. To
+					set up a new project, use the example configuration and copy it to the data directory
+					of gitce. The configuration file's name is the unique identifier for the project's
+					executions.
+					<span class="code">
+						mkdir ~/.gitce<br/>
+						cp ~/apps/gitce/share/examples/example-project ~/.gitce/my-cool-project
+					</span>
+					Open the new configuration file. The example configuration should be self explained.
+					The only required configuration parameter to set up is the <strong>SOURCE</strong>
+					where you define the source of your git repository.
+				</p>
 
-                <h4>Do your job!</h4>
-                <p>
-                    To use gitce continuous execution process start gitce:
-                    <span class="code">
-                        ~/apps/gitce/gitce watch my-cool-project
-                    </span>
-                    gitce will now continuously watch your repository and run your program every time
-                    you commit or push something.<br/>
-                    To enable cool notifications or other features, look at the "<a href="#extending">Extending gitce</a>" section.
-                </p>
-                <p class="hint">
-                    To watch your repository all the time, even if you are not logged in, start gitce
-                    with <strong>nohup</strong>:
-                    <span class="code">
-                        nohup ~/apps/gitce/gitce watch my-cool-project &gt;/dev/null 2&gt;&amp;1 &amp;
-                    </span>
-                    gitce automatically logs all actions in your data directory. Look at <strong>~/.gitce/logs/my-cool-project.log</strong>.
-                </p>
-            </article>
+				<h4>Working with your project</h4>
+				<p>
+					By default, gitce runs a <strong>test.sh</strong> which is expected to be in the
+					project's root and executable. If you want gitce to run another program, then
+					you can configure it with the <strong>TEST_COMMAND</strong> parameter.
+				</p>
 
-            <article>
-                <h3><a name="server"></a>Usage as a server</h3>
-                <p>
-                    It is not nessecary to run gitce as root on a server. You can simply use the
-                    "<a href="#user">single-user capabilities</a> to set up a watcher for a central
-                    repository. But running gitce as root provides more features. At first, you can easily
-                    set up a user for every repository seperatly and second, you can use the cool web
-                    interface.
-                </p>
+				<h4>Do your job!</h4>
+				<p>
+					To use gitce continuous execution process start gitce:
+					<span class="code">
+						~/apps/gitce/gitce watch my-cool-project
+					</span>
+					gitce will now continuously watch your repository and run your program every time
+					you commit or push something.<br/>
+					To enable cool notifications or other features, look at the "<a href="#extending">Extending gitce</a>" section.
+				</p>
+				<p class="hint">
+					To watch your repository all the time, even if you are not logged in, start gitce
+					with <strong>nohup</strong>:
+					<span class="code">
+						nohup ~/apps/gitce/gitce watch my-cool-project &gt;/dev/null 2&gt;&amp;1 &amp;
+					</span>
+					gitce automatically logs all actions in your data directory. Look at <strong>~/.gitce/logs/my-cool-project.log</strong>.
+				</p>
+			</article>
 
-                <h4>Installation</h4>
-                <p>
-                    To gain a full featured server installation you have to use the provided tarball
-                    or debian package (usable on all Debian derivates like Ubuntu).
-                    <span class="code">
-                        dpkg -i gitce-1.0.0-all.deb
-                    </span>
-                    or
-                    <span class="code">
-                        tar xfz gitce-1.0.0.tar.gz -C /
-                    </span>
-                </p>
+			<article>
+				<h3><a name="server"></a>Usage as a server</h3>
+				<p>
+					It is not nessecary to run gitce as root on a server. You can simply use the
+					"<a href="#user">single-user capabilities</a> to set up a watcher for a central
+					repository. But running gitce as root provides more features. At first, you can easily
+					set up a user for every repository seperatly and second, you can use the cool web
+					interface.
+				</p>
 
-                <h4>Configuration</h4>
-                <p>
-                    gitce stores its data in different locations:
-                </p>
-                <ul>
-                    <li><strong>/etc/gitce</strong>: configuration files</li>
-                    <li><strong>/var/lib/gitce</strong>: various data used by executions</li>
-                    <li><strong>/var/log/gitce</strong>: all log files of the projects</li>
-		    <li><strong>/usr/local/share/gitce</strong>: the web interface</li>
-                    <li><strong>/usr/local/share/doc/gitce</strong>: documentation</li>
-                    <li><strong>/usr/local/share/examples/gitce</strong>: examples for configuration and hooks</li>
-                </ul>
-                <p>
-                    To set up a project, copy the example configuration file into the gitce configuration
-                    directory. The configuration file's name will be the unique identifier for the
-                    executions.
-                    <span class="code">
-                        mkdir /etc/gitce<br/>
-                        cp /usr/local/share/gitce/examples/example-project /etc/gitce/my-cool-project
-                    </span>
-                    The configuration file is self explained. The only required option to configure is
-                    the <strong>SOURCE</strong> parameter. Read through the configuration file to find
-                    more useful configurations for your project.<br/>
-                    To enable cool notifications or other features, look at the "<a href="#extending">Extending gitce</a>" section.
-                </p>
+				<h4>Installation</h4>
+				<p>
+					To gain a full featured server installation you have to use the provided tarball
+					or debian package (usable on all Debian derivates like Ubuntu).
+					<span class="code">
+						dpkg -i gitce-1.0.0-all.deb
+					</span>
+					or
+					<span class="code">
+						tar xfz gitce-1.0.0.tar.gz -C /
+					</span>
+				</p>
 
-                <h4>Start and Autostart</h4>
-                <p>
-                    To start watchers for all projects, simply run
-                    <span class="code">
-                        /etc/init.d/gitce-watchers start
-                    </span>
-                    If you didn't used the debian package for installation, you should use your system's tools
-                    to automatically start the watchers on server boot. If you installed the deb file, then
-                    this was already set up for you.
-                </p>
+				<h4>Configuration</h4>
+				<p>
+					gitce stores its data in different locations:
+				</p>
+				<ul>
+					<li><strong>/etc/gitce</strong>: configuration files</li>
+					<li><strong>/var/lib/gitce</strong>: various data used by executions</li>
+					<li><strong>/var/log/gitce</strong>: all log files of the projects</li>
+			<li><strong>/usr/local/share/gitce</strong>: the web interface</li>
+					<li><strong>/usr/local/share/doc/gitce</strong>: documentation</li>
+					<li><strong>/usr/local/share/examples/gitce</strong>: examples for configuration and hooks</li>
+				</ul>
+				<p>
+					To set up a project, copy the example configuration file into the gitce configuration
+					directory. The configuration file's name will be the unique identifier for the
+					executions.
+					<span class="code">
+						mkdir /etc/gitce<br/>
+						cp /usr/local/share/gitce/examples/example-project /etc/gitce/my-cool-project
+					</span>
+					The configuration file is self explained. The only required option to configure is
+					the <strong>SOURCE</strong> parameter. Read through the configuration file to find
+					more useful configurations for your project.<br/>
+					To enable cool notifications or other features, look at the "<a href="#extending">Extending gitce</a>" section.
+				</p>
 
-                <h4>Timed executions</h4>
-                <p>
-                    If you want cron based executions instead of executing on every commit, you can disable
-                    the watcher by setting the <strong>RUN_TESTS</strong> configuration to <strong>no</strong>.
-                    Now create a cron task like that:
-                    <span class="code">
-                        # cat > /etc/cron.daily/gitce << "EOF"<br/>
-                        #!/bin/sh<br/>
-                        /usr/local/bin/gitce update my-cool-project<br/>
-                        /usr/local/bin/gitce run my-cool-project<br/>
-                        EOF<br/>
-                        chmod +x /etc/cron.daily/gitce
-                    </span>
-                </p>
+				<h4>Start and Autostart</h4>
+				<p>
+					To start watchers for all projects, simply run
+					<span class="code">
+						/etc/init.d/gitce-watchers start
+					</span>
+					If you didn't used the debian package for installation, you should use your system's tools
+					to automatically start the watchers on server boot. If you installed the deb file, then
+					this was already set up for you.
+				</p>
 
-                <h4>Web Interface</h4>
-                <p class="hint">
-                    The web interface is highly exploitable and is not secure in any way
-                    at the moment. The web interface will not provide any user management by
-                    itself. Be sure to block any malicous sources. Only run it in your trusted
-                    internal network or secure it by granting only access to trusted users.
-                </p>
-                <p>
-                    To set up the web interface, you need a cgi-capable web server. For most users,
-                    Apache will be the right tool so here is an example of how to configure a
-                    virtual host for gitce:
-                    <span class="code">
-                        &lt;VirtualHost *:80&gt;<br/>
-                        &nbsp;&nbsp;ServerName gitce.example.com<br/>
-                        <br/>
-                        &nbsp;&nbsp;DocumentRoot /usr/local/share/gitce<br/>
-                        &nbsp;&nbsp;ScriptAlias /cgi-bin/ /usr/local/share/gitce/cgi-bin/<br/>
-                        <br/>
-                        &nbsp;&nbsp;# Enable to allow unified dashboard usage. Be aware of<br/>
-                        &nbsp;&nbsp;# security implications!<br/>
-                        &nbsp;&nbsp;#Header add Access-Control-Allow-Origin "*"<br/>
-                        &lt;/VirtualHost&gt;
-                    </span>
-                    If you set up a basic authentication, use your committers e-mail addresses. The
-                    web interface will give them a personalized view.
-                </p>
-                <p class="hint">
-                    <strong>Monitoring your project</strong><br/>
-                    gitce already provides as web interface which is optimized for a monitor. If you
-                    have a monitor in your room, point its browser in fullscreen mode to your gitce
-                    webinterface, appended with "monitor.html", like that:
-                    <span class="code">
-                        http://gitce.example.com/monitor.html?my-cool-project
-                    </span>
-                </p>
-            </article>
+				<h4>Timed executions</h4>
+				<p>
+					If you want cron based executions instead of executing on every commit, you can disable
+					the watcher by setting the <strong>RUN_TESTS</strong> configuration to <strong>no</strong>.
+					Now create a cron task like that:
+					<span class="code">
+						# cat > /etc/cron.daily/gitce << "EOF"<br/>
+						#!/bin/sh<br/>
+						/usr/local/bin/gitce update my-cool-project<br/>
+						/usr/local/bin/gitce run my-cool-project<br/>
+						EOF<br/>
+						chmod +x /etc/cron.daily/gitce
+					</span>
+				</p>
 
-            <article>
-                <h3><a name="extending"></a>Extending gitce</h3>
-                <p>
-                    gitce provides a plugin system to extend its capabilities with various features.
-                    Plugins are automatically used if they are put into the correct directories. To
-                    execute a plugin before the main project's execution, create a directory besides your
-                    configuration file with the same name and <strong>-pre.d</strong> prepended. If
-                    the plugin should run after the main execution, e.g. to cleanup stuff, put it in the
-                    <strong>-post.d</strong> directory. Example:
-                    <span class="code">
-                        /etc/gitce/my-cool-project<br/>
-                        /etc/gitce/my-cool-project-pre.d/<br/>
-                        /etc/gitce/my-cool-project-post.d/<br/>
-                    </span>
-                    gitce bundles some basic plugins. You can use them easily as described in the following
-                    sections.
-                </p>
+				<h4>Web Interface</h4>
+				<p class="hint">
+					The web interface is highly exploitable and is not secure in any way
+					at the moment. The web interface will not provide any user management by
+					itself. Be sure to block any malicous sources. Only run it in your trusted
+					internal network or secure it by granting only access to trusted users.
+				</p>
+				<p>
+					To set up the web interface, you need a cgi-capable web server. For most users,
+					Apache will be the right tool so here is an example of how to configure a
+					virtual host for gitce:
+					<span class="code">
+						&lt;VirtualHost *:80&gt;<br/>
+						&nbsp;&nbsp;ServerName gitce.example.com<br/>
+						<br/>
+						&nbsp;&nbsp;DocumentRoot /usr/local/share/gitce<br/>
+						&nbsp;&nbsp;ScriptAlias /cgi-bin/ /usr/local/share/gitce/cgi-bin/<br/>
+						<br/>
+						&nbsp;&nbsp;# Enable to allow unified dashboard usage. Be aware of<br/>
+						&nbsp;&nbsp;# security implications!<br/>
+						&nbsp;&nbsp;#Header add Access-Control-Allow-Origin "*"<br/>
+						&lt;/VirtualHost&gt;
+					</span>
+					If you set up a basic authentication, use your committers e-mail addresses. The
+					web interface will give them a personalized view.
+				</p>
+				<p class="hint">
+					<strong>Monitoring your project</strong><br/>
+					gitce already provides as web interface which is optimized for a monitor. If you
+					have a monitor in your room, point its browser in fullscreen mode to your gitce
+					webinterface, appended with "monitor.html", like that:
+					<span class="code">
+						http://gitce.example.com/monitor.html?my-cool-project
+					</span>
+				</p>
+			</article>
 
-                <h4>Mail Notifications</h4>
-                <p>
-                    The "mail" plugin can send you notifications about failed executions and recoveries.
-                    It utilizes the git authors to send our the mails. To set up the plugin, link or copy
-                    it to your post-plugin directory:
-                    <span class="code">
-                        ln -s /usr/local/share/gitce/examples/hooks/mail.sh \<br/>
-                        &nbsp;&nbsp;/etc/gitce/my-cool-project-post.d/10_mail.sh
-                    </span>
-                </p>
-                <h4>VNC server</h4>
-                <p>
-                    For GUI or browser tests, you need an X server to be available during your tests.
-                    The "vnc" plugin provides the capabilities to start and stop a vnc server for
-                    the execution. To set up the plugin, link or copy it to your post-plugin directory:
-                    <span class="code">
-                        ln -s /usr/local/share/gitce/examples/hooks/vnc.sh \<br/>
-                        &nbsp;&nbsp;/etc/gitce/my-cool-project-pre.d/50_vnc.sh
-                        ln -s /usr/local/share/gitce/examples/hooks/vnc.sh \<br/>
-                        &nbsp;&nbsp;/etc/gitce/my-cool-project-post.d/50_vnc.sh
-                    </span>
-                    To enable the plugin, you have to define the DISPLAY parameter in your project's
-                    configuration like that:
-                    <span class="code">
-                        echo "export DISPLAY=:30" &gt;&gt; /etc/gitce/my-cool-project
-                    </span>
-                </p>
-                <h4>Cleanup Working Directory</h4>
-                <p>
-                    To save disk space, you can enable the "clearwork" plugin in the post plugin directory
-                    which will delete the checked out content of the execution.
-                    <span class="code">
-                        ln -s /usr/local/share/gitce/examples/hooks/clearwork.sh \<br/>
-                        &nbsp;&nbsp;/etc/gitce/my-cool-project-post.d/99_clearwork.sh
-                    </span>
-                </p>
-            </article>
+			<article>
+				<h3><a name="extending"></a>Extending gitce</h3>
+				<p>
+					gitce provides a plugin system to extend its capabilities with various features.
+					Plugins are automatically used if they are put into the correct directories. To
+					execute a plugin before the main project's execution, create a directory besides your
+					configuration file with the same name and <strong>-pre.d</strong> prepended. If
+					the plugin should run after the main execution, e.g. to cleanup stuff, put it in the
+					<strong>-post.d</strong> directory. Example:
+					<span class="code">
+						/etc/gitce/my-cool-project<br/>
+						/etc/gitce/my-cool-project-pre.d/<br/>
+						/etc/gitce/my-cool-project-post.d/<br/>
+					</span>
+					gitce bundles some basic plugins. You can use them easily as described in the following
+					sections.
+				</p>
 
-            <article>
-                <h3><a name="plugins"></a>Write your own plugins</h3>
-                <p>
-                    To write your own plugins you only have to provide some kind of executable. Link or
-                    move your program to the appropriate plugin directory (pre.d or post.d) of your
-                    project. There are various environment variables defined which you can use to
-                    prepare your execution or to clean it up afterwards. Use some simple plugin to get
-                    the available variables:
-                    <span class="code">
-                        cat &gt; /etc/gitce/my-cool-project-post.d/myplugin.sh &lt;&lt; "EOF"<br/>
-                        #!/bin/sh<br/>
-                        export<br/>
-                        EOF<br/>
-                        chmod +x /etc/gitce/my-cool-project-post.d/myplugin.sh
-                    </span>
-                    On next execution, the plugin will log all available environment variables.
-                </p>
-            </article>
+				<h4>Mail Notifications</h4>
+				<p>
+					The "mail" plugin can send you notifications about failed executions and recoveries.
+					It utilizes the git authors to send our the mails. To set up the plugin, link or copy
+					it to your post-plugin directory:
+					<span class="code">
+						ln -s /usr/local/share/gitce/examples/hooks/mail.sh \<br/>
+						&nbsp;&nbsp;/etc/gitce/my-cool-project-post.d/10_mail.sh
+					</span>
+				</p>
+				<h4>VNC server</h4>
+				<p>
+					For GUI or browser tests, you need an X server to be available during your tests.
+					The "vnc" plugin provides the capabilities to start and stop a vnc server for
+					the execution. To set up the plugin, link or copy it to your post-plugin directory:
+					<span class="code">
+						ln -s /usr/local/share/gitce/examples/hooks/vnc.sh \<br/>
+						&nbsp;&nbsp;/etc/gitce/my-cool-project-pre.d/50_vnc.sh
+						ln -s /usr/local/share/gitce/examples/hooks/vnc.sh \<br/>
+						&nbsp;&nbsp;/etc/gitce/my-cool-project-post.d/50_vnc.sh
+					</span>
+					To enable the plugin, you have to define the DISPLAY parameter in your project's
+					configuration like that:
+					<span class="code">
+						echo "export DISPLAY=:30" &gt;&gt; /etc/gitce/my-cool-project
+					</span>
+				</p>
+				<h4>Cleanup Working Directory</h4>
+				<p>
+					To save disk space, you can enable the "clearwork" plugin in the post plugin directory
+					which will delete the checked out content of the execution.
+					<span class="code">
+						ln -s /usr/local/share/gitce/examples/hooks/clearwork.sh \<br/>
+						&nbsp;&nbsp;/etc/gitce/my-cool-project-post.d/99_clearwork.sh
+					</span>
+				</p>
+			</article>
 
-            <footer>
-                <ul>
-                    <li><a href="https://www.new-thoughts.org/">Copyright &copy; 2011, 2012 Tobias Sarnowski</a></li>
-                </ul>
-            </footer>
-        </div>
-    </body>
+			<article>
+				<h3><a name="plugins"></a>Write your own plugins</h3>
+				<p>
+					To write your own plugins you only have to provide some kind of executable. Link or
+					move your program to the appropriate plugin directory (pre.d or post.d) of your
+					project. There are various environment variables defined which you can use to
+					prepare your execution or to clean it up afterwards. Use some simple plugin to get
+					the available variables:
+					<span class="code">
+						cat &gt; /etc/gitce/my-cool-project-post.d/myplugin.sh &lt;&lt; "EOF"<br/>
+						#!/bin/sh<br/>
+						export<br/>
+						EOF<br/>
+						chmod +x /etc/gitce/my-cool-project-post.d/myplugin.sh
+					</span>
+					On next execution, the plugin will log all available environment variables.
+				</p>
+			</article>
+
+			<footer>
+				<ul>
+					<li><a href="https://www.new-thoughts.org/">Copyright &copy; 2011, 2012 Tobias Sarnowski</a></li>
+				</ul>
+			</footer>
+		</div>
+	</body>
 </html>
