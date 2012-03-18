@@ -114,7 +114,7 @@ done
 
 # run the command
 export GENCI_PHASE="run"
-export
+env
 cd $BUILD_WORK_DIR
 
 if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
