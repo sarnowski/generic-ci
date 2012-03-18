@@ -1,6 +1,7 @@
-/gitce.iml
+/*.iml
 /.idea
-*.deb
 *.tar.gz
+*.tgz
+*.deb
 *.rpm
 /test-*.log
