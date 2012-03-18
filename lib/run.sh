@@ -108,8 +108,16 @@ fi
 
 # trigger pre hooks
 export GENCI_PHASE="pre"
-for hook in "$PRE"; do
+for hook in $PRE; do
 	$hook
+	hook_result=$?
+
+	if [ $hook_result -ne 0 ]; then
+		echo $hook_result > $BUILD_RESULT
+		echo $SHA1 > $HEADS/$BRANCH
+		echo "Aborting build due to failure during pre-hooks!"
+		exit $hook_result
+	fi
 done
 
 # run the command
@@ -140,7 +148,7 @@ export GENCI_BUILD_RESULT=$RESULT
 
 # trigger post hooks
 export GENCI_PHASE="post"
-for hook in "$POST"; do
+for hook in $POST; do
 	$hook
 done
 
