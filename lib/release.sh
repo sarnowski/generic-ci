@@ -6,6 +6,6 @@ BRANCH=$3
 [ -z "$BRANCH" ] && BRANCH="master"
 
 REF=$4
-[ -z "$REF" ] && REF="HEAD"
+[ -z "$REF" ] && REF="$BRANCH"
 
 echo $REF > $RELEASES/$BRANCH || exit 1
