@@ -177,7 +177,7 @@ $GENCI status $CONFIG | while read line; do
 	while [ $(($last - $cnt)) -ge 0 ] && [ $cnt -lt 10 ]; do
 
 		bhealth="broken"
-		[ "$(cat $BUILDS/master/build/$(($last - $cnt))/result 2>/dev/null)" = "0" ] && bhealth="ok"
+		[ "$(cat $BUILDS/$branch/build/$(($last - $cnt))/result 2>/dev/null)" = "0" ] && bhealth="ok"
 
 		echo "<td><a class=\"$bhealth\" href=\"$branch-$(($last - $cnt)).txt\">#$(($last - $cnt))</a></td>" >> $WEB/index.html
 		cnt=$(($cnt + 1))
@@ -276,15 +276,15 @@ EOF
 	echo "<ul>" >> $WEB/$branch.html
 	build=$last
 	while [ $build -ge 0 ]; do
-		sha1=$(cat $BUILDS/master/build/$build/sha1)
+		sha1=$(cat $BUILDS/$branch/build/$build/sha1)
 
 		bhealth="broken"
-		[ "$(cat $BUILDS/master/build/$build/result 2>/dev/null)" = "0" ] && bhealth="ok"
+		[ "$(cat $BUILDS/$branch/build/$build/result 2>/dev/null)" = "0" ] && bhealth="ok"
 
 		echo "<li><a href=\"$branch-$build.txt\" class=\"$bhealth\">#$build based on $sha1</a>" >> $WEB/$branch.html
 
 		if [ $build -gt 0 ]; then
-			sha1_from=$(cat $BUILDS/master/build/$(($build - 1))/sha1)
+			sha1_from=$(cat $BUILDS/$branch/build/$(($build - 1))/sha1)
 			echo "<ul>" >> $WEB/$branch.html
 			$GIT log --format="%s (%h) %an, %aD" $sha1_from..$sha1 | while read line; do
 				echo "<li>$line</li>" >> $WEB/$branch.html
