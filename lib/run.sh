@@ -122,7 +122,7 @@ done
 
 # run the command
 export GENCI_PHASE="run"
-env
+env | sort
 cd $BUILD_WORK_DIR
 
 if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
