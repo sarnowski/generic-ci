@@ -206,7 +206,7 @@ cat > $WEB/monitor.html << "EOF"
 	<head>
 		<title>generic-ci monitor</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta http-equiv="refresh" content="5">
+		<meta http-equiv="refresh" content="5"/>
 		<style type="text/css">
 			* {
 				margin: 0;
@@ -313,6 +313,7 @@ EOF
 <html>
 	<head>
 		<title>generic-ci widget</title>
+		<meta http-equiv="refresh" content="23"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<style type="text/css">
 			* {
