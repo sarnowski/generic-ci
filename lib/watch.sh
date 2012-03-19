@@ -1,5 +1,5 @@
 # update repository
-$GENCI update $CONFIG
+$GENCI update $CONFIG >/dev/null
 
 # parse status
 build=
