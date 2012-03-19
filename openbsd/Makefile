@@ -25,8 +25,8 @@ PKG_ARCH =		*
 
 do-install:
 	${INSTALL_SCRIPT} ${WRKSRC}/genci ${PREFIX}/bin/
-	${INSTALL_DATA_DIR} ${PREFIX}/share/lib/genci
-	${INSTALL_DATA} ${WRKSRC}/lib/* ${PREFIX}/share/lib/genci
+	${INSTALL_DATA_DIR} ${PREFIX}/lib/genci
+	${INSTALL_DATA} ${WRKSRC}/lib/* ${PREFIX}/lib/genci
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/genci
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/genci/css
 	${INSTALL_DATA} ${WRKSRC}/doc/{LICENSE,index.html} ${PREFIX}/share/doc/genci
