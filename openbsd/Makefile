@@ -1,4 +1,4 @@
-V =			VERSION
+V =			OVERSION
 DISTNAME =		generic-ci-openbsd-${V}
 COMMENT =		generic-ci, a generic continuous integration tool
 
@@ -25,10 +25,13 @@ PKG_ARCH =		*
 
 do-install:
 	${INSTALL_SCRIPT} ${WRKSRC}/genci ${PREFIX}/bin/
+	${INSTALL_DATA_DIR} ${PREFIX}/share/lib/genci
+	${INSTALL_DATA} ${WRKSRC}/lib/* ${PREFIX}/share/lib/genci
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/genci
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/genci/css
 	${INSTALL_DATA} ${WRKSRC}/doc/{LICENSE,index.html} ${PREFIX}/share/doc/genci
 	${INSTALL_DATA} ${WRKSRC}/doc/css/* ${PREFIX}/share/doc/genci/css
+	echo ${V} > ${PREFIX}/share/doc/genci/VERSION
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/genci
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/genci/hooks
 	${INSTALL_DATA_DIR} ${PREFIX}/share/examples/genci/monitor

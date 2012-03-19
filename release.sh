@@ -55,7 +55,7 @@ if [ "$(uname)" = "OpenBSD" ] && [ -d /usr/ports/infrastructure ] && [ $(id -u) 
 	fi
 
 	mkdir -p $TMP/devel/generic-ci-openbsd
-	sed "s/VERSION/$OVERSION/g" openbsd/Makefile > $TMP/devel/generic-ci-openbsd/Makefile
+	sed "s/OVERSION/$OVERSION/g" openbsd/Makefile > $TMP/devel/generic-ci-openbsd/Makefile
 	mkdir -p $TMP/devel/generic-ci-openbsd/pkg
 	cp README $TMP/devel/generic-ci-openbsd/pkg/DESCR
 
