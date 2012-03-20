@@ -62,7 +62,7 @@ fi
 if [ $# -eq 0 ]; then
 	echo "generic-ci - a generic continuous integration tool"
 	echo
-	echo "Find more help under http://www.new-thoughts.org/generic-ci/"
+	echo "Find more help under http://trustedco.de/generic-ci/"
 	echo
 	echo
 	cat $DOC/LICENSE

@@ -4,8 +4,8 @@ COMMENT =		generic-ci, a generic continuous integration tool
 
 CATEGORIES =		devel
 
-HOMEPAGE =		https://www.new-thoughts.org/generic-ci/
-MAINTAINER =		Tobias Sarnowski <sarnowski@new-thoughts.org>
+HOMEPAGE =		http://trustedco.de/generic-ci/
+MAINTAINER =		Tobias Sarnowski <tobias@trustedco.de>
 
 PERMIT_PACKAGE_CDROM =	No
 PERMIT_PACKAGE_FTP =	No

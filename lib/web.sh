@@ -187,7 +187,7 @@ done
 
 cat >> $WEB/index.html << "EOF"
 		</table>
-		<p>Builds powered by <a href="https://www.new-thoughts.org/generic-ci/" target="_blank">generic-ci</a>.</p>
+		<p>Builds powered by <a href="http://trustedco.de/generic-ci/" target="_blank">generic-ci</a>.</p>
 	</body>
 </html>
 EOF
@@ -299,7 +299,7 @@ EOF
 	echo "</ul>" >> $WEB/$branch.html
 
 	cat >> $WEB/$branch.html << "EOF"
-		<p>Builds powered by <a href="https://www.new-thoughts.org/generic-ci/" target="_blank">generic-ci</a>.</p>
+		<p>Builds powered by <a href="http://trustedco.de/generic-ci/" target="_blank">generic-ci</a>.</p>
 	</body>
 </html>
 EOF
