@@ -1,1 +1,1 @@
-$GIT fetch --prune
+$GIT fetch --prune --quiet
