@@ -5,18 +5,23 @@
 # BASIC SETUP
 #
 
-# which command to execute for testing
-#TEST_COMMAND=./test.sh
+# If the watcher should test on every change (yes/no)
+#RUN_TESTS="yes"
 
-# which command to execute for releasing
-#RELEASE_COMMAND=./release.sh
+# Which command to execute for testing
+#TEST_COMMAND="./test.sh"
 
-# if called via root, use this user
-# # e.g. BUILD_USER=nobody
-#BUILD_USER=
+# Which command to execute for releasing
+#RELEASE_COMMAND="./release.sh"
 
-# if the watcher should test on every change (yes/no)
-#RUN_TESTS=yes
+# Change to this user for the execution. Only usable as root!
+# e.g. BUILD_USER="nobody"
+#BUILD_USER=""
+
+# Change the root directory during the execution. Call this script
+# to set up the environment. Only usable as root!
+# e.g. CHROOT_SETUP="/usr/local/share/examples/genci/chroot-setup.sh"
+#CHROOT_SETUP=""
 
 
 #

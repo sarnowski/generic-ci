@@ -54,6 +54,14 @@ if [ $(id -u) -eq 0 ]; then
 	echo "  scripts or tests."
 	read INPUT_BUILD_USER
 	echo
+
+	echo "Chroot Setup (leave blank if no chroot should be user:"
+	echo "  A chrooted environment can be used to run the build in a"
+	echo "  seperated 'system'. Even running as root can hardly"
+	echo "  damage the host system (but not impossible!). Type in"
+	echo "  the location of the setup script to use."
+	read INPUT_CHROOT_SETUP
+	echo
 fi
 
 
@@ -66,6 +74,7 @@ echo "Run Tests:           $INPUT_RUN_TESTS"
 echo "Test Command:        $INPUT_TEST_COMMAND"
 echo "Release Command:     $INPUT_RELEASE_COMMAND"
 echo "Build User:          $INPUT_BUILD_USER"
+echo "Chroot Setup:        $INPUT_CHROOT_SETUP"
 echo
 echo "Are those settings correct? (yes/no)"
 read CONFIRM
@@ -85,6 +94,7 @@ cat $EXAMPLES/example-config \
 	| sed "s§^#TEST_COMMAND=.*$§TEST_COMMAND=\"$INPUT_TEST_COMMAND\"§" \
 	| sed "s§^#RELEASE_COMMAND=.*$§RELEASE_COMMAND=\"$INPUT_RELEASE_COMMAND\"§" \
 	| sed "s§^#BUILD_USER=.*$§BUILD_USER=\"$INPUT_BUILD_USER\"§" \
+	| sed "s§^#CHROOT_SETUP=.*$§CHROOT_SETUP=\"$INPUT_CHROOT_SETUP\"§" \
 	> $config_file
 
 $GENCI init $INPUT_CONFIG $INPUT_SOURCE

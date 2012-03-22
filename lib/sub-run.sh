@@ -144,20 +144,56 @@ done
 
 cd $BUILD_WORK_DIR
 
-if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
-	echo "Running build command $COMMAND as $BUILD_USER..."
-	chown -R $BUILD_USER $BUILD_WORK_DIR
-	if [ "$(uname)" = "OpenBSD" ]; then
-		su $BUILD_USER -c "$COMMAND"
-	else
-		su -p -c "$COMMAND" $BUILD_USER
+if [ $(id -u) -eq 0 ]; then
+	if [ ! -z "$BUILD_USER" ] && [ -z "$CHROOT_SETUP" ]; then
+		chown -R $BUILD_USER $BUILD_WORK_DIR
+
+		if [ "$(uname)" = "OpenBSD" ]; then
+			COMMAND="su $BUILD_USER -c \"$COMMAND\""
+		else
+			COMMAND="su -p -c \"$COMMAND\" $BUILD_USER"
+		fi
+	elif [ ! -z "$CHROOT_SETUP" ]; then
+		mkdir -p $BUILD_DIR/newroot
+		$CHROOT_SETUP $BUILD_DIR/newroot
+		chroot_result=$?
+
+		if [ $chroot_result -ne 0 ]; then
+			echo $chroot_result > $BUILD_RESULT
+			echo $SHA1 > $HEADS/$BRANCH
+			echo "Aborting build due to failure during chroot setup!"
+			exit $chroot_result
+		fi
+
+		mv $BUILD_WORK_DIR $BUILD_DIR/newroot/checkout
+		mv $BUILD_DIR/newroot $BUILD_WORK_DIR
+
+		echo "Preparing chrooted command:  $COMMAND"
+		cat > $BUILD_WORK_DIR/run.sh << "EOF"
+#!/bin/sh
+cd /checkout
+EOF
+		echo $COMMAND >> $BUILD_WORK_DIR/run.sh
+		chmod +x $BUILD_WORK_DIR/run.sh
+
+		if [ -z "$BUILD_USER" ]; then
+			COMMAND="chroot $BUILD_WORK_DIR /run.sh"
+		else
+			chown -R $BUILD_USER $BUILD_WORK_DIR/checkout
+
+			export LD_LIBRARY_PATH="/usr/local/lib"
+			if [ "$(uname)" = "OpenBSD" ]; then
+				COMMAND="chroot -u $BUILD_USER $BUILD_WORK_DIR /run.sh"
+			else
+				COMMAND="chroot -userspec=$BUILD_USER $BUILD_WORK_DIR /run.sh"
+			fi
+		fi
 	fi
-	RESULT=$?
-else
-	echo "Running build command $COMMAND..."
-	$COMMAND
-	RESULT=$?
 fi
+
+echo "Running build command:  $COMMAND"
+$COMMAND
+RESULT=$?
 
 # the result
 echo $RESULT > $BUILD_RESULT
