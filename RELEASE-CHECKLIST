@@ -1,0 +1,9 @@
+What to do to release generic-ci:
+
+  * Test!
+  * Update doc/index.html to reflect new version.
+  * Tag and push git.
+  * Build and upload the distribution packages. (OpenBSD + Debian)
+  * Generate the new ChangeLog file.
+  * Update the live page.
+
