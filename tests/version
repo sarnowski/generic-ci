@@ -1,2 +1,2 @@
 #!/bin/sh
-[ "development" = "$($GENCI version)" ] || exit 1
+[ "unknown" != "$($GENCI version)" ] || exit 1
