@@ -17,7 +17,7 @@ echo Bin: $0
 echo Pwd: $(pwd)
 echo Shell: $SHELL
 echo User: $USER
-echo Version: $(git describe --tags)
+echo Version: $(git describe --tags 2>&1)
 echo Date: $(date)
 echo
 
@@ -36,4 +36,8 @@ fi
 
 echo
 echo "============ git status ======================================="
-git status
+git status 2>&1
+
+echo
+echo "============ environment ======================================"
+env
