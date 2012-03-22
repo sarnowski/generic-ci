@@ -11,6 +11,11 @@ printed() {
 }
 
 last_result() {
+	if [ ! -f $BUILDS/$branch/number ]; then
+		echo "0"
+		return
+	fi
+
 	next_number=$(cat $BUILDS/$branch/number)
 	current_number=$(($next_number - 1))
 	last_number=$(($current_number - 1))
@@ -26,6 +31,11 @@ last_result() {
 
 running() {
 	branch=$1
+
+	if [ ! -f $BUILDS/$branch/number ]; then
+		echo "0"
+		return
+	fi
 
 	next_number=$(cat $BUILDS/$branch/number)
 	current_number=$(($next_number - 1))

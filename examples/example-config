@@ -5,10 +5,6 @@
 # BASIC SETUP
 #
 
-# where to get the source from
-# e.g. git@github.com:sarnowski/gitce.git
-SOURCE=
-
 # which command to execute for testing
 #TEST_COMMAND=./test.sh
 

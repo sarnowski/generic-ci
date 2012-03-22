@@ -15,7 +15,7 @@ success=0
 for t in $(ls tests); do
 	# prepare
 	config=$(date +%s)-$t
-	echo "SOURCE=/tmp/$config" > $HOME/.genci/$config
+	touch $HOME/.genci/$config
 
 	# prepare a fake git repository
 	mkdir /tmp/$config
@@ -33,6 +33,8 @@ EOF
 	git init >/dev/null
 	git add . >/dev/null
 	git commit -m "initial commit" >/dev/null
+
+	$GENCI init $config /tmp/$config
 
 	# execute the test
 	cd $h

@@ -108,7 +108,7 @@ th a {
 	color: red;
 }
 .running {
-	color: darkyellow;
+	color: yellow;
 }
 th.ok {
 	color: black;
@@ -175,11 +175,20 @@ $GENCI status $CONFIG | while read line; do
 	echo "<tr>" >> $WEB/index.html
 	echo "<th class=\"$health $(running $status) $status\"><a href=\"$branch.html\">$branch</a></th>" >> $WEB/index.html
 	while [ $(($last - $cnt)) -ge 0 ] && [ $cnt -lt 10 ]; do
+		build=$((last - $cnt))
 
-		bhealth="broken"
-		[ "$(cat $BUILDS/$branch/build/$(($last - $cnt))/result 2>/dev/null)" = "0" ] && bhealth="ok"
+		if [ ! -f $BUILDS/$branch/build/$build/sha1 ]; then
+			cnt=$(($cnt + 1))
+			continue
+		fi
 
-		echo "<td><a class=\"$bhealth\" href=\"$branch-$(($last - $cnt)).txt\">#$(($last - $cnt))</a></td>" >> $WEB/index.html
+		bhealth="running"
+		if [ -f $BUILDS/$branch/build/$build/result ]; then
+			bhealth="broken"
+			[ "$(cat $BUILDS/$branch/build/$build/result)" = "0" ] && bhealth="ok"
+		fi
+
+		echo "<td><a class=\"$bhealth\" href=\"$branch-$build.txt\">#$build</a></td>" >> $WEB/index.html
 		cnt=$(($cnt + 1))
 	done
 	echo "</tr>" >> $WEB/index.html
@@ -276,10 +285,18 @@ EOF
 	echo "<ul>" >> $WEB/$branch.html
 	build=$last
 	while [ $build -ge 0 ]; do
+		if [ ! -f $BUILDS/$branch/build/$build/sha1 ]; then
+			build=$(($build - 1))
+			continue
+		fi
+
 		sha1=$(cat $BUILDS/$branch/build/$build/sha1)
 
-		bhealth="broken"
-		[ "$(cat $BUILDS/$branch/build/$build/result 2>/dev/null)" = "0" ] && bhealth="ok"
+		bhealth="running"
+		if [ -f $BUILDS/$branch/build/$build/result ]; then
+			bhealth="broken"
+			[ "$(cat $BUILDS/$branch/build/$build/result)" = "0" ] && bhealth="ok"
+		fi
 
 		echo "<li><a href=\"$branch-$build.txt\" class=\"$bhealth\">#$build based on $sha1</a>" >> $WEB/$branch.html
 
@@ -354,6 +371,10 @@ EOF
 	#
 	build=$last
 	while [ $build -ge 0 ]; do
+		if [ ! -f $BUILDS/$branch/build/$build/log ]; then
+			build=$(($build - 1))
+			continue
+		fi
 		orig=$(filesize $BUILDS/$branch/build/$build/log)
 		copy=$(filesize $WEB/$branch-$build.txt)
 

@@ -7,6 +7,8 @@ GIT="git --git-dir=$SOURCE/.git"
 # create a second branch
 $GIT branch testbranch
 
+$GENCI update $CONFIG
+
 # two lines, since we have two branches now which are untested
 [ $($GENCI pending $CONFIG | wc -l) -eq 2 ] || exit 1
 

@@ -124,8 +124,9 @@ done
 export GENCI_PHASE="run"
 
 echo "Build Informations:"
-echo "   System: $(uname -a)"
-echo "   Hostname: $(hostname)"
+echo "  System: $(uname -a)"
+echo "  Hostname: $(hostname)"
+echo "  Environment:"
 env | sort | while read line; do
 	echo "   $line"
 done

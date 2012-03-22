@@ -10,7 +10,7 @@ if [ "$0" = "genci" ] && [ -z "$GENCI_HOME"] || [ "$0" = "/usr/local/bin/genci" 
 	GENCI=/usr/local/bin/genci
 
 	LIB=/usr/local/lib/genci
-	SHARE=/usr/local/share/genci
+	EXAMPLES=/usr/local/share/examples/genci
 	DOC=/usr/local/share/doc/genci
 else
 	if [ ! -z "$GENCI_HOME" ]; then
@@ -22,7 +22,7 @@ else
 	GENCI=$prefix/genci
 
 	LIB=$prefix/lib
-	SHARE=$prefix/share
+	EXAMPLES=$prefix/examples
 	DOC=$prefix/doc
 fi
 
@@ -59,7 +59,7 @@ if [ -f $LIB/top-$COMMAND.sh ]; then
 elif [ -f $LIB/sub-$COMMAND.sh ]; then
 	command_script=$LIB/sub-$COMMAND.sh
 else
-	echo "Command $0 not found!" >&2
+	echo "Command $1 not found!" >&2
 	panic "Usage:  $0 <command>"
 fi
 
@@ -74,11 +74,6 @@ if [ ! -f $config_file ]; then
 fi
 . $config_file
 
-# sanitize configuration
-if [ -z "$SOURCE" ]; then
-	panic "SOURCE not set in $CONF/$CONFIG!"
-fi
-
 # set up more base paths
 WORK=$WORKS/$CONFIG
 
@@ -90,8 +85,9 @@ RELEASES=$WORK/releases
 mkdir -p $WORK $BUILDS $HEADS $RELEASES
 
 # check for repository and clone on demand
-if [ ! -d $REPOSITORY ]; then
-	git clone --mirror $SOURCE $REPOSITORY >/dev/null || exit $?
+if [ ! -d $REPOSITORY ] && [ "$COMMAND" != "init" ]; then
+	echo "Configuration is not initialized! Use '$0 init $CONFIG <source>'." >&2
+	exit 1
 fi
 GIT="git --git-dir=$REPOSITORY"
 

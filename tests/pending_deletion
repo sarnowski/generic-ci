@@ -8,6 +8,8 @@ ls -l $SOURCE
 # create a branch
 $GIT branch testbranch
 
+$GENCI update $CONFIG
+
 # build the branches
 $GENCI run $CONFIG testbranch
 
