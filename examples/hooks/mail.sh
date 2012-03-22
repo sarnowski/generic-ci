@@ -1,5 +1,16 @@
 #!/bin/sh
 
+if [ "$GENCI_PHASE" != "post" ]; then
+	echo "Wrong phase for plugin!" >&2
+	exit 1
+fi
+
+if [ "$GENCI_BUILD_NUMBER" -eq 0 ]; then
+	# ignore the first one, would result in mailing to all persons in history
+	# if a newly branched build failes
+	exit 0
+fi
+
 # only if we broke the build
 R=$GENCI_BUILD_RESULT
 
