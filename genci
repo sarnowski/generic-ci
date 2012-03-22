@@ -37,27 +37,6 @@ else
 	LOGS=$CONF/logs
 fi
 
-# version
-if [ "$1" = "version" ]; then
-	version_file=$DOC/VERSION
-	if [ -f $version_file ]; then
-		cat $version_file
-	else
-		echo "development"
-	fi
-	exit 0
-fi
-
-# list configs
-if [ "$1" = "configs" ]; then
-	for entry in $(ls $CONF); do
-		if [ -f $CONF/$entry ]; then
-			echo $entry
-		fi
-	done
-	exit 0
-fi
-
 # basic argument sanitizing
 if [ $# -eq 0 ]; then
 	echo "generic-ci - a generic continuous integration tool"
@@ -69,23 +48,34 @@ if [ $# -eq 0 ]; then
 	exit 1
 fi
 
-if [ $# -lt 2 ]; then
-	echo "Usage:  $0 <command> <configuration>" >&2
-	exit 1
+# top commands
+if [ $# -eq 1 ]; then
+	COMMAND=$1
+	command_script=$LIB/top-$COMMAND.sh
+
+	if [ ! -f $command_script ]; then
+		echo "Command $0 not found!" >&2
+		panic "Usage:  $0 <command>"
+	fi
+
+	. $command_script
+	exit $?
 fi
 
-# check the requested command
+# sub commands
 COMMAND=$1
-command_script=$LIB/$COMMAND.sh
+command_script=$LIB/sub-$COMMAND.sh
 if [ ! -f $command_script ]; then
-	echo "Command $COMMAND not found!"
+	echo "Command $0 not found!" >&2
+	panic "Usage:  $0 <command> <configuration>"
 fi
 
 # load the configuration
 CONFIG=$2
 config_file=$CONF/$CONFIG
 if [ ! -f $config_file ]; then
-	panic "Configuration $CONFIG not found!"
+	echo "Configuration $CONFIG not found!" >&2
+	panic "Usage:  $0 <command> <configuration>"
 fi
 . $config_file
 
@@ -112,3 +102,4 @@ GIT="git --git-dir=$REPOSITORY"
 
 # finally run the command
 . $command_script
+exit $?
