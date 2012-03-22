@@ -55,7 +55,7 @@ EOF
 		success=$(($success + 1))
 	else
 		echo "Return Code: $result" >> test-$t.log
-		echo "FAIL  $t  (output: test-$t.log)"
+		echo "FAIL  $t  [$result]"
 		failed=$(($failed + 1))
 	fi
 
