@@ -5,6 +5,13 @@ SOURCE=$2
 # dummy config
 dummy=$CONFIG-second
 
+fail() {
+	rm $HOME/.genci/$dummy
+	exit $1
+}
+
 # should not work
-$GENCI init $dummy $SOURCE || exit 0
+$GENCI init $dummy $SOURCE || fail 0
+
+rm $HOME/.genci/$dummy
 exit 1

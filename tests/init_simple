@@ -5,8 +5,16 @@ SOURCE=$2
 # dummy config
 dummy=$CONFIG-second
 
+fail() {
+	rm $HOME/.genci/$dummy
+	exit $1
+}
+
 # generate new config
 touch $HOME/.genci/$dummy
 
 # should work
-$GENCI init $dummy $SOURCE
+$GENCI init $dummy $SOURCE || fail 1
+
+rm $HOME/.genci/$dummy
+exit 0

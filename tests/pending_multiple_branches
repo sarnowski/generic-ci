@@ -5,15 +5,15 @@ SOURCE=$2
 GIT="git --git-dir=$SOURCE/.git"
 
 # create a second branch
-$GIT branch testbranch
+$GIT branch testbranch || exit 1
 
-$GENCI update $CONFIG
+$GENCI update $CONFIG || exit 2
 
 # two lines, since we have two branches now which are untested
-[ $($GENCI pending $CONFIG | wc -l) -eq 2 ] || exit 1
+[ $($GENCI pending $CONFIG | wc -l) -eq 2 ] || exit 3
 
 # both should be named explicitly
-[ ! -z "$($GENCI pending $CONFIG | grep "build master ")" ] || exit 2
-[ ! -z "$($GENCI pending $CONFIG | grep "build testbranch ")" ] || exit 3
+[ ! -z "$($GENCI pending $CONFIG | grep "build master ")" ] || exit 4
+[ ! -z "$($GENCI pending $CONFIG | grep "build testbranch ")" ] || exit 5
 
 exit 0
