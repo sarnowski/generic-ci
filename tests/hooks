@@ -1,0 +1,31 @@
+#!/bin/sh
+CONFIG=$1
+SOURCE=$2
+
+GIT="git --git-dir=$SOURCE/.git"
+
+# prepare two hooks
+cat > $SOURCE/hook-first.sh << "EOF"
+#!/bin/sh
+echo "HOOK FIRST"
+EOF
+chmod +x $SOURCE/hook-first.sh
+
+cat > $SOURCE/hook-second.sh << "EOF"
+#!/bin/sh
+echo "HOOK SECOND"
+EOF
+chmod +x $SOURCE/hook-second.sh
+
+# configure them
+echo "POST=\"\$POST $SOURCE/hook-first.sh\"" >> $HOME/.genci/$CONFIG
+echo "POST=\"\$POST $SOURCE/hook-second.sh\"" >> $HOME/.genci/$CONFIG
+
+# now do a build
+output=`$GENCI run $CONFIG`
+
+# test it
+[ -z "$(echo $output | grep 'HOOK FIRST')" ] && exit 1
+[ -z "$(echo $output | grep 'HOOK SECOND')" ] && exit 2
+
+exit 0

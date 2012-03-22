@@ -101,6 +101,13 @@ export GENCI_BUILD_USER=$BUILD_USER
 export GENCI_BUILD_COMMAND=$BUILD_COMMAND
 export GENCI_PHASE="init"
 
+if [ $BUILD_NUMBER -gt 0 ]; then
+	last_build=$(($BUILD_NUMBER - 1))
+	if [ -f $BRANCH_DIR/build/$last_build/sha1 ]; then
+		export GENCI_BUILD_OLD_SHA1=$(cat $BRANCH_DIR/build/$last_build/sha1)
+	fi
+fi
+
 # set up some variables, su does not set up for us
 if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
 	export HOME=$(grep "^$BUILD_USER:" /etc/passwd | cut -d':' -f6)

@@ -8,6 +8,7 @@ fi
 if [ "$GENCI_BUILD_NUMBER" -eq 0 ]; then
 	# ignore the first one, would result in mailing to all persons in history
 	# if a newly branched build failes
+	echo "Skipping mailing on the first build of a branch."
 	exit 0
 fi
 
@@ -54,6 +55,8 @@ if [ $R -eq 0 ]; then
 				| mail -s "$TITLE" $email
 		done
 		rm $FAILAUTHORS
+	else
+		echo "No mails to send."
 	fi
 fi
 
