@@ -122,7 +122,14 @@ done
 
 # run the command
 export GENCI_PHASE="run"
-env | sort
+
+echo "Build Informations:"
+echo "   System: $(uname -a)"
+echo "   Hostname: $(hostname)"
+env | sort | while read line; do
+	echo "   $line"
+done
+
 cd $BUILD_WORK_DIR
 
 if [ $(id -u) -eq 0 ] && [ ! -z "$BUILD_USER" ]; then
