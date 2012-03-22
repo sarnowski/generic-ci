@@ -23,12 +23,12 @@
 				<article id="download">
 					<h3>Download</h3>
 
-					<span>Latest release: <strong>0.10.2</strong></span>
+					<span>Latest release: <strong>0.11.0</strong></span>
 					<span>
-						<a href="http://trustedco.de/generic-ci/dl/generic-ci-user-0.10.2.tar.gz">generic user tarball</a>,<br/>
-						<a href="http://trustedco.de/generic-ci/dl/generic-ci-server-0.10.2.tar.gz">generic server tarball</a>,<br/>
-						<a href="http://trustedco.de/generic-ci/dl/generic-ci-openbsd-0.10.2.tgz">OpenBSD package</a>,<br/>
-						<a href="http://trustedco.de/generic-ci/dl/generic-ci-0.10.2-all.deb">Debian package</a>
+						<a href="http://trustedco.de/generic-ci/dl/generic-ci-user-0.11.0.tar.gz">generic user tarball</a>,<br/>
+						<a href="http://trustedco.de/generic-ci/dl/generic-ci-server-0.11.0.tar.gz">generic server tarball</a>,<br/>
+						<a href="http://trustedco.de/generic-ci/dl/generic-ci-openbsd-0.11.0.tgz">OpenBSD package</a>,<br/>
+						<a href="http://trustedco.de/generic-ci/dl/generic-ci-0.11.0-all.deb">Debian package</a>
 					</span>
 
 					<br/>
@@ -113,22 +113,18 @@
 			<article>
 				<h3><a name="setup"></a>Basic Setup</h3>
 				<p>
-					To set up a new project with generic-ci, you only have to create an appropriate configuation file.
-					When running generic-ci as a user, place the configuration file in $HOME/.genci/. When running as
-					root, place the file in /etc/genci/. You can find an example configuration in the "examples" directory.
-					It is recommended to use the example configuration as there is documentation about configuration
-					options.
-				</p>
-				<p>
-					generic-ci uses the cron service of your system to perform all tasks. To get started, configure your
-					cron with "crontab -e" like the following:
+					generic-ci provides a setup utility, which sets up a configuration initially. To start the setup
+					just type:
 					<span class="code">
-						* * * * * genci watch example-config
+						genci setup
 					</span>
-					Replace "example-config" with the name you gave your configuration file. That's it!
+					The setup will ask you some question and will afterwards initialize your configuration. Please
+					read the instructions carefully!
 				</p>
+			</article>
 
-				<h4>Releasing</h4>
+			<article>
+				<h3>Releasing</h3>
 				<p>
 					generic-ci provides the ability to use the test environment directly to also execute releases. This
 					may help to utilize the tested environment. To trigger a release, type the following command:
@@ -137,8 +133,10 @@
 					</span>
 					The release is then scheduled and executed next time the crontab executes generic-ci.
 				</p>
+			</article>
 
-				<h4>Web Interface</h4>
+			<article>
+				<h3>Web Interface</h3>
 				<p>
 					To get an easy web interface for generic-ci, you can let generic-ci generate static html files. This
 					way, it is easy to have a web interface in a chrooted web server. Set up another cronjob:
