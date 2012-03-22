@@ -91,6 +91,38 @@ if [ ! -d $REPOSITORY ] && [ "$COMMAND" != "init" ]; then
 fi
 GIT="git --git-dir=$REPOSITORY"
 
+# locking functions
+lock_config() {
+	config=$1
+	locked_config
+	if [ $? -eq 0 ]; then
+		return 1
+	else
+		echo $$ > $WORK/lock
+		return 0
+	fi
+}
+
+locked_config() {
+	[ ! -f $WORK/lock ] && return 1
+	pid=$(cat $WORK/lock)
+	if [ $(ps $pid | wc -l) -ne 2 ]; then
+		rm $WORK/lock
+		return 1
+	else
+		return 0
+	fi
+}
+
+require_locked_config() {
+	lock_config
+	[ $? -eq 0 ] || panic "Configuration $CONFIG is currently locked!"
+}
+
+unlock_config() {
+	rm -f $WORK/lock
+}
+
 # finally run the command
 . $command_script
 exit $?

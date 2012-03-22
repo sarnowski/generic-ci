@@ -1,17 +1,24 @@
 #!/bin/sh
 CONFIG=$1
 
-$GENCI watch $CONFIG
-
-if [ "$($GENCI status $CONFIG)" != "ok master active 0 " ]; then
+if [ "$($GENCI status $CONFIG)" != "ok master build 0 " ]; then
+	$GENCI status $CONFIG
 	exit 1
 fi
 
-
-$GENCI watch $CONFIG
+$GENCI watch $CONFIG || exit $?
 
 if [ "$($GENCI status $CONFIG)" != "ok master active 0 " ]; then
-	exit 1
+	$GENCI status $CONFIG
+	exit 2
+fi
+
+
+$GENCI watch $CONFIG || exit $?
+
+if [ "$($GENCI status $CONFIG)" != "ok master active 0 " ]; then
+	$GENCI status $CONFIG
+	exit 3
 fi
 
 exit 0

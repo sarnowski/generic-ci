@@ -38,9 +38,11 @@ action=$(echo $todo | cut -d' ' -f1)
 branch=$(echo $todo | cut -d' ' -f2)
 
 # nothing todo
-if [ -z "$action" ]; then
-	exit 0
-fi
+[ -z "$action" ] && exit 0
+
+# already working on something?
+locked_config
+[ $? -eq 0 ] && exit 0
 
 # check if we do normal builds
 if [ "$RUN_TESTS" = "no" ] && [ "$action" != "release" ]; then

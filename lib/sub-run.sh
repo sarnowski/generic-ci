@@ -14,6 +14,9 @@ REF=$4
 [ -z "$BRANCH" ] && BRANCH="master"
 [ -z "$REF" ] && REF="$BRANCH"
 
+# lock the config
+require_locked_config
+
 # set up basics
 BRANCH_DIR=$BUILDS/$BRANCH
 mkdir -p $BRANCH_DIR
@@ -162,6 +165,9 @@ done
 
 # for logging
 date
+
+# unlock config
+unlock_config
 
 # end the run
 if [ $RESULT -eq 0 ]; then
