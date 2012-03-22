@@ -10,9 +10,15 @@ mkdir -p $HOME/.genci/works
 export GENCI_HOME=$h
 export GENCI=$h/genci
 
+# which tests to work on
+tests=$(ls tests)
+[ ! -z "$1" ] && tests=$*
+
 failed=0
 success=0
-for t in $(ls tests); do
+for t in $tests; do
+	t=$(basename $t)
+
 	# prepare
 	config=$(date +%s)-$t
 	touch $HOME/.genci/$config
@@ -22,11 +28,13 @@ for t in $(ls tests); do
 	cd /tmp/$config
 	cat > test.sh << "EOF"
 #!/bin/sh
+echo "DUMMY TEST"
 exit 0
 EOF
 	chmod +x test.sh
 	cat > release.sh << "EOF"
 #!/bin/sh
+echo "DUMMY RELEASE"
 exit 0
 EOF
 	chmod +x release.sh

@@ -1,0 +1,26 @@
+#!/bin/sh
+CONFIG=$1
+SOURCE=$2
+
+GIT="git --git-dir=$SOURCE/.git"
+
+$GIT branch dummy || exit 1
+$GENCI update $CONFIG || exit 2
+
+$GENCI run $CONFIG dummy || exit 3
+
+$GIT branch -d dummy || exit 4
+$GENCI update $CONFIG || exit 5
+
+$GENCI watch $CONFIG || exit 6
+
+$GENCI status $CONFIG
+
+# two branches, two lines
+[ $($GENCI status $CONFIG | wc -l) -eq 2 ] || exit 7
+
+# this one line should be a mark to build the master
+[ ! -z "$($GENCI status $CONFIG | grep "^ok master active 0 $")" ] || exit 8
+[ ! -z "$($GENCI status $CONFIG | grep "^ok dummy inactive 0 $")" ] || exit 9
+
+exit 0

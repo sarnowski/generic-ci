@@ -1,0 +1,16 @@
+#!/bin/sh
+CONFIG=$1
+
+# only one line, since we only have a simple master
+[ $($GENCI pending $CONFIG | wc -l) -eq 1 ] || exit 1
+
+# this one line should be a mark to build the master
+[ ! -z "$($GENCI pending $CONFIG | grep "^build master ")" ] || exit 2
+
+# build it
+$GENCI run $CONFIG || exit 3
+
+# nothing should be pending
+[ $($GENCI pending $CONFIG | wc -l) -eq 0 ] || exit 4
+
+exit 0

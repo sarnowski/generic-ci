@@ -1,0 +1,14 @@
+#!/bin/sh
+CONFIG=$1
+
+if [ ! -z "$($GENCI pending $CONFIG | grep "^release master")" ]; then
+	exit 1
+fi
+
+$GENCI release $CONFIG || exit 2
+
+if [ ! -z "$($GENCI pending $CONFIG | grep "^release master")" ]; then
+	exit 0
+else
+	exit 3
+fi

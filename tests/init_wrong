@@ -1,0 +1,13 @@
+#!/bin/sh
+CONFIG=$1
+SOURCE=$2
+
+# dummy config
+dummy=$CONFIG-second
+
+# generate new config
+touch $HOME/.genci/$dummy
+
+# should not work
+$GENCI init $dummy /unexistant || exit 0
+exit 1

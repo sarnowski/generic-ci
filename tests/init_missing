@@ -1,0 +1,10 @@
+#!/bin/sh
+CONFIG=$1
+SOURCE=$2
+
+# dummy config
+dummy=$CONFIG-second
+
+# should not work
+$GENCI init $dummy $SOURCE || exit 0
+exit 1
