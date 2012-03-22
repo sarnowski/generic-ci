@@ -5,3 +5,4 @@
 *.deb
 *.rpm
 /test-*.log
+/doc/ChangeLog
