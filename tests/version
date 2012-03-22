@@ -1,2 +1,0 @@
-#!/bin/sh
-[ "unknown" != "$($GENCI version)" ] || exit 1
