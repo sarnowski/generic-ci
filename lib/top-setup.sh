@@ -4,6 +4,7 @@ echo
 INPUT_CONFIG=
 while [ true ]; do
 	echo "Configuration Name:"
+	echo "  This has to be a unique name which will identify your configuration."
 	read INPUT_CONFIG
 	if [ ! -z "$INPUT_CONFIG" ] && [ ! -f $CONF/$INPUT_CONFIG ]; then
 		break
@@ -15,6 +16,7 @@ echo
 INPUT_SOURCE=
 while [ true ]; do
 	echo "Source:"
+	echo "  The source has to be a git repository url."
 	read INPUT_SOURCE
 	[ ! -z "$INPUT_SOURCE" ] && break
 	echo "You have to enter a source for the configuration!"
@@ -23,6 +25,8 @@ echo
 
 INPUT_RUN_TESTS=
 echo "Should the configuration run tests automatically? [yes]"
+echo "  generic-ci will check your repository periodically and will trigger"
+echo "  test builds."
 read INPUT_RUN_TESTS
 [ -z "$INPUT_RUN_TESTS" ] && INPUT_RUN_TESTS="yes"
 echo
@@ -30,6 +34,7 @@ echo
 INPUT_TEST_COMMAND=
 if [ -z "$INPUT_RUN_TESTS" ] || [ "$INPUT_RUN_TESTS" = "yes" ]; then
 	echo "Test Command: [./test.sh]"
+	echo "  The test command has to return if the build is ok or broken."
 	read INPUT_TEST_COMMAND
 	[ -z "$INPUT_TEST_COMMAND" ] && INPUT_TEST_COMMAND="./test.sh"
 	echo
@@ -37,12 +42,16 @@ fi
 
 INPUT_RELEASE_COMMAND=
 echo "Release Command (ignore if you don't use it): [./release.sh]"
+echo "  The release command has to return if the build was ok or failed."
 read INPUT_RELEASE_COMMAND
 [ -z "$INPUT_RELEASE_COMMAND" ] && INPUT_RELEASE_COMMAND="./release.sh"
 echo
 
 if [ $(id -u) -eq 0 ]; then
 	echo "Build User (leave blank if root shall be used):"
+	echo "  Running a build as a non-privileged user is recommended as"
+	echo "  it prevents your system to be affected by broken build"
+	echo "  scripts or tests."
 	read INPUT_BUILD_USER
 	echo
 fi
