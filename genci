@@ -48,27 +48,22 @@ if [ $# -eq 0 ]; then
 	exit 1
 fi
 
-# top commands
-if [ $# -eq 1 ]; then
-	COMMAND=$1
+# command detection (top or sub)
+COMMAND=$1
+if [ -f $LIB/top-$COMMAND.sh ]; then
 	command_script=$LIB/top-$COMMAND.sh
 
-	if [ ! -f $command_script ]; then
-		echo "Command $0 not found!" >&2
-		panic "Usage:  $0 <command>"
-	fi
-
+	# execute directly, nothing more todo
 	. $command_script
 	exit $?
+elif [ -f $LIB/sub-$COMMAND.sh ]; then
+	command_script=$LIB/sub-$COMMAND.sh
+else
+	echo "Command $0 not found!" >&2
+	panic "Usage:  $0 <command>"
 fi
 
-# sub commands
-COMMAND=$1
-command_script=$LIB/sub-$COMMAND.sh
-if [ ! -f $command_script ]; then
-	echo "Command $0 not found!" >&2
-	panic "Usage:  $0 <command> <configuration>"
-fi
+# only sub commands go here
 
 # load the configuration
 CONFIG=$2
