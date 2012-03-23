@@ -59,6 +59,8 @@
 						<ul>
 							<li><a href="#install">Installation</a></li>
 							<li><a href="#setup">Basic Setup</a></li>
+							<li><a href="#release">Releasing</a></li>
+							<li><a href="#web">Web Interface</a></li>
 							<li><a href="#extending">Extending</a></li>
 						</ul>
 					</nav>
@@ -93,9 +95,9 @@
 				<h3>Why generic-ci?</h3>
 				<p>
 					Using the 2GB fat Java continuous integration servers is often overkill for the feature
-					set you really use. Often you don't even need Java on your server to build your project
-					or you don't have the memory or space for that extra process. That is where generic-ci
-					starts offering a lightweight, extremly simple and customizable solution.
+					set you really use. Often you don't even need Java or similar dependencies on your server
+					to build your project or you don't have the memory or space for that extra process. That
+					is where generic-ci starts offering a lightweight, extremly simple and customizable solution.
 				</p>
 			</article>
 
@@ -112,8 +114,9 @@
 			<article>
 				<h3><a name="install"></a>Installation</h3>
 				<p>
-					You can use generic-ci as a user or as a server. To use it as a server, install one of the provided
-					packages. As a user, just clone the repository itself to somewhere in your home directory.
+					You can use generic-ci as a user or as a server. To use it as a server or globally for every user,
+					install one of the provided packages. As a user, just clone the repository itself to somewhere in
+					your home directory.
 				</p>
 			</article>
 
@@ -126,12 +129,13 @@
 						genci setup
 					</span>
 					The setup will ask you some question and will afterwards initialize your configuration. Please
-					read the instructions carefully!
+					read the instructions carefully! For more configuration options, have a look at the generated
+					configuration file and modify it to your needs.
 				</p>
 			</article>
 
 			<article>
-				<h3>Releasing</h3>
+				<h3><a name="release"></a>Releasing</h3>
 				<p>
 					generic-ci provides the ability to use the test environment directly to also execute releases. This
 					may help to utilize the tested environment. To trigger a release, type the following command:
@@ -143,10 +147,11 @@
 			</article>
 
 			<article>
-				<h3>Web Interface</h3>
+				<h3><a name="web"></a>Web Interface</h3>
 				<p>
-					To get an easy web interface for generic-ci, you can let generic-ci generate static html files. This
-					way, it is easy to have a web interface in a chrooted web server. Set up another cronjob:
+					To get an easy web interface for generic-ci, you can let generic-ci generate html files. This
+					way, it is easy to have a stable and secure web interface deployable in a chrooted web server.
+					Set up another cronjob:
 					<span class="code">
 						* * * * * genci web example-config /var/www/htdocs/builds/example-config
 					</span>
