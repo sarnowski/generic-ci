@@ -28,9 +28,12 @@
 # HOOKS PRE
 #
 
-# vnc
+# vnc  - the vnc hook runs an X display during the build
+#
 #PRE="$PRE /usr/local/share/examples/genci/hooks/vnc.sh"
+#
 # vnc requires the DISPLAY variable to be set
+#
 #export DISPLAY=:30
 
 
@@ -39,11 +42,23 @@
 #
 
 # vnc
+#
 #POST="$POST /usr/local/share/examples/genci/hooks/vnc.sh"
 
-# mailing - send mails on fail etc.
+# artifacts  - collects build results
+#
+#POST="$POST /usr/local/share/examples/genci/hooks/cleanup.sh"
+#
+# artifacts requires a list of masks to search for
+# e.g. "results/*.xml", "tests/*.txt doc/*"
+#
+#export ARTIFACTS="*.log *.tar.gz *.tgz *.deb"
+
+# mail  - send mails on failure and recovery
+#
 #POST="$POST /usr/local/share/examples/genci/hooks/mail.sh"
 
-# cleanup
+# cleanup  - delete the work directory to save space
+#
 #POST="$POST /usr/local/share/examples/genci/hooks/cleanup.sh"
 

@@ -6,3 +6,4 @@
 *.rpm
 /test-*.log
 /doc/ChangeLog
+/TODO
