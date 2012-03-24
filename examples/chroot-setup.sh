@@ -1,8 +1,15 @@
 #!/bin/sh
 
-# Example script to set up a chroot environment.
-# This one only works on OpenBSD and can be used
-# to test generic-ci.
+# Example script to set up a chroot environment on OpenBSD.
+#
+# To run this script, you have to have a group and user called
+# "builder" with id 32760. Set up the following configuration
+# in your generic-ci config:
+#  BUILD_USER=builder
+#  CHROOT_SETUP=/path/to/this/chroot-setup.sh
+#
+# The commands installed here, are nessecary to build generic-ci
+# itself. Feel free to copy and modify the script to your needs.
 
 ROOT=$1
 
@@ -14,7 +21,7 @@ lnf() {
 		[ -f $ROOT/$file ] && continue
 
 		mkdir -p $(dirname $ROOT/$file)
-		ln $file $ROOT/$file
+		cp -p $file $ROOT/$file
 
 		for dep in $(ldd $file 2>/dev/null | awk '{print $7}'); do
 			[ -f $dep ] && lnf $dep
@@ -100,3 +107,4 @@ cat > $ROOT/home/builder/.gitconfig << "EOF"
 	email = builder@example.com
 	name = Builder
 EOF
+chown builder:builder $ROOT/home/builder/.gitconfig
