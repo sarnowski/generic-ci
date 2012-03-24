@@ -30,6 +30,8 @@
 
 # vnc
 #PRE="$PRE /usr/local/share/examples/genci/hooks/vnc.sh"
+# vnc requires the DISPLAY variable to be set
+#export DISPLAY=:30
 
 
 #
