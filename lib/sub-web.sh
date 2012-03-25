@@ -298,7 +298,7 @@ EOF
 			[ "$(cat $BUILDS/$branch/build/$build/result)" = "0" ] && bhealth="ok"
 		fi
 
-		echo "<li><a href=\"$branch-$build.txt\" class=\"$bhealth\">#$build based on $sha1</a>" >> $WEB/$branch.html
+		echo "<li><a href=\"$branch-$build.txt\" class=\"$bhealth\">#$build [$bhealth] based on $sha1</a>" >> $WEB/$branch.html
 
 		if [ $build -gt 0 ]; then
 			sha1_from=$(cat $BUILDS/$branch/build/$(($build - 1))/sha1)
