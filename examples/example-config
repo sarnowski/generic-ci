@@ -47,7 +47,7 @@
 
 # artifacts  - collects build results
 #
-#POST="$POST /usr/local/share/examples/genci/hooks/cleanup.sh"
+#POST="$POST /usr/local/share/examples/genci/hooks/artifacts.sh"
 #
 # artifacts requires a list of masks to search for
 # e.g. "results/*.xml", "tests/*.txt doc/*"
