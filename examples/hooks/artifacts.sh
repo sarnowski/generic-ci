@@ -1,9 +1,9 @@
 #!/bin/sh
 
-ARTIFACTS_DIR=$GENCI_BUILD_DIR/artifacts
-mkdir -p $ARTIFACTS_DIR
-
 if [ ! -z "$ARTIFACTS" ] && [ -d $GENCI_BUILD_WORK_DIR ]; then
+	ARTIFACTS_DIR=$GENCI_BUILD_DIR/artifacts
+	mkdir -p $ARTIFACTS_DIR
+
 	cd $GENCI_BUILD_WORK_DIR
 
 	echo "Collecting artifacts..."

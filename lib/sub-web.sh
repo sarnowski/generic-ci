@@ -16,6 +16,18 @@ filesize() {
 	fi
 }
 
+modifiedtime() {
+	if [ ! -e $1 ]; then
+		echo 0
+		return
+	fi
+	if [ ! -z "$(uname | grep -i "BSD")" ]; then
+		stat -f "%m" $1
+	else
+		stat -c "%Y" $1
+	fi
+}
+
 running() {
 	if [ "$1" = "active" ] || [ "$1" = "inactive" ]; then
 		echo
@@ -188,7 +200,12 @@ $GENCI status $CONFIG | while read line; do
 			[ "$(cat $BUILDS/$branch/build/$build/result)" = "0" ] && bhealth="ok"
 		fi
 
-		echo "<td><a class=\"$bhealth\" href=\"$branch-$build.txt\">#$build</a></td>" >> $WEB/index.html
+		artifacts_link=
+		if [ -d $WEB/$branch-$build ]; then
+			artifacts_link=" [<a href="$branch-$build/">A</a>]"
+		fi
+
+		echo "<td><a class=\"$bhealth\" href=\"$branch-$build.txt\">#$build</a>$artifacts_link</td>" >> $WEB/index.html
 		cnt=$(($cnt + 1))
 	done
 	echo "</tr>" >> $WEB/index.html
@@ -298,7 +315,12 @@ EOF
 			[ "$(cat $BUILDS/$branch/build/$build/result)" = "0" ] && bhealth="ok"
 		fi
 
-		echo "<li><a href=\"$branch-$build.txt\" class=\"$bhealth\">#$build [$bhealth] based on $sha1</a>" >> $WEB/$branch.html
+		artifacts_link=
+		if [ -d $WEB/$branch-$build ]; then
+			artifacts_link=" [<a href="$branch-$build/">A</a>]"
+		fi
+
+		echo "<li><a href=\"$branch-$build.txt\" class=\"$bhealth\">#$build [$bhealth] based on $sha1</a>$artifacts_link" >> $WEB/$branch.html
 
 		if [ $build -gt 0 ]; then
 			sha1_from=$(cat $BUILDS/$branch/build/$(($build - 1))/sha1)
@@ -380,6 +402,16 @@ EOF
 
 		if [ ! -f $WEB/$branch-$build.txt ] || [ "$orig" != "$copy" ]; then
 			cp $BUILDS/$branch/build/$build/log $WEB/$branch-$build.txt
+		fi
+
+		if [ -d $BUILDS/$branch/build/$build/artifacts ]; then
+			orig=$(modifiedtime $BUILDS/$branch/build/$build/artifacts)
+			copy=$(modifiedtime $WEB/$branch-$build)
+
+			if [ ! -d $WEB/$branch-$build ] || [ "$orig" != "$copy" ]; then
+				rm -rf $WEB/$branch-$build
+				cp -r $BUILDS/$branch/build/$build/artifacts $WEB/$branch-$build
+			fi
 		fi
 
 		build=$(($build - 1))
