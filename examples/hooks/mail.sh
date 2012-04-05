@@ -81,10 +81,9 @@ if [ $R -ne 0 ]; then
 
 
 	# send to authors
-	git --git-dir=$GENCI_REPOSITORY log --format="%ae|%an|%s" $GENCI_BUILD_OLD_SHA1..$GENCI_BUILD_SHA1 | sort | uniq | while read line; do
+	git --git-dir=$GENCI_REPOSITORY log --format="%ae|%an" $GENCI_BUILD_OLD_SHA1..$GENCI_BUILD_SHA1 | sort | uniq | while read line; do
 		email=$(echo $line | cut -d'|' -f1)
 		name=$(echo $line | cut -d'|' -f2)
-		message=$(echo $line | cut -d'|' -f3-)
 
 		echo "Sending E-Mail to $name <$email>..."
 		cat $BODY \
