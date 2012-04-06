@@ -7,6 +7,7 @@ dummy=$CONFIG-second
 
 fail() {
 	rm $HOME/.genci/$dummy
+	rm -rf $HOME/.genci/works/$dummy
 	exit $1
 }
 
@@ -20,4 +21,5 @@ $GENCI init $dummy $SOURCE || fail 1
 $GENCI init $dummy $SOURCE || fail 0
 
 rm $HOME/.genci/$dummy
+rm -rf $HOME/.genci/works/$dummy
 exit 1
