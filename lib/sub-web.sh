@@ -36,6 +36,16 @@ running() {
 	fi
 }
 
+html() {
+	sed 's/</&lt;/g' \
+		| sed 's/>/&gt;/g'
+}
+
+css() {
+	sed 's/"/\\"/g' \
+		sed "s/'/\\\\'/g"
+}
+
 #
 # PREPARATION
 # copy all logs+artifacts
@@ -202,7 +212,7 @@ cat > $WEB/index.html << "EOF"
 	<head>
 EOF
 
-echo "<title>$CONFIG - generic-ci</title>" >> $WEB/index.html
+echo "<title>$CONFIG build status</title>" >> $WEB/index.html
 
 cat >> $WEB/index.html << "EOF"
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -324,7 +334,7 @@ $GENCI status $CONFIG | while read line; do
 	<head>
 EOF
 
-	echo "<title>$CONFIG / $branch - generic-ci</title>" >> $WEB/$branch.html
+	echo "<title>$CONFIG / $branch builds history</title>" >> $WEB/$branch.html
 
 	cat >> $WEB/$branch.html << "EOF"
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -364,7 +374,7 @@ EOF
 			sha1_from=$(cat $BUILDS/$branch/build/$(($build - 1))/sha1)
 			echo "<ul>" >> $WEB/$branch.html
 			$GIT log --format="%s (%h) %an, %aD" $sha1_from..$sha1 | while read line; do
-				echo "<li>$line</li>" >> $WEB/$branch.html
+				echo "<li>$(echo $line | html)</li>" >> $WEB/$branch.html
 			done
 			echo "</ul>" >> $WEB/$branch.html
 		fi
