@@ -28,6 +28,8 @@ if [ ! -z "$ARTIFACTS" ] && [ -d $GENCI_BUILD_WORK_DIR ]; then
 			done
 		fi
 	done
+
+	rmdir $ARTIFACTS_DIR 2>&1
 	exit 0
 else
 	echo "Error: cannot collect artifacts, no artifacts configured or work directory vanished!" >&2
