@@ -206,7 +206,8 @@ echo "<title>$CONFIG - generic-ci</title>" >> $WEB/index.html
 
 cat >> $WEB/index.html << "EOF"
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="genci.css">
+		<meta name="generator" content="generic-ci" />
+		<link rel="stylesheet" type="text/css" href="genci.css" />
 	</head>
 	<body>
 EOF
@@ -268,6 +269,7 @@ cat > $WEB/monitor.html << "EOF"
 		<title>generic-ci monitor</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="refresh" content="5"/>
+		<meta name="generator" content="generic-ci" />
 		<style type="text/css">
 			* {
 				margin: 0;
@@ -326,7 +328,8 @@ EOF
 
 	cat >> $WEB/$branch.html << "EOF"
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="genci.css">
+		<meta name="generator" content="generic-ci" />
+		<link rel="stylesheet" type="text/css" href="genci.css" />
 	</head>
 	<body>
 EOF
@@ -388,6 +391,7 @@ EOF
 		<title>generic-ci widget</title>
 		<meta http-equiv="refresh" content="23"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="generic-ci" />
 		<style type="text/css">
 			* {
 				margin: 0;
