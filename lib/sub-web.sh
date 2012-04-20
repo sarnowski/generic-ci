@@ -37,6 +37,43 @@ running() {
 }
 
 #
+# PREPARATION
+# copy all logs+artifacts
+#
+$GENCI status $CONFIG | while read line; do
+	health=$(echo $line | cut -d' ' -f1)
+	branch=$(echo $line | cut -d' ' -f2)
+	last=$(echo $line | cut -d' ' -f4)
+
+	build=$last
+	while [ $build -ge 0 ]; do
+		if [ ! -f $BUILDS/$branch/build/$build/log ]; then
+			build=$(($build - 1))
+			continue
+		fi
+		orig=$(filesize $BUILDS/$branch/build/$build/log)
+		copy=$(filesize $WEB/$branch-$build.txt)
+
+		if [ ! -f $WEB/$branch-$build.txt ] || [ "$orig" != "$copy" ]; then
+			cp $BUILDS/$branch/build/$build/log $WEB/$branch-$build.txt
+		fi
+
+		if [ -d $BUILDS/$branch/build/$build/artifacts ]; then
+			orig=$(modifiedtime $BUILDS/$branch/build/$build/artifacts)
+			copy=$(modifiedtime $WEB/$branch-$build)
+
+			if [ ! -d $WEB/$branch-$build ] || [ "$orig" != "$copy" ]; then
+				rm -rf $WEB/$branch-$build
+				cp -r $BUILDS/$branch/build/$build/artifacts $WEB/$branch-$build
+			fi
+		fi
+
+		build=$(($build - 1))
+	done
+
+done
+
+#
 # CSS
 #
 cat > $WEB/genci.css << "EOF"
@@ -317,7 +354,7 @@ EOF
 
 		artifacts_link=
 		if [ -d $WEB/$branch-$build ]; then
-			artifacts_link=" [<a href="$branch-$build/">A</a>]"
+			artifacts_link=" [<a href="$branch-$build/">artifacts</a>]"
 		fi
 
 		echo "<li><a href=\"$branch-$build.txt\" class=\"$bhealth\">#$build [$bhealth] based on $sha1</a>$artifacts_link" >> $WEB/$branch.html
@@ -387,34 +424,5 @@ EOF
 	</body>
 </html>
 EOF
-
-	#
-	# BRANCH LOGS
-	#
-	build=$last
-	while [ $build -ge 0 ]; do
-		if [ ! -f $BUILDS/$branch/build/$build/log ]; then
-			build=$(($build - 1))
-			continue
-		fi
-		orig=$(filesize $BUILDS/$branch/build/$build/log)
-		copy=$(filesize $WEB/$branch-$build.txt)
-
-		if [ ! -f $WEB/$branch-$build.txt ] || [ "$orig" != "$copy" ]; then
-			cp $BUILDS/$branch/build/$build/log $WEB/$branch-$build.txt
-		fi
-
-		if [ -d $BUILDS/$branch/build/$build/artifacts ]; then
-			orig=$(modifiedtime $BUILDS/$branch/build/$build/artifacts)
-			copy=$(modifiedtime $WEB/$branch-$build)
-
-			if [ ! -d $WEB/$branch-$build ] || [ "$orig" != "$copy" ]; then
-				rm -rf $WEB/$branch-$build
-				cp -r $BUILDS/$branch/build/$build/artifacts $WEB/$branch-$build
-			fi
-		fi
-
-		build=$(($build - 1))
-	done
 
 done
