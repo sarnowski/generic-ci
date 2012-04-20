@@ -202,7 +202,7 @@ $GENCI status $CONFIG | while read line; do
 
 		artifacts_link=
 		if [ -d $WEB/$branch-$build ]; then
-			artifacts_link=" [<a href="$branch-$build/">A</a>]"
+			artifacts_link="<a href="$branch-$build/">*</a>"
 		fi
 
 		echo "<td><a class=\"$bhealth\" href=\"$branch-$build.txt\">#$build</a>$artifacts_link</td>" >> $WEB/index.html
