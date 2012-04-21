@@ -82,6 +82,11 @@ echo "Build based on $REF ($SHA1)"
 TITLE=$($GIT show --format="%s" "$REF" | head -n 1)
 echo "Title: $TITLE"
 
+TAG_VERSION=$($GIT describe --tags "$REF" 2>/dev/null)
+if [ ! -z "$TAG_VERSION" ]; then
+	echo "Version: $TAG_VERSION"
+fi
+
 # check out files
 echo "Preparing build directory..."
 $GIT archive --format=tar $SHA1 | tar -xf- -C $BUILD_WORK_DIR

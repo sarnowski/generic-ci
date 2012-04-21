@@ -368,7 +368,14 @@ EOF
 			artifacts_link=" [<a href="$branch-$build/">artifacts</a>]"
 		fi
 
-		echo "<li><a href=\"$branch-$build.txt\" class=\"$bhealth\">#$build [$bhealth] based on $sha1</a>$artifacts_link" >> $WEB/$branch.html
+		based=$($GIT describe --tags $sha1 2>/dev/null)
+		if [ -z "$based" ]; then
+			based="$sha1"
+		else
+			based="$based"
+		fi
+
+		echo "<li><a href=\"$branch-$build.txt\" class=\"$bhealth\">#$build [$bhealth] based on $based</a>$artifacts_link" >> $WEB/$branch.html
 
 		if [ $build -gt 0 ]; then
 			sha1_from=$(cat $BUILDS/$branch/build/$(($build - 1))/sha1)
