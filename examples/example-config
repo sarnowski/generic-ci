@@ -57,6 +57,19 @@
 # mail  - send mails on failure and recovery
 #
 #POST="$POST /usr/local/share/examples/genci/hooks/mail.sh"
+#
+# uncomment BOTH lines if you want the panic feature:
+# the maximum numbers of fail-mails to go out; if this is
+# exceeded, only one mail goes out to the PANIC_MAIL
+#
+#export MAIL_PANIC_LIMIT=10
+#export MAIL_PANIC_MAIL=me@example.com
+#
+# a branch whitelist, to only send mails when the event
+# happens on one of the following branches
+#
+#export MAIL_BRANCHES="master stable"
+
 
 # cleanup  - delete the work directory to save space
 #
