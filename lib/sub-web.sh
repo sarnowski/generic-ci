@@ -74,7 +74,7 @@ $GENCI status $CONFIG | while read line; do
 
 			if [ ! -d $WEB/$branch-$build ] || [ "$orig" != "$copy" ]; then
 				rm -rf $WEB/$branch-$build
-				cp -r $BUILDS/$branch/build/$build/artifacts $WEB/$branch-$build
+				cp -a $BUILDS/$branch/build/$build/artifacts $WEB/$branch-$build
 			fi
 		fi
 
