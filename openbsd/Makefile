@@ -4,7 +4,7 @@ COMMENT =		generic-ci, a generic continuous integration tool
 
 CATEGORIES =		devel
 
-HOMEPAGE =		http://trustedco.de/generic-ci/
+HOMEPAGE =		http://trustedco.de/p/generic-ci/
 MAINTAINER =		Tobias Sarnowski <tobias@trustedco.de>
 
 PERMIT_PACKAGE_CDROM =	No

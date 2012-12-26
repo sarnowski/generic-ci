@@ -5,4 +5,4 @@ Priority: optional
 Architecture: all
 Depends: git
 Maintainer: Tobias Sarnowski
-Description: http://trustedco.de/generic-ci/
+Description: http://trustedco.de/p/generic-ci/

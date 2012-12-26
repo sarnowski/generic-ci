@@ -260,7 +260,7 @@ $GENCI status $CONFIG | while read line; do
 done
 
 echo "</table>
-        <p>Builds powered by <a href=\"http://trustedco.de/generic-ci/\" target=\"_blank\">generic-ci</a>, $(date)</p>
+        <p>Builds powered by <a href=\"http://trustedco.de/p/generic-ci/\" target=\"_blank\">generic-ci</a>, $(date)</p>
 	</body>
 </html>" >> $WEB/index.html
 
@@ -393,7 +393,7 @@ EOF
 	echo "</ul>" >> $WEB/$branch.html
 
     echo "
-        <p>Builds powered by <a href=\"http://trustedco.de/generic-ci/\" target=\"_blank\">generic-ci</a>, $(date)</p>
+        <p>Builds powered by <a href=\"http://trustedco.de/p/generic-ci/\" target=\"_blank\">generic-ci</a>, $(date)</p>
 	</body>
 </html>" >> $WEB/$branch.html
 
